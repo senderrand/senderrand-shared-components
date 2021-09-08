@@ -1,0 +1,22 @@
+{
+  "name": "senderrand-shared-components-example",
+  "displayName": "SenderrandSharedComponents Example",
+  "expo": {
+    "name": "senderrand-shared-components-example",
+    "slug": "senderrand-shared-components-example",
+    "description": "Example app for senderrand-shared-components",
+    "privacy": "public",
+    "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
