@@ -144,5 +144,16 @@
       "module",
       "typescript"
     ]
+  },
+  "dependencies": {
+    "@expo/vector-icons": "^12.0.5",
+    "@unimodules/core": "^7.1.2",
+    "@unimodules/react-native-adapter": "^6.3.7",
+    "expo-asset": "^8.3.3",
+    "expo-constants": "^11.0.2",
+    "expo-file-system": "^11.1.3",
+    "expo-font": "^9.2.1",
+    "react-native-size-matters": "^0.4.0",
+    "styled-components": "^5.3.1"
   }
 }

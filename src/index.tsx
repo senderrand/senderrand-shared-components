@@ -1,5 +1,9 @@
-export default {
-  multiply(a: number, b: number) {
-    return Promise.resolve(a * b);
-  },
+import { View } from 'react-native';
+import React from 'react';
+import Header from './chat/components/header';
+
+export default () => {
+  return <View />;
 };
+
+export { Header };
