@@ -1,6 +1,6 @@
 import { Appearance } from 'react-native';
-// import * as ImagePicker from 'expo-image-picker';
-// import * as DocumentPicker from 'expo-document-picker'
+import * as ImagePicker from 'expo-image-picker';
+import * as DocumentPicker from 'expo-document-picker';
 
 class Helper {
   public lang: string;
@@ -25,47 +25,52 @@ class Helper {
     };
   };
 
-  // mediaPicker = async (type: string, options?: any) => {
-  //   // Type options: 'camera', 'library', 'document'
-  //   switch (type) {
-  //     case 'camera':
-  //       const { status } = await ImagePicker.getCameraPermissionsAsync();
-  //       if (status === 'granted') return this.launchMedia(type, options);
-  //       else {
-  //         let res = await ImagePicker.requestCameraPermissionsAsync();
-  //         if (res.status === 'granted') return this.launchMedia(type, options);
-  //         else return { error: true, status: res.status };
-  //       }
-  //     case 'library':
-  //       const res = await ImagePicker.getMediaLibraryPermissionsAsync();
-  //       if (res.status === 'granted') return this.launchMedia('library');
-  //       else {
-  //         let res2 = await ImagePicker.requestMediaLibraryPermissionsAsync();
-  //         if (res2.status === 'granted') return this.launchMedia('library');
-  //         else return { error: true, status: res.status };
-  //       }
-  //     case 'document':
-  //       return await DocumentPicker.getDocumentAsync(options);
-  //   }
-  // };
+  mediaPicker = async (type: string, options?: any) => {
+    // Type options: 'camera', 'library', 'document'
+    switch (type) {
+      case 'camera':
+        const { status } = await ImagePicker.getCameraPermissionsAsync();
+        if (status === 'granted') return this.launchMedia(type, options);
+        else {
+          let res = await ImagePicker.requestCameraPermissionsAsync();
+          if (res.status === 'granted') return this.launchMedia(type, options);
+          else return { error: true, status: res.status, message };
+        }
+      case 'library':
+        const res = await ImagePicker.getMediaLibraryPermissionsAsync();
+        if (res.status === 'granted') return this.launchMedia('library');
+        else {
+          let res2 = await ImagePicker.requestMediaLibraryPermissionsAsync();
+          if (res2.status === 'granted') return this.launchMedia('library');
+          else return { error: true, status: res.status, message };
+        }
+      case 'document':
+        return await DocumentPicker.getDocumentAsync(options);
+      default:
+        return { error: true, status: '', message: 'Invalid Option' };
+    }
+  };
 
-  // launchMedia = async (type: string, options?: any) => {
-  //   return type === 'camera'
-  //     ? await ImagePicker.launchCameraAsync({ quality: 0, ...options })
-  //     : await ImagePicker.launchImageLibraryAsync({ quality: 0, ...options });
-  // };
-  //
-  // formatFile = (file: any) => {
-  //   let filename = file.uri.split('/').pop();
-  //   let match = /\.(\w+)$/.exec(filename);
-  //   let type = match
-  //     ? `${file.type ? file.type : ''}${match[1]}`
-  //     : file.type
-  //     ? file.type
-  //     : 'file';
-  //   return { uri: file.uri, name: filename, type };
-  // };
+  launchMedia = async (type: string, options?: any) => {
+    return type === 'camera'
+      ? await ImagePicker.launchCameraAsync({ quality: 0, ...options })
+      : await ImagePicker.launchImageLibraryAsync({ quality: 0, ...options });
+  };
+
+  formatFile = (file: any) => {
+    let filename = file.uri.split('/').pop();
+    let match = /\.(\w+)$/.exec(filename);
+    let type = match
+      ? `${file.type ? file.type : ''}${match[1]}`
+      : file.type
+      ? file.type
+      : 'file';
+    return { uri: file.uri, name: filename, type };
+  };
 }
+
+let message =
+  'Permission is required to be granted to access camera of photo library, go to settings to grant permission.';
 
 export const colors = {
   primary: '#3BAFDA',

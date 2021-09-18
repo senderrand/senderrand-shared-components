@@ -75,6 +75,84 @@ Below are the listed props that can be passed to the header component
 | `onPressOption` | `Function` | `false` | This function call when each menu option is tapped. It returns the index of the tapped option as parameter |
 
 
+## Footer Component Usage
+
+```typescript
+import { Footer } from 'senderrand-shared-components';
+
+let fontFamily = {
+  light: 'Light',
+  regular: 'Regular',
+  bold: 'Bold',
+  italic: 'RegularItalic',
+};
+
+const Example = () => (
+ <Footer
+   fontFamily={fontFamily}
+   onError={(message) => Alert.alert('Failed', message)}
+   clipIcon={<MaterialCommunityIcons name={'paperclip'} />}
+   sendIcon={<MaterialCommunityIcons name={'send'} />}
+   onSelectOption={(index) => console.log(index)}
+   audioIcon={<Ionicons name={'mic-outline'} />}
+   leftIcon={
+     <Ionicons
+       name={'location-outline'}
+       color={scheme === 'dark' ? '#fff' : '#6A6A6A'}
+     />
+   }
+   recordIcon={
+     <Ionicons
+       name={'mic-outline'}
+       color={scheme === 'dark' ? '#fff' : '#3C4656'}
+     />
+   }
+ />
+);
+```
+
+## Features
+- Camera.
+- Image Picker.
+- Audio Recorder.
+- Text Input
+
+## Tech
+
+The Header component uses a number of open source projects to work properly:
+
+- `expo-av` - For Audio Recording.
+- `expo-image-picker` - To take picture from camera or select from library.
+- `react-native-actionsheet` - To display Footer options.
+- `expo-file-system` - To get the URI of the recorded audio.
+
+## props
+
+Below are the listed props that can be passed to the header component
+
+| Property | Type | Required | Description |
+| ------ | ------ | ------ | ------ |
+| `defaultOptions` | `array` | `false` | This array is passed to the footer options to display. Defaults to `['Camera', 'Photo Library']`  |
+| `cancetTxt` | `string` | `false` | The string to replace the cancel text. Defaults to `Cancel` |
+| `options` | `array` | `false` | Additional options passed to the footer to display. |
+| `reply` | `object` | `false` | A message object passed to the footer to display when replying a message. |
+| `send` | `function` | `false` | A functions that returns the message object as a parameter. |
+| `onError` | `function` | `false` | A function that returns error message as a parameter. |
+| `onSelectOption` | `function` | `false` | The function returns the index of the selected option as parameter. |
+| `leftIcon` | `React.Component` | `false` | The icon displayed on the left hand side of the input text. |
+| `fontFamily` | `object` | `true` | An object that contains the font family used for the text elements in the footer component. An example is shown above. |
+| `multiline` | `boolean` | `false` | The multiline props for the footer text input. |
+| `placeholder` | `string` | `false` | The placeholder props for the footer text input. |
+| `keyboardType` | `string` | `false` | The keyboardType props for the footer text input. |
+| `clipIcon` | `React.Component` | `false` | The attach file icon.  |
+| `loading` | `boolean` | `false` | To disable all footer functionalities and display the loading component. |
+| `audioIcon` | `React.Component` | `false` | The microphone icon to represent audio record.  |
+| `sendIcon` | `React.Component` | `false` | The paper plane icon to represent send button.  |
+| `sheetOneTitle` | `string` | `false` | The title of the first action sheet, defaults to `Options`.  |
+| `sheetTwoTitle` | `string` | `false` | The title of the second action sheet, defaults to `Options`.  |
+| `recordIcon` | `React.Component` | `false` |  The microphone icon to represent audio record.  |
+
+
 ## Contributing
 
 See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
