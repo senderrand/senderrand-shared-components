@@ -55,8 +55,12 @@ const Touch = styled.TouchableOpacity.attrs((props: any) => {
     props.viewMargin ? props.viewMargin[3] : '0'}px;
 `;
 
-const Txt = styled.Text`
-  font-family: ${(props: any) => (props.family ? props.family : 'Regular')};
+const Txt = styled.Text.attrs((props: any) => {
+  let style = {};
+  if (props.family) style = { ...style, fontFamily: props.family };
+  return style;
+})`
+  font-family: ${(props: any) => (props.family ? props.family : 'Medium')};
   font-size: ${(props: any) => (props.size ? props.size : '12')}px;
   color: ${(props: any) =>
     props.color ? props.color : Helper.getColor().primaryTxt};

@@ -83,6 +83,7 @@ import { Footer } from 'senderrand-shared-components';
 let fontFamily = {
   light: 'Light',
   regular: 'Regular',
+  medium: 'Medium',
   bold: 'Bold',
   italic: 'RegularItalic',
 };
@@ -151,6 +152,57 @@ Below are the listed props that can be passed to the header component
 | `sheetOneTitle` | `string` | `false` | The title of the first action sheet, defaults to `Options`.  |
 | `sheetTwoTitle` | `string` | `false` | The title of the second action sheet, defaults to `Options`.  |
 | `recordIcon` | `React.Component` | `false` |  The microphone icon to represent audio record.  |
+
+
+## Success Modal 1
+
+```typescript
+import { Header } from 'senderrand-shared-components';
+import { useState } from 'react';
+import { Ionicons } from '@expo/vector-icons';
+
+const family = {
+  light: 'Light',
+  regular: 'Regular',
+  medium: 'Medium',
+  bold: 'Bold',
+  italic: 'RegularItalic',
+};
+
+const Example = () => {
+  let [visible, setVisible] = useState(true)
+
+  return (
+    <SuccessModal
+      fontFamily={family}
+      visible={visible}
+      title={'Congratulations'}
+      close={() => setVisible(false)}
+      btnTitle={'Close Modal'}
+      checkIcon={<Ionicons name={'check'} />}
+      content={'We are exited to have you join our team!'}
+    />
+  )
+}
+```
+
+## Features
+- A styled success modal to be displayed after successful action
+
+## props
+
+Below are the listed props that can be passed to the header component
+
+| Property | Type | Required | Description |
+| ------ | ------ | ------ | ------ |
+| `animationType` | `string` | `false` | Default animationType options for react native modal. Defaults to `slide` |
+| `visible` | `boolean` | `true` | Set the visibility of the modal to true or false |
+| `checkIcon` | `React.Component` | `true` | An icon to represent a check mark |
+| `fontFamily` | `object` | `true` | An object containing the app font family, example above |
+| `title` | `string` | `false` | The text string to be displayed as title ex: 'Congrats' |
+| `content` | `string` | `false` | The details string displayed below the title |
+| `close` | `function` | `false` | A function called after the button is pressed |
+| `btnTitle` | `string` | `false` | The title of the button displayed |
 
 
 ## Contributing

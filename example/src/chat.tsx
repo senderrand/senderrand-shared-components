@@ -29,9 +29,6 @@ const Avoid = styled.KeyboardAvoidingView`
   flex: 1;
   justify-content: flex-end;
 `;
-const List = styled.FlatList`
-  padding: 15px;
-`;
 const SendIcon = styled(MaterialCommunityIcons)`
   font-size: 15px;
   margin-left: 2px;
@@ -97,36 +94,37 @@ export default () => {
               />
             }
           />
-          {/*<Footer*/}
-          {/*  runner*/}
-          {/*  fontFamily={family}*/}
-          {/*  onError={(message) => Alert.alert('Failed', message)}*/}
-          {/*  clipIcon={<Clip name={'paperclip'} />}*/}
-          {/*  sendIcon={<SendIcon name={'send'} />}*/}
-          {/*  onSelectOption={(index) => console.log(index)}*/}
-          {/*  audioIcon={<AudioIcon name={'mic-outline'} />}*/}
-          {/*  leftIcon={*/}
-          {/*    <AudioIcon*/}
-          {/*      name={'location-outline'}*/}
-          {/*      color={scheme === 'dark' ? '#fff' : '#6A6A6A'}*/}
-          {/*    />*/}
-          {/*  }*/}
-          {/*  recordIcon={*/}
-          {/*    <AudioIcon*/}
-          {/*      name={'mic-outline'}*/}
-          {/*      color={helper.getColor().primaryTxt}*/}
-          {/*    />*/}
-          {/*  }*/}
-          {/*/>*/}
+          <Footer
+            runner
+            fontFamily={family}
+            onError={(message) => Alert.alert('Failed', message)}
+            clipIcon={<Clip name={'paperclip'} />}
+            sendIcon={<SendIcon name={'send'} />}
+            onSelectOption={(index) => console.log(index)}
+            audioIcon={<AudioIcon name={'mic-outline'} />}
+            leftIcon={
+              <AudioIcon
+                name={'location-outline'}
+                color={scheme === 'dark' ? '#fff' : '#6A6A6A'}
+              />
+            }
+            recordIcon={
+              <AudioIcon
+                name={'mic-outline'}
+                color={helper.getColor().primaryTxt}
+              />
+            }
+          />
         </Avoid>
       </Inner>
     </Wrap>
   );
 };
 
-const family = {
+export const family = {
   light: 'Light',
   regular: 'Regular',
+  medium: 'Medium',
   bold: 'Bold',
   italic: 'RegularItalic',
 };
