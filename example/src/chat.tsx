@@ -48,12 +48,6 @@ const Clip = styled(SendIcon)`
   font-size: 20px;
 `;
 
-let styles = {
-  optionTxtStyle: { fontFamily: 'Regular' },
-  titleStyle: { fontFamily: 'Bold' },
-  detailStyle: { fontFamily: 'RegularItalic' },
-};
-
 export default () => {
   let scheme = useColorScheme();
 
@@ -63,9 +57,7 @@ export default () => {
         <Header
           detail={'Typing..'}
           title={'SendErrand'}
-          titleStyle={styles.titleStyle}
-          detailStyle={styles.detailStyle}
-          optionTxtStyle={styles.optionTxtStyle}
+          fontFamily={family}
           rightIcon={
             <Dot
               name={'dots-three-vertical'}
@@ -76,11 +68,13 @@ export default () => {
         />
         <Avoid behavior={Platform.OS === 'android' ? 'height' : 'padding'}>
           <Footer
+            // reply={messages[0]}
             fontFamily={family}
             onError={(message) => Alert.alert('Failed', message)}
             onSelectOption={(index) => console.log(index)}
             sendIcon={<SendIcon name={'send'} />}
             audioIcon={<AudioIcon name={'mic-outline'} />}
+            cancelIcon={<PlusIcon name={'closecircleo'} color={'#ff733e'} />}
             recordIcon={
               <AudioIcon
                 name={'mic-outline'}
@@ -102,6 +96,7 @@ export default () => {
             sendIcon={<SendIcon name={'send'} />}
             onSelectOption={(index) => console.log(index)}
             audioIcon={<AudioIcon name={'mic-outline'} />}
+            cancelIcon={<PlusIcon name={'closecircleo'} color={'#ff733e'} />}
             leftIcon={
               <AudioIcon
                 name={'location-outline'}
@@ -128,3 +123,17 @@ export const family = {
   bold: 'Bold',
   italic: 'RegularItalic',
 };
+
+let messages = [
+  {
+    sender: { id: 2, name: 'The sender' },
+    id: 7,
+    status: 3,
+    date: new Date(),
+    text: 'Hello there, On the hunt for winter sun? Or any time of the year sun?',
+    file: null,
+    type: 'text',
+    duration: 2024,
+    reply: null,
+  },
+];
