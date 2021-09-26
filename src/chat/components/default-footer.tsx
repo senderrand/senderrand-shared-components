@@ -9,6 +9,7 @@ import {
   Animated,
   ActivityIndicator,
 } from 'react-native';
+import { ReplyFoot } from './reply';
 
 const Wrap = styled.View``;
 const InputBox = styled.View`
@@ -70,12 +71,35 @@ const PaperClipTouch = styled.TouchableOpacity`
   align-items: flex-start;
   justify-content: center;
 `;
+const Icon = styled.Text``;
 
 export default (props: any) => {
+  const SendIcon = styled(
+    props.materialCommunityIcons ? props.materialCommunityIcons : Icon
+  )`
+    font-size: 15px;
+    margin-left: 2px;
+    color: ${(prop: any) => (prop.color ? prop.color : '#fff')};
+  `;
+  const AudioIcon = styled(props.ionicons ? props.ionicons : Icon)`
+    font-size: 20px;
+    color: ${(prop: any) => (prop.color ? prop.color : '#fff')};
+  `;
+  const PlusIcon = styled(props.antDesign ? props.antDesign : Icon)`
+    color: ${(prop: any) => (prop.color ? prop.color : '#6A6A6A')};
+    font-size: 20px;
+  `;
+  const Clip = styled(SendIcon)`
+    color: ${(prop: any) =>
+      prop.color ? prop.color : Helper.getColor().secondaryTxt};
+    font-size: 20px;
+  `;
+
   let inputRef: any;
   let sheet: any, sheet2: any;
   let scheme = useColorScheme();
   let [text, setText] = useState('');
+  let [loading, setLoading] = useState(false);
   let [defaultOptions] = useState(
     props.defaultOptions && props.defaultOptions.length
       ? props.defaultOptions
@@ -114,9 +138,11 @@ export default (props: any) => {
   const keyboardWillHide = () => setKeyboardShown(false);
 
   let send = (file?: any) => {
-    let message = { type: '', text, file };
+    let newFile = file ? Helper.formatFile(file) : null;
+    let message = { type: 'text', text, file: newFile };
     if (file) message.type = file.type;
     props.send(message);
+    setText('');
   };
 
   let reportError = (error: string) => {
@@ -139,12 +165,14 @@ export default (props: any) => {
   let selectOptions2 = (index: number) => {
     switch (index) {
       case 0:
+        setLoading(true);
         Helper.mediaPicker('camera', {
           mediaTypes: MediaTypeOptions.All,
           allowsMultipleSelection: true,
         }).then(handleMedia);
         break;
       case 1:
+        setLoading(true);
         Helper.mediaPicker('library', {
           mediaTypes: MediaTypeOptions.All,
           allowsMultipleSelection: true,
@@ -156,14 +184,16 @@ export default (props: any) => {
   };
 
   let handleMedia = (res: any) => {
+    setLoading(false);
     if (!res.cancelled) {
       if (res.error) reportError(res.message);
-      else send(Helper.formatFile(res));
+      else send(res);
     }
   };
 
   return (
     <Wrap>
+      {props.reply && <ReplyFoot {...props} />}
       <InputBox
         background={Helper.getColor().plane}
         scheme={scheme}
@@ -174,7 +204,10 @@ export default (props: any) => {
             onPress={() => sheet.show()}
             background={Helper.getColor().background}
           >
-            {props.leftIcon && props.leftIcon}
+            <PlusIcon
+              name={'plus'}
+              color={scheme === 'dark' ? '#fff' : '#6A6A6A'}
+            />
           </SendBtn>
         </PlusWrap>
         <TxtInputWrap background={Helper.getColor().plane} scheme={scheme}>
@@ -189,32 +222,39 @@ export default (props: any) => {
             multiline={props.multiline ? props.multiline : true}
             placeholder={props.placeholder ? props.placeholder : ''}
             keyboardType={props.keyboardType ? props.keyboardType : 'default'}
-            onChangeText={(value: React.SetStateAction<string>) =>
-              setText(value)
-            }
+            onChangeText={(value: React.SetStateAction<string>) => {
+              setText(value);
+              props.onChangeText && props.onChangeText(value);
+            }}
           />
           {props.runner && (
             <PaperClipTouch onPress={() => sheet2.show()}>
-              {props.clipIcon && props.clipIcon}
+              <Clip name={'paperclip'} />
             </PaperClipTouch>
           )}
         </TxtInputWrap>
         <SendWrap>
           <SendBtn
-            onPress={props.loading ? null : text === '' ? recordError : send}
+            onPress={
+              loading || props.loading
+                ? null
+                : text === ''
+                ? recordError
+                : () => send()
+            }
             onLongPress={
-              !props.loading && text === ''
+              !loading && !props.loading && text === ''
                 ? () => props.changeType('audio')
                 : null
             }
             background={text === '' ? '#FD5710' : Helper.getColor().primary}
           >
-            {props.loading ? (
+            {loading || props.loading ? (
               <ActivityIndicator size={'small'} color={'#fff'} />
             ) : text === '' ? (
-              props.audioIcon && props.audioIcon
+              <AudioIcon name={'mic-outline'} />
             ) : (
-              props.sendIcon && props.sendIcon
+              <SendIcon name={'send'} />
             )}
           </SendBtn>
         </SendWrap>

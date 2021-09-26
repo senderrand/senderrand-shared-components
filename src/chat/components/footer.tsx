@@ -9,7 +9,7 @@ export default (props: any) => {
   const [type, setType] = useState('default');
 
   let send = (message: any) => {
-    console.log(message);
+    props.send && props.send(message);
   };
 
   return (

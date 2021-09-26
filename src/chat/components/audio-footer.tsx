@@ -4,6 +4,7 @@ import Helper from '../../config/helper';
 import * as FileSystem from 'expo-file-system';
 import { ActivityIndicator } from 'react-native';
 import React, { useEffect, useState } from 'react';
+import helper from '../../config/helper';
 
 const RecordWrap = styled.View`
   flex-direction: row;
@@ -51,6 +52,7 @@ const SendBtn = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
 `;
+const Icon = styled.Text``;
 
 const RECORDING_OPTIONS_PRESET_LOW_QUALITY = {
   android: {
@@ -83,6 +85,18 @@ let audioSettings = {
   staysActiveInBackground: true,
 };
 export default (props: any) => {
+  const SendIcon = styled(
+    props.materialCommunityIcons ? props.materialCommunityIcons : Icon
+  )`
+    font-size: 15px;
+    margin-left: 2px;
+    color: ${(prop: any) => (prop.color ? prop.color : '#fff')};
+  `;
+  const AudioIcon = styled(props.ionicons ? props.ionicons : Icon)`
+    font-size: 20px;
+    color: ${(prop: any) => (prop.color ? prop.color : '#fff')};
+  `;
+
   const [duration, setDuration] = useState(0);
   const [record] = useState(new Audio.Recording());
 
@@ -114,6 +128,9 @@ export default (props: any) => {
   let onStopRecord = async (type: string) => {
     if (type === 'cancel') {
       try {
+        await FileSystem.deleteAsync(record.getURI() as string, {
+          idempotent: true,
+        });
         await record.stopAndUnloadAsync();
       } catch (error) {
         console.log(error, 'stop error');
@@ -132,7 +149,6 @@ export default (props: any) => {
         console.log(error, 'playback error');
       }
     }
-
     setDuration(0);
     props.changeType('default');
   };
@@ -140,9 +156,9 @@ export default (props: any) => {
   return (
     <RecordWrap>
       <MicBox>
-        {props.recordIcon && props.recordIcon}
+        <AudioIcon name={'mic-outline'} color={helper.getColor().primaryTxt} />
         <DurationTxt family={props.fontFamily}>
-          {millisToTime(duration)}
+          {Helper.millisToTime(duration)}
         </DurationTxt>
       </MicBox>
       <CancelAudio onPress={() => onStopRecord('cancel')}>
@@ -157,7 +173,7 @@ export default (props: any) => {
         {props.loading ? (
           <ActivityIndicator size={'small'} color={'#fff'} />
         ) : (
-          props.sendIcon && props.sendIcon
+          <SendIcon name={'send'} />
         )}
       </SendBtn>
     </RecordWrap>
@@ -166,10 +182,3 @@ export default (props: any) => {
 
 let permitError =
   'Permission is required to be granted to record audio, go to settings to grant permission.';
-
-export const millisToTime = (millis: number, addition?: number) => {
-  let minutes = Math.floor(millis / 60000);
-  let seconds: number = Number(((millis % 60000) / 1000).toFixed(0));
-  if (addition) seconds = parseInt(String(seconds), 10) + addition;
-  return minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
-};

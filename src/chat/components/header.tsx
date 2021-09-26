@@ -46,10 +46,13 @@ const TxtBox = styled.View`
 const Title = styled.Text`
   font-size: 16px;
   color: ${(props: any) => props.color};
+  font-family: ${(props: any) => (props.family ? props.family.bold : 'Bold')};
 `;
 const Detail = styled.Text`
   font-size: 11px;
   color: ${(props: any) => props.color};
+  font-family: ${(props: any) =>
+    props.family ? props.family.italic : 'RegularItalic'};
 `;
 const RightTouch = styled.TouchableOpacity`
   padding-right: 18px;
@@ -87,8 +90,11 @@ const MenuTxt = styled.Text`
   font-size: 14px;
   color: ${(props: any) =>
     props.color ? props.color : Helper.getColor().primaryTxt};
+  font-family: ${(props: any) =>
+    props.family ? props.family.regular : 'Regular'};
 `;
 const List = styled.FlatList``;
+const Icon = styled.Text``;
 
 export default (props: any) => {
   let scheme = useColorScheme();
@@ -98,6 +104,11 @@ export default (props: any) => {
     setVisible(false);
     props.onPressOption && props.onPressOption(index);
   };
+
+  const Dot = styled(props.entypo ? props.entypo : Icon)`
+    color: ${(prop: any) => prop.color};
+    font-size: 15px;
+  `;
 
   return (
     <Outer>
@@ -115,6 +126,7 @@ export default (props: any) => {
             <ImgBox source={props.image ? { uri: props.image } : blue} />
             <TxtBox>
               <Title
+                family={props.fontFamily && props.fontFamily}
                 color={Helper.getColor().primaryTxt}
                 style={props.titleStyle ? props.titleStyle : {}}
               >
@@ -132,7 +144,10 @@ export default (props: any) => {
           </LeftBox>
           {props.options && props.options.length && (
             <RightTouch onPress={() => setVisible(true)}>
-              {props.rightIcon && props.rightIcon}
+              <Dot
+                name={'dots-three-vertical'}
+                color={Helper.getColor().primaryTxt}
+              />
             </RightTouch>
           )}
         </Head>

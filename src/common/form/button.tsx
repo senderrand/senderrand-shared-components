@@ -15,8 +15,8 @@ const Wrap = styled.TouchableOpacity`
   opacity: ${(props: any) => (props.disabled ? '0.4' : '1')};
   shadow-opacity: ${(props: any) => (props.shadow ? '1.0' : '0')};
   shadow-color: rgba(0, 0, 0, 0.08);
-  shadow-offset: ${(props: any) => (props.shadow ? '5px' : '0px')}
-    ${(props: any) => (props.shadow ? '5px' : '0px')};
+  shadow-offset: ${(props: any) => (props.shadow ? '2px' : '0px')}
+    ${(props: any) => (props.shadow ? '2px' : '0px')};
 `;
 
 const Txt = styled.Text.attrs((props: any) => {

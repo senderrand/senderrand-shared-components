@@ -1,6 +1,8 @@
+import Moment from 'moment';
 import { Appearance } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as DocumentPicker from 'expo-document-picker';
+import { manipulateAsync, SaveFormat } from 'expo-image-manipulator';
 
 class Helper {
   public lang: string;
@@ -38,10 +40,10 @@ class Helper {
         }
       case 'library':
         const res = await ImagePicker.getMediaLibraryPermissionsAsync();
-        if (res.status === 'granted') return this.launchMedia('library');
+        if (res.status === 'granted') return this.launchMedia(type, options);
         else {
           let res2 = await ImagePicker.requestMediaLibraryPermissionsAsync();
-          if (res2.status === 'granted') return this.launchMedia('library');
+          if (res2.status === 'granted') return this.launchMedia(type, options);
           else return { error: true, status: res.status, message };
         }
       case 'document':
@@ -52,20 +54,50 @@ class Helper {
   };
 
   launchMedia = async (type: string, options?: any) => {
-    return type === 'camera'
-      ? await ImagePicker.launchCameraAsync({ quality: 0, ...options })
-      : await ImagePicker.launchImageLibraryAsync({ quality: 0, ...options });
+    let opt = options ? { ...options } : {};
+    let img: any =
+      type === 'camera'
+        ? await ImagePicker.launchCameraAsync({ quality: 0.0, ...opt })
+        : await ImagePicker.launchImageLibraryAsync({
+            quality: 0.0,
+            ...opt,
+          });
+    if (img.cancelled || img.type !== 'image') return img;
+    else {
+      let result = await manipulateAsync(
+        img.uri,
+        [{ resize: { width: img.width / 2, height: img.height / 2 } }],
+        {
+          compress: 0.0,
+          format: SaveFormat.JPEG,
+        }
+      );
+      return { ...img, ...result };
+    }
   };
 
   formatFile = (file: any) => {
     let filename = file.uri.split('/').pop();
     let match = /\.(\w+)$/.exec(filename);
     let type = match
-      ? `${file.type ? file.type : ''}${match[1]}`
+      ? `${file.type ? file.type : ''}/${match[1]}`
       : file.type
       ? file.type
       : 'file';
     return { uri: file.uri, name: filename, type };
+  };
+
+  getDate = (date: Date) => {
+    if (new Date(date).toDateString() === new Date().toDateString()) {
+      return `${Moment(new Date(date)).format('h:mm a')}`;
+    } else return Moment(new Date(date)).calendar();
+  };
+
+  millisToTime = (millis: number, addition?: number) => {
+    let minutes = Math.floor(millis / 60000);
+    let seconds: number = Number(((millis % 60000) / 1000).toFixed(0));
+    if (addition) seconds = parseInt(String(seconds), 10) + addition;
+    return minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
   };
 }
 
@@ -85,7 +117,7 @@ export const colors = {
   backgroundDark: 'rgb(2,2,2)',
   chatBoxOne: '#E4E8EB',
   chatBoxOneDark: '#3c3b3d',
-  chatBoxTwo: '#69C2E3',
+  chatBoxTwo: '#0a78a1',
   chatBoxTwoDark: '#0a78a1',
 };
 
