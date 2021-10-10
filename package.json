@@ -161,8 +161,13 @@
     "moment": "^2.29.1",
     "react-native-actionsheet": "^2.4.2",
     "react-native-animatable": "^1.3.3",
+    "react-native-maps": "^0.29.3",
+    "react-native-remote-svg": "^2.0.6",
     "react-native-size-matters": "^0.4.0",
     "react-native-sliders": "^1.1.1",
+    "react-native-svg": "^12.1.1",
+    "react-native-webview": "^11.14.0",
+    "react-native-zigzag-lines": "^0.1.1",
     "react-swipeable-views-native": "^0.13.2",
     "styled-components": "^5.3.1"
   }

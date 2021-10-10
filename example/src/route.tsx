@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
 import Chat from './chat';
 import Sink from './sink';
-
+import Dump from './dump';
 import { enableScreens } from 'react-native-screens';
 enableScreens();
 
@@ -20,6 +20,11 @@ const Route = () => {
         <Stack.Screen
           name={'Chat'}
           component={Chat}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={'Dump'}
+          component={Dump}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

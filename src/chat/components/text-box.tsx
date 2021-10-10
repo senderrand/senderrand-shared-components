@@ -39,6 +39,22 @@ const TimeTxt = styled.Text`
   font-size: 8px;
 `;
 const Icon = styled.Text``;
+const Btn = styled.TouchableOpacity`
+  border-radius: 10px;
+  height: 30px;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  background-color: ${(props: any) =>
+    props.background ? props.background : Helper.getColor().chatBoxTwo};
+  margin: 10px 0;
+`;
+const BtnTxt = styled.Text`
+  color: #fff;
+  font-family: ${(props: any) =>
+    props.family && props.family.regular ? props.family.regular : 'Regular'};
+  font-size: 12px;
+`;
 
 export default (props: any) => {
   let scheme = useColorScheme();
@@ -96,6 +112,11 @@ export default (props: any) => {
         >
           {props.text}
         </MsgTxt>
+        {props.btnTitle ? (
+          <Btn onPress={props.btnPress && props.btnPress}>
+            <BtnTxt>{props.btnTitle}</BtnTxt>
+          </Btn>
+        ) : null}
         <TickTime>
           <TimeTxt family={props.fontFamily} sender={props.sender}>
             {typeof props.date === 'object'

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Helper from '../../config/helper';
+import Helper from '../../../config/helper';
 import React, { useEffect, useState } from 'react';
 import { MediaTypeOptions } from 'expo-image-picker';
 import ActionSheet from 'react-native-actionsheet';
@@ -9,7 +9,7 @@ import {
   Animated,
   ActivityIndicator,
 } from 'react-native';
-import { ReplyFoot } from './reply';
+import { ReplyFoot } from '../reply';
 
 const Wrap = styled.View``;
 const InputBox = styled.View`
@@ -86,6 +86,10 @@ export default (props: any) => {
     color: ${(prop: any) => (prop.color ? prop.color : '#fff')};
   `;
   const PlusIcon = styled(props.antDesign ? props.antDesign : Icon)`
+    color: ${(prop: any) => (prop.color ? prop.color : '#6A6A6A')};
+    font-size: 20px;
+  `;
+  const LocationIcon = styled(props.ionicons ? props.ionicons : Icon)`
     color: ${(prop: any) => (prop.color ? prop.color : '#6A6A6A')};
     font-size: 20px;
   `;
@@ -201,13 +205,20 @@ export default (props: any) => {
       >
         <PlusWrap>
           <SendBtn
-            onPress={() => sheet.show()}
+            onPress={loading || props.loading ? null : () => sheet.show()}
             background={Helper.getColor().background}
           >
-            <PlusIcon
-              name={'plus'}
-              color={scheme === 'dark' ? '#fff' : '#6A6A6A'}
-            />
+            {props.runner ? (
+              <LocationIcon
+                name={'md-location-outline'}
+                color={scheme === 'dark' ? '#fff' : '#6A6A6A'}
+              />
+            ) : (
+              <PlusIcon
+                name={'plus'}
+                color={scheme === 'dark' ? '#fff' : '#6A6A6A'}
+              />
+            )}
           </SendBtn>
         </PlusWrap>
         <TxtInputWrap background={Helper.getColor().plane} scheme={scheme}>
@@ -228,7 +239,9 @@ export default (props: any) => {
             }}
           />
           {props.runner && (
-            <PaperClipTouch onPress={() => sheet2.show()}>
+            <PaperClipTouch
+              onPress={loading || props.loading ? null : () => sheet2.show()}
+            >
               <Clip name={'paperclip'} />
             </PaperClipTouch>
           )}

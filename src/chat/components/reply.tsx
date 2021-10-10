@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import Helper from '../../config/helper';
+import helper from '../../config/helper';
 import { Dimensions, useColorScheme } from 'react-native';
 import { verticalScale, moderateScale } from 'react-native-size-matters';
-import helper from '../../config/helper';
 
 let width = Dimensions.get('window').width;
 const ReplyBox = styled.TouchableOpacity`

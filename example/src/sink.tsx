@@ -42,6 +42,9 @@ export default (props: any) => {
       <Touch onPress={() => setSuccess2(true)}>
         <Txt>Success Modal 2</Txt>
       </Touch>
+      <Touch onPress={() => props.navigation.navigate('Dump')}>
+        <Txt>Header/Loader/Invoice</Txt>
+      </Touch>
       <SuccessModal
         fontFamily={family}
         visible={success1}

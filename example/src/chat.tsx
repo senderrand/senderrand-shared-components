@@ -9,6 +9,15 @@ import {
   VoiceNote,
   VideoBox,
   ListAnimate,
+  FooterOptions,
+  LocationBox,
+  FleetFooter,
+  FleetBox,
+  StatusBox,
+  NewRunner,
+  InvoiceBox,
+  TrackBox,
+  SwipeUp,
   ImageBox, // @ts-ignore
 } from 'senderrand-shared-components';
 import {
@@ -16,6 +25,8 @@ import {
   MaterialCommunityIcons,
   Ionicons,
   AntDesign,
+  Fontisto,
+  Feather,
 } from '@expo/vector-icons';
 
 const pattern = require('../../assets/media/pattern.png');
@@ -46,7 +57,7 @@ export default () => {
   let list: any;
   let scheme = useColorScheme();
   let [reply, setReply] = useState(null);
-  let [messages, setMessages] = useState([...data]);
+  let [messages, setMessages] = useState([...data].reverse());
 
   let scrollToMsg = (msg: any) => {
     let msgIndex = null;
@@ -66,7 +77,7 @@ export default () => {
       date: new Date(),
       reply: reply,
     };
-    setMessages((state) => [...state, data]);
+    setMessages((state) => [data, ...state]);
     setReply(null);
   };
 
@@ -92,6 +103,7 @@ export default () => {
             sender={item.sender.id === 1}
             toReply={() => scrollToMsg(item.reply)}
             onSelectOption={() => {}}
+            btnTitle={item.data && item.data.btnTitle && item.data.btnTitle}
           />
         ) : item.type === 'audio' ? (
           <VoiceNote
@@ -123,6 +135,63 @@ export default () => {
             sender={item.sender.id === 1}
             onSelectOption={() => {}}
           />
+        ) : item.type === 'purchase_location' ||
+          item.type === 'delivery_location' ? (
+          <LocationBox
+            fontFamily={family}
+            ionicons={Ionicons}
+            entypo={Entypo}
+            fontisto={Fontisto}
+            status={item.status} // 0: not sent, 1: sent, 2: received, 3:read
+            text={item.data && item.data.address && item.data.address}
+            date={item.date}
+            sender={item.sender.id === 1}
+            onSelectOption={() => {}}
+            location_type={item.data && item.data.location_type}
+          />
+        ) : item.type === 'fleet' ? (
+          <FleetBox
+            date={item.date}
+            index={item.data && item.data.index && item.data.index}
+            sender={item.sender.id === 1}
+            onSelectOption={() => {}}
+          />
+        ) : item.type === 'status' ? (
+          <StatusBox
+            fontFamily={family}
+            text={item.text}
+            color={item.data && item.data.color && item.data.color}
+            loading={item.data && item.data.loading && item.data.loading}
+          />
+        ) : item.type === 'new_runner' ? (
+          <NewRunner
+            antDesign={AntDesign}
+            fontFamily={family}
+            text={'Runner YINKA joined the chat'}
+            name={'Runner Yinka'}
+            runs={'90+ Runs'}
+            rate={4}
+            image={
+              'https://media.istockphoto.com/photos/portrait-of-a-girl-picture-id938709362?s=612x612'
+            }
+          />
+        ) : item.type === 'invoice' ? (
+          <InvoiceBox
+            text={item.text}
+            date={item.date}
+            fontFamily={family}
+            invoiceID={item.data && item.data.id && item.data.id}
+            price={item.data && item.data.price ? `${item.data.price} AED` : ''}
+          />
+        ) : item.type === 'tracker' ? (
+          <TrackBox
+            feather={Feather}
+            text={item.text}
+            date={item.date}
+            fontFamily={family}
+            region={item.data && item.data.region && item.data.region}
+            position={item.data && item.data.position && item.data.position}
+          />
         ) : null}
       </BoxWrap>
     </ListAnimate>
@@ -140,13 +209,21 @@ export default () => {
         />
         <Avoid behavior={Platform.OS === 'android' ? 'height' : 'padding'}>
           <List
-            // inverted={-1}
+            inverted={-1}
             data={messages}
             renderItem={renderItem}
             keyExtractor={keyExtractor}
             ref={(ref: any) => (list = ref)}
             showsVerticalScrollIndicator={false}
             contentContainerStyle={others.listContainer}
+          />
+          <FooterOptions
+            fontFamily={family}
+            press={(index: number) => console.log(index)}
+            options={[
+              { id: 1, name: 'Purchase' },
+              { id: 2, name: 'Pick Up' },
+            ]}
           />
           <Footer
             send={send}
@@ -168,8 +245,10 @@ export default () => {
             onSelectOption={(index: number) => console.log(index)}
             onError={(message: string) => Alert.alert('Failed', message)}
           />
+          <FleetFooter />
         </Avoid>
       </Inner>
+      <SwipeUp />
     </Wrap>
   );
 };
@@ -229,5 +308,101 @@ let data = [
     },
     type: 'image',
     reply: null,
+  },
+  {
+    sender: { id: 1, name: 'The sender' },
+    id: 71,
+    status: 3,
+    date: new Date(),
+    text: '',
+    file: null,
+    type: 'purchase_location',
+    reply: null,
+    data: {
+      address: 'Deira International Market',
+      longitude: 20,
+      latitude: 20,
+      location_type: 'store',
+    },
+  },
+  {
+    sender: { id: 1, name: 'The sender' },
+    id: 73,
+    status: 3,
+    date: new Date(),
+    text: '',
+    file: null,
+    type: 'fleet',
+    reply: null,
+    data: { index: 3 },
+  },
+  {
+    sender: { id: 1, name: 'The sender' },
+    id: 74,
+    status: 3,
+    date: new Date(),
+    text: 'Please wait while we connect you to a  runner...',
+    file: null,
+    type: 'status',
+    reply: null,
+    data: { loading: true },
+  },
+  {
+    sender: { id: 1, name: 'The sender' },
+    id: 75,
+    status: 3,
+    date: new Date(),
+    text: 'Runner Joined chat',
+    file: null,
+    type: 'new_runner',
+    reply: null,
+    data: { loading: true },
+  },
+  {
+    sender: { id: 1, name: 'The sender' },
+    id: 74,
+    status: 3,
+    date: new Date(),
+    text: 'Yinka is 1 minute away from Location 1',
+    file: null,
+    type: 'status',
+    reply: null,
+    data: { loading: false, color: '#66CF4A' },
+  },
+  {
+    sender: { id: 2, name: 'The sender' },
+    id: 75,
+    status: 3,
+    date: new Date(),
+    text: 'Invoice',
+    file: null,
+    type: 'invoice',
+    reply: null,
+    data: { id: '#12345678', price: 500 },
+  },
+  {
+    sender: { id: 2, name: 'The sender' },
+    id: 75,
+    status: 3,
+    date: new Date(),
+    text: 'Track Runner',
+    file: null,
+    type: 'tracker',
+    reply: null,
+    data: {
+      region: { longitude: 55.3863, latitude: 25.1279 },
+      position: { longitude: 55.3775, latitude: 25.1218 },
+    },
+  },
+  {
+    sender: { id: 2, name: 'The sender' },
+    id: 76,
+    status: 3,
+    date: new Date(),
+    text: 'The sender has accepted the Invoice, Proceed to make payment.',
+    file: null,
+    type: 'text',
+    reply: null,
+    data: { btnTitle: 'PAY' },
   },
 ];

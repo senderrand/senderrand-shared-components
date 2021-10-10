@@ -1,10 +1,10 @@
 import { Audio } from 'expo-av';
 import styled from 'styled-components';
-import Helper from '../../config/helper';
+import Helper from '../../../config/helper';
 import * as FileSystem from 'expo-file-system';
 import { ActivityIndicator } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import helper from '../../config/helper';
+import helper from '../../../config/helper';
 
 const RecordWrap = styled.View`
   flex-direction: row;
