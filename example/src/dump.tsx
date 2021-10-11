@@ -37,7 +37,7 @@ export default (props: any) => {
       <Header2
         entypo={Entypo}
         title={'Earnings'}
-        fontFamily={family}
+        family={family}
         back={() => props.navigation.goBack()}
         options={['One', 'Two']}
         materialIcons={MaterialIcons}
@@ -52,7 +52,7 @@ export default (props: any) => {
       </Inner>
       <LoadingModal
         visible={loading}
-        fontFamily={family}
+        family={family}
         text={'Processing Payment..'}
         close={() => setLoading(false)}
       />

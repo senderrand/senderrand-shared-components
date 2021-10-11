@@ -96,7 +96,7 @@ export default () => {
       <BoxWrap sender={item.sender.id === 1}>
         {item.type === 'text' ? (
           <TextBox
-            fontFamily={family}
+            family={family}
             ionicons={Ionicons}
             reply={item.reply}
             status={item.status} // 0: not sent, 1: sent, 2: received, 3:read
@@ -140,7 +140,7 @@ export default () => {
         ) : item.type === 'purchase_location' ||
           item.type === 'delivery_location' ? (
           <LocationBox
-            fontFamily={family}
+            family={family}
             ionicons={Ionicons}
             entypo={Entypo}
             fontisto={Fontisto}
@@ -160,7 +160,7 @@ export default () => {
           />
         ) : item.type === 'status' ? (
           <StatusBox
-            fontFamily={family}
+            family={family}
             text={item.text}
             color={item.data && item.data.color && item.data.color}
             loading={item.data && item.data.loading && item.data.loading}
@@ -168,7 +168,7 @@ export default () => {
         ) : item.type === 'new_runner' ? (
           <NewRunner
             antDesign={AntDesign}
-            fontFamily={family}
+            family={family}
             text={'Runner YINKA joined the chat'}
             name={'Runner Yinka'}
             runs={'90+ Runs'}
@@ -181,7 +181,7 @@ export default () => {
           <InvoiceBox
             text={item.text}
             date={item.date}
-            fontFamily={family}
+            family={family}
             invoiceID={item.data && item.data.id && item.data.id}
             price={item.data && item.data.price ? `${item.data.price} AED` : ''}
           />
@@ -190,7 +190,7 @@ export default () => {
             feather={Feather}
             text={item.text}
             date={item.date}
-            fontFamily={family}
+            family={family}
             region={item.data && item.data.region && item.data.region}
             position={item.data && item.data.position && item.data.position}
           />
@@ -206,7 +206,7 @@ export default () => {
           entypo={Entypo}
           detail={'Typing..'}
           title={'SendErrand'}
-          fontFamily={family}
+          family={family}
           options={['Errand History', 'Saved Locations', 'Profile', 'FAQs']}
         />
         <Avoid behavior={Platform.OS === 'android' ? 'height' : 'padding'}>
@@ -221,7 +221,7 @@ export default () => {
             contentContainerStyle={others.listContainer}
           />
           <FooterOptions
-            fontFamily={family}
+            family={family}
             press={(index: number) => console.log(index)}
             options={[
               { id: 1, name: 'Purchase' },
@@ -231,7 +231,7 @@ export default () => {
           <Footer
             send={send}
             reply={reply}
-            fontFamily={family}
+            family={family}
             ionicons={Ionicons}
             antDesign={AntDesign}
             materialCommunityIcons={MaterialCommunityIcons}
@@ -241,7 +241,7 @@ export default () => {
           <Footer
             runner
             send={send}
-            fontFamily={family}
+            family={family}
             ionicons={Ionicons}
             antDesign={AntDesign}
             materialCommunityIcons={MaterialCommunityIcons}

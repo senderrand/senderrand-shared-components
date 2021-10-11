@@ -46,7 +46,7 @@ export default (props: any) => (
         color={props.color ? props.color : '#4299E8'}
       />
     ) : (
-      <Txt color={props.color} family={props.fontFamily}>
+      <Txt color={props.color} family={props.family && props.family}>
         {props.title}
       </Txt>
     )}

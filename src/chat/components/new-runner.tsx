@@ -46,16 +46,23 @@ const RateWrap = styled.View`
 export default (props: any) => {
   return (
     <Wrap>
-      <Txt1 color={Helper.getColor().primaryTxt}>
+      <Txt1
+        family={props.family && props.family}
+        color={Helper.getColor().primaryTxt}
+      >
         {props.text && props.text}
       </Txt1>
       <ImgWrap>
         <Img source={props.image && { uri: props.image }} />
       </ImgWrap>
-      <RunnerName>{props.name && props.name}</RunnerName>
+      <RunnerName family={props.family && props.family}>
+        {props.name && props.name}
+      </RunnerName>
       <RateWrap>
         <Star antDesign={props.antDesign} rate={props.rate} />
-        <Txt1>{props.runs && props.runs}</Txt1>
+        <Txt1 family={props.family && props.family}>
+          {props.runs && props.runs}
+        </Txt1>
       </RateWrap>
     </Wrap>
   );

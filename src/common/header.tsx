@@ -134,7 +134,9 @@ export default (props: any) => {
               </LeftBtn>
             ) : null}
           </LeftBox>
-          <CenterTitle>{props.title && props.title}</CenterTitle>
+          <CenterTitle family={props.family && props.family}>
+            {props.title && props.title}
+          </CenterTitle>
           <RightBox>
             {props.right
               ? props.right
@@ -165,6 +167,7 @@ export default (props: any) => {
               renderItem={({ item, index }: any) => (
                 <EachMenu onPress={() => menuSelect(index)}>
                   <MenuTxt
+                    family={props.family && props.family}
                     style={props.optionTxtStyle ? props.optionTxtStyle : {}}
                     color={scheme === 'dark' ? '#fff' : '#184859'}
                   >

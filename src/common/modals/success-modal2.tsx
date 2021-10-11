@@ -66,7 +66,7 @@ export default (props: any) => {
             align={'center'}
             viewMargin={[25, 0, 18, 0]}
             color={Helper.getColor().primaryTxt}
-            family={props.fontFamily && props.fontFamily.bold}
+            family={props.family && props.family.bold}
           >
             {props.text && props.text}
           </Txt>
@@ -74,7 +74,7 @@ export default (props: any) => {
             <Txt
               size={12}
               color={'#fff'}
-              family={props.fontFamily && props.fontFamily.regular}
+              family={props.family && props.family.regular}
             >
               {props.btnTitle && props.btnTitle}
             </Txt>

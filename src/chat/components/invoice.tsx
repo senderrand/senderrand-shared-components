@@ -75,13 +75,13 @@ export const InvoiceBox = (props: any) => {
           <TitleWrap>
             <Title
               color={Helper.getColor().primaryTxt}
-              family={props.fontFamily}
+              family={props.family && props.family}
             >
               {props.txt1 ? props.txt1 : 'Invoice'}
             </Title>
             <InvoiceID
               color={Helper.getColor().chatBoxTwo}
-              family={props.fontFamily}
+              family={props.family && props.family}
             >
               {props.invoiceID && props.invoiceID}
             </InvoiceID>
@@ -89,25 +89,25 @@ export const InvoiceBox = (props: any) => {
           <TotalWrap>
             <InvoiceID
               color={Helper.getColor().chatBoxTwo}
-              family={props.fontFamily}
+              family={props.family && props.family}
             >
               {props.txt2 ? props.txt2 : 'Grand Total:'}
             </InvoiceID>
             <TotalTxt
               color={Helper.getColor().primaryTxt}
-              family={props.fontFamily}
+              family={props.family && props.family}
             >
               {props.price && props.price}
             </TotalTxt>
           </TotalWrap>
         </Box1>
         <Box2>
-          <Box2Text family={props.fontFamily} color={'#fff'}>
+          <Box2Text family={props.family && props.family} color={'#fff'}>
             {props.txt3 ? props.txt3 : 'View Invoice'}
           </Box2Text>
         </Box2>
       </Box>
-      <TimeTxt>
+      <TimeTxt family={props.family && props.family}>
         {typeof props.date === 'object'
           ? Helper.getDate(props.date)
           : props.date}

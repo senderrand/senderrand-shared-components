@@ -46,7 +46,7 @@ export default (props: any) => {
         <Txt>Header/Loader/Invoice</Txt>
       </Touch>
       <SuccessModal
-        fontFamily={family}
+        family={family}
         visible={success1}
         title={'Congratulations'}
         close={() => setSuccess1(false)}
@@ -58,7 +58,7 @@ export default (props: any) => {
       />
       <SuccessModal2
         entypo={Entypo}
-        fontFamily={family}
+        family={family}
         visible={success2}
         text={'Verified Successfully'}
         press={() => setSuccess2(false)}

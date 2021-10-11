@@ -190,11 +190,17 @@ export default (props: any) => {
             trackStyle={others.trackStyle}
           />
           <SliderBottom>
-            <TimeTxt family={props.fontFamily} sender={props.sender}>
+            <TimeTxt
+              family={props.family && props.family}
+              sender={props.sender}
+            >
               {Helper.millisToTime(playing ? position : duration)}
             </TimeTxt>
             <TickTime2>
-              <TimeTxt family={props.fontFamily} sender={props.sender}>
+              <TimeTxt
+                family={props.family && props.family}
+                sender={props.sender}
+              >
                 {typeof props.date === 'object'
                   ? Helper.getDate(props.date)
                   : props.date}

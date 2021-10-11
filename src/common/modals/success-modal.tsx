@@ -53,7 +53,7 @@ export default (props: any) => {
         </View>
         <Txt
           size={30}
-          family={props.fontFamily && props.fontFamily.bold}
+          family={props.family && props.family.bold}
           color={'#fff'}
           viewMargin={[39, 0, 17, 0]}
           align={'center'}
@@ -61,7 +61,7 @@ export default (props: any) => {
           {props.title && props.title}
         </Txt>
         <Txt
-          family={props.fontFamily && props.fontFamily.regular}
+          family={props.family && props.family.regular}
           size={18}
           color={'#fff'}
           viewMargin={[0, 0, 40, 0]}
@@ -70,7 +70,7 @@ export default (props: any) => {
           {props.content && props.content}
         </Txt>
         <Button
-          fontFamil={props.fontFamily}
+          family={props.family && props.family}
           background={'#fff'}
           press={props.close && props.close}
           color={Helper.getColor().primary}

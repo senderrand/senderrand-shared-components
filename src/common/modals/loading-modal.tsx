@@ -58,7 +58,7 @@ export default (props: any) => {
             align={'center'}
             viewMargin={[25, 0, 0, 0]}
             color={Helper.getColor().primaryTxt}
-            family={props.fontFamily && props.fontFamily.bold}
+            family={props.family && props.family.bold}
           >
             {props.text && props.text}
           </Txt>

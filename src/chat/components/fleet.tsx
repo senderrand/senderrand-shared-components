@@ -132,7 +132,7 @@ export const FleetBox = (props: any) => {
           index !== options.length - 1 && selectOption(index)
         }
       />
-      <TimeTxt>
+      <TimeTxt family={props.family && props.family}>
         {typeof props.date === 'object'
           ? Helper.getDate(props.date)
           : props.date}

@@ -126,7 +126,7 @@ export default (props: any) => {
             <ImgBox source={props.image ? { uri: props.image } : blue} />
             <TxtBox>
               <Title
-                family={props.fontFamily && props.fontFamily}
+                family={props.family && props.family}
                 color={Helper.getColor().primaryTxt}
                 style={props.titleStyle ? props.titleStyle : {}}
               >
@@ -134,6 +134,7 @@ export default (props: any) => {
               </Title>
               {props.detail && (
                 <Detail
+                  family={props.family && props.family}
                   color={Helper.getColor().secondaryTxt}
                   style={props.detailStyle ? props.detailStyle : {}}
                 >
@@ -166,6 +167,7 @@ export default (props: any) => {
               renderItem={({ item, index }: any) => (
                 <EachMenu onPress={() => menuSelect(index)}>
                   <MenuTxt
+                    family={props.family && props.family}
                     style={props.optionTxtStyle ? props.optionTxtStyle : {}}
                     color={scheme === 'dark' ? '#fff' : '#184859'}
                   >

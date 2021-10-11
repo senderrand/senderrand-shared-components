@@ -77,13 +77,13 @@ export default (props: any) => {
             </Map>
           ) : null}
           <Box2>
-            <Box2Text family={props.fontFamily} color={'#fff'}>
+            <Box2Text family={props.family && props.family} color={'#fff'}>
               {props.text ? props.text : 'Track Delivery'}
             </Box2Text>
           </Box2>
         </Box1>
       </Box>
-      <TimeTxt>
+      <TimeTxt family={props.family && props.family}>
         {typeof props.date === 'object'
           ? Helper.getDate(props.date)
           : props.date}

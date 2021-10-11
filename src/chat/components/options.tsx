@@ -41,7 +41,7 @@ export const FooterOptions = (props: any) => (
             blue={index === 0}
             onPress={() => props.press && props.press(index)}
           >
-            <BtnTxt family={props.fontFamily} blue={index === 0}>
+            <BtnTxt family={props.family && props.family} blue={index === 0}>
               {item.name && item.name}
             </BtnTxt>
           </Btn>
@@ -106,7 +106,7 @@ export const StatusBox = (props: any) => (
   <StatWrap>
     {props.loading && <Activity color={'#3BAFDA'} />}
     <StatTxt
-      family={props.fontFamily}
+      family={props.family && props.family}
       loading={props.loading}
       color={props.color}
     >

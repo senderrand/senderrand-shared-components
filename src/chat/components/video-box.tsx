@@ -70,7 +70,7 @@ export default (props: any) => {
           }}
         />
         <TickTime>
-          <TimeTxt family={props.fontFamily} sender={props.sender}>
+          <TimeTxt family={props.family && props.family} sender={props.sender}>
             {typeof props.date === 'object'
               ? Helper.getDate(props.date)
               : props.date}

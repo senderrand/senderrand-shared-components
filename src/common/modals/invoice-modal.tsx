@@ -185,7 +185,7 @@ export default (props: any) => {
                   ]}
                 >
                   <TotalItem
-                    family={props.family}
+                    family={props.family && props.family}
                     discount={item.discount && item.discount}
                     title={item.title ? item.title : 'Title'}
                     price={item.value ? item.value : 'Value'}
@@ -195,7 +195,7 @@ export default (props: any) => {
           </InvoiceWrap>
           <InvoiceWrap>
             <GrandTotal
-              family={props.family}
+              family={props.family && props.family}
               grandTotal={props.grandTotal && props.grandTotal}
               grandTotalTxt={props.grandTotalTxt && props.grandTotalTxt}
             />
@@ -203,7 +203,7 @@ export default (props: any) => {
           <InvoiceWrap borderless>
             {props.press ? (
               <CTA
-                family={props.family}
+                family={props.family && props.family}
                 press={props.press}
                 acceptTxt={props.acceptTxt && props.acceptTxt}
                 declineTxt={props.declineTxt && props.declineTxt}
@@ -365,12 +365,12 @@ let GrandTotal = (props: any) => (
 let CTA = (props: any) => (
   <View direction={'row'} align={'center'} justify={'space-between'}>
     <Btn blue onPress={() => props.press && props.press(1)}>
-      <BtnTxt family={props.family} blue>
+      <BtnTxt family={props.family && props.family} blue>
         {props.acceptTxt ? props.acceptTxt : 'Accept'}
       </BtnTxt>
     </Btn>
     <Btn onPress={() => props.press && props.press(2)}>
-      <BtnTxt family={props.family}>
+      <BtnTxt family={props.family && props.family}>
         {props.declineTxt ? props.declineTxt : 'Decline'}
       </BtnTxt>
     </Btn>

@@ -107,18 +107,20 @@ export default (props: any) => {
           space={bottomSpace}
           sender={props.sender}
           onTextLayout={txtLayout}
-          family={props.fontFamily}
+          family={props.family && props.family}
           color={props.sender ? '#fff' : Helper.getColor().primaryTxt}
         >
           {props.text}
         </MsgTxt>
         {props.btnTitle ? (
           <Btn onPress={props.btnPress && props.btnPress}>
-            <BtnTxt>{props.btnTitle}</BtnTxt>
+            <BtnTxt family={props.family && props.family}>
+              {props.btnTitle}
+            </BtnTxt>
           </Btn>
         ) : null}
         <TickTime>
-          <TimeTxt family={props.fontFamily} sender={props.sender}>
+          <TimeTxt family={props.family && props.family} sender={props.sender}>
             {typeof props.date === 'object'
               ? Helper.getDate(props.date)
               : props.date}

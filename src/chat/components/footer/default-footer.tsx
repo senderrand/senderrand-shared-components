@@ -226,7 +226,7 @@ export default (props: any) => {
             value={text}
             space={text === ''}
             runner={props.runner}
-            family={props.fontFamily}
+            family={props.family && props.family}
             ref={(ref: any) => (inputRef = ref)}
             color={Helper.getColor().primaryTxt}
             underlineColorAndroid={'transparent'}

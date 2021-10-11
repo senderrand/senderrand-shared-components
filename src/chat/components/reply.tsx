@@ -64,7 +64,10 @@ export default (props: any) => {
           onPress={props.toReply && props.toReply}
         >
           <TxtReply>
-            <TitleReply family={props.family} sender={props.sender}>
+            <TitleReply
+              family={props.family && props.family}
+              sender={props.sender}
+            >
               {props.reply.sender && props.reply.sender.name
                 ? props.reply.sender.name
                 : ''}
@@ -78,7 +81,7 @@ export default (props: any) => {
                   />
                 </WrapIcon>
                 <ReplyMsg2
-                  family={props.family}
+                  family={props.family && props.family}
                   sender={props.sender}
                   color={props.sender ? '#fff' : helper.getColor().primaryTxt}
                 >
@@ -86,7 +89,10 @@ export default (props: any) => {
                 </ReplyMsg2>
               </AudioIconWrap>
             ) : (
-              <ReplyMsg family={props.family} sender={props.sender}>
+              <ReplyMsg
+                family={props.family && props.family}
+                sender={props.sender}
+              >
                 {props.reply.text}
               </ReplyMsg>
             )}
@@ -98,12 +104,18 @@ export default (props: any) => {
           onPress={props.toReply && props.toReply}
         >
           <TxtReply>
-            <ImgTitle family={props.family} sender={props.sender}>
+            <ImgTitle
+              family={props.family && props.family}
+              sender={props.sender}
+            >
               {props.reply.sender && props.reply.sender.name
                 ? props.reply.sender.name
                 : ''}
             </ImgTitle>
-            <ReplyMsg family={props.family} sender={props.sender}>
+            <ReplyMsg
+              family={props.family && props.family}
+              sender={props.sender}
+            >
               📷 Photo
             </ReplyMsg>
           </TxtReply>
@@ -186,18 +198,24 @@ export const ReplyFoot = (props: any) => {
     <ReplyWrap background={Helper.getColor().plane} scheme={scheme}>
       {props.reply.type === 'image' ? (
         <TxtReply2 media={props.reply.type !== 'text'}>
-          <ImgTitle2 family={props.family} sender={props.sender}>
+          <ImgTitle2
+            family={props.family && props.family}
+            sender={props.sender}
+          >
             {props.reply.sender && props.reply.sender.name
               ? props.reply.sender.name
               : ''}
           </ImgTitle2>
-          <ReplyMsg2 family={props.family}>📷 Photo</ReplyMsg2>
+          <ReplyMsg2 family={props.family && props.family}>📷 Photo</ReplyMsg2>
         </TxtReply2>
       ) : (
         <TxtReply2
           media={props.reply.type !== 'text' && props.reply.type !== 'audio'}
         >
-          <TitleReply2 sender={props.sender}>
+          <TitleReply2
+            sender={props.sender}
+            family={props.family && props.family}
+          >
             {props.reply.sender && props.reply.sender.name
               ? props.reply.sender.name
               : ''}
@@ -212,7 +230,7 @@ export const ReplyFoot = (props: any) => {
               </WrapIcon>
               <ReplyMsg2
                 color={Helper.getColor().primaryTxt}
-                family={props.family}
+                family={props.family && props.family}
                 ellipsizeMode={'tail'}
                 numberOfLines={1}
               >
@@ -223,7 +241,7 @@ export const ReplyFoot = (props: any) => {
           ) : (
             <ReplyMsg2
               color={Helper.getColor().primaryTxt}
-              family={props.family}
+              family={props.family && props.family}
               ellipsizeMode={'tail'}
               numberOfLines={1}
             >

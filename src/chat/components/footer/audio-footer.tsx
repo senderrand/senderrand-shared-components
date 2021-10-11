@@ -157,12 +157,12 @@ export default (props: any) => {
     <RecordWrap>
       <MicBox>
         <AudioIcon name={'mic-outline'} color={helper.getColor().primaryTxt} />
-        <DurationTxt family={props.fontFamily}>
+        <DurationTxt family={props.family && props.family}>
           {Helper.millisToTime(duration)}
         </DurationTxt>
       </MicBox>
       <CancelAudio onPress={() => onStopRecord('cancel')}>
-        <CancelAudioTxt family={props.fontFamily}>
+        <CancelAudioTxt family={props.family && props.family}>
           {props.cancelTxt ? props.cancelTxt : 'Cancel'}
         </CancelAudioTxt>
       </CancelAudio>
