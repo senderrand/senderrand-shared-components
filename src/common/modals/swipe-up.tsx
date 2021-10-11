@@ -61,24 +61,28 @@ export default (props: any) => {
       PanResponder.create({
         onStartShouldSetPanResponder: (_evt, _gestureState) => true,
         onPanResponderMove: (_evt, gestureState) => {
-          let val = screenHeight - gestureState.moveY;
-          if (val < 200) {
-            props.close && props.close();
-            props.close &&
-              setHeight(
-                props.containerHeight ? props.containerHeight : modalHeight
-              );
-          } else {
-            setHeight(val);
-            LayoutAnimation.spring();
+          if (!props.disableSwipe) {
+            let val = screenHeight - gestureState.moveY;
+            if (val < 200) {
+              props.close && props.close();
+              props.close &&
+                setHeight(
+                  props.containerHeight ? props.containerHeight : modalHeight
+                );
+            } else {
+              setHeight(val);
+              LayoutAnimation.spring();
+            }
           }
         },
         onPanResponderRelease: (_event, _gestureState) => {
-          if (props.swipeable && height < 200) {
-            props.close && props.close();
-            setHeight(
-              props.containerHeight ? props.containerHeight : modalHeight
-            );
+          if (!props.disableSwipe) {
+            if (props.swipeable && height < 200) {
+              props.close && props.close();
+              setHeight(
+                props.containerHeight ? props.containerHeight : modalHeight
+              );
+            }
           }
         },
       }),
@@ -89,7 +93,7 @@ export default (props: any) => {
     <Content
       {...panResponder.panHandlers}
       style={props.containerStyle ? props.containerStyle : {}}
-      newHeight={height + keyboard}
+      newHeight={props.avoid ? height + keyboard : height}
     >
       {props.children && props.children}
     </Content>

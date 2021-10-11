@@ -23,6 +23,7 @@ import Header2 from './common/header';
 import LoadingModal from './common/modals/loading-modal';
 import InvoiceModal from './common/modals/invoice-modal';
 import ReasonSwipe from './chat/components/footer/reason-swipe';
+import LocationSwipe from './chat/components/footer/locations-swipe';
 import {
   WebView,
   WebViewProps,
@@ -59,6 +60,7 @@ export {
   LoadingModal,
   InvoiceModal,
   ReasonSwipe,
+  LocationSwipe,
   // WebView Components
   WebView,
   WebViewProps,

@@ -95,6 +95,7 @@ const Footer = (props: any) => {
 let keyExtractor = (_item: any, index: number) => index.toString();
 export default (props: any) => (
   <SwipeUp
+    avoid
     containerStyle={containerStyle}
     containerHeight={
       props.data && props.data.length ? props.data.length * 50 + 100 : 200

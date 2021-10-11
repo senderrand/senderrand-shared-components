@@ -18,6 +18,7 @@ import {
   InvoiceBox,
   TrackBox,
   ReasonSwipe,
+  LocationSwipe,
   ImageBox, // @ts-ignore
 } from 'senderrand-shared-components';
 import {
@@ -26,7 +27,8 @@ import {
   Ionicons,
   AntDesign,
   Fontisto,
-  Feather, FontAwesome5,
+  Feather,
+  MaterialIcons,
 } from '@expo/vector-icons';
 
 const pattern = require('../../assets/media/pattern.png');
@@ -257,6 +259,14 @@ export default () => {
         onSend={(item) => console.log(item)}
         onSelect={(item) => console.log(item)}
       />
+      <LocationSwipe
+        family={family}
+        data={locations}
+        ionicons={Ionicons}
+        materialIcons={MaterialIcons}
+        change={(val) => console.log(val)}
+        onSelect={(item) => console.log(item)}
+      />
     </Wrap>
   );
 };
@@ -420,4 +430,53 @@ let reasons = [
   { reason: 'Wrong pickup location' },
   { reason: 'I don’t need the service anymore' },
   { reason: 'Have to attend to an Emergency' },
+];
+
+let locations = [
+  {
+    distance: '1.3km',
+    timing: 'Deira',
+    address: 'Dubai Deira International Market',
+  },
+  {
+    distance: '400m',
+    timing: '10am - 10:30pm',
+    status: 1,
+    address: 'Auto Pro, Silicon Oasis, Dubai',
+  },
+  {
+    distance: '2km',
+    timing: '10am - 2:30pm',
+    status: 2,
+    address: 'Zoom Enoc, Silicon Oasis, Dubai',
+  },
+  {
+    distance: '2km',
+    timing: '10am - 2:30pm',
+    status: 3,
+    address: 'Kana, Dubai digital park, Dubai Silicon Oasis',
+  },
+  {
+    distance: '1.3km',
+    timing: 'Deira',
+    address: 'Dubai Deira International Market',
+  },
+  {
+    distance: '400m',
+    timing: '10am - 10:30pm',
+    status: 1,
+    address: 'Auto Pro, Silicon Oasis, Dubai',
+  },
+  {
+    distance: '2km',
+    timing: '10am - 2:30pm',
+    status: 2,
+    address: 'Zoom Enoc, Silicon Oasis, Dubai',
+  },
+  {
+    distance: '2km',
+    timing: '10am - 2:30pm',
+    status: 3,
+    address: 'Kana, Dubai digital park, Dubai Silicon Oasis',
+  },
 ];
