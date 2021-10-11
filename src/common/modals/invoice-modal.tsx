@@ -1,13 +1,25 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, Txt } from '../styles';
 import styled from 'styled-components';
 import Helper from '../../config/helper';
 import ZigzagLines from 'react-native-zigzag-lines';
-import { useColorScheme, Dimensions } from 'react-native';
+import {
+  useColorScheme,
+  Dimensions,
+  Animated,
+  PanResponder,
+} from 'react-native';
 
 let zagWidth = (80 / 100) * Dimensions.get('window').width;
 const Modal = styled.Modal``;
-const Inner = styled.View`
+const WrapTouch = styled.TouchableOpacity`
+  flex: 1;
+  background-color: rgba(0, 0, 0, 0.17);
+  padding: 10px 0;
+  align-items: center;
+  justify-content: center;
+`;
+const Inner = styled(Animated.View)`
   width: 80%;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
@@ -64,6 +76,17 @@ const BtnTxt = styled.Text`
 
 export default (props: any) => {
   let scheme = useColorScheme();
+
+  let dummyPanHandler = useMemo(
+    () =>
+      PanResponder.create({
+        onStartShouldSetPanResponder: (_evt: any, _gestureState: any) => true,
+        onPanResponderMove: (_evt: any, _gestureState: any) => {},
+        onPanResponderRelease: (_event: any, _gestureState: any) => {},
+      }),
+    []
+  );
+
   return (
     <Modal
       transparent={'true'}
@@ -71,15 +94,12 @@ export default (props: any) => {
       animationType={'slide'}
       onRequestClose={() => {}}
     >
-      <View
-        flex={1}
+      <WrapTouch
         scheme={scheme}
-        align={'center'}
-        justify={'center'}
-        pad={[10, 0, 10, 0]}
-        background={'rgba(0, 0, 0, 0.17)'}
+        activeOpacity={1.0}
+        onPress={props.close && props.close}
       >
-        <Inner>
+        <Inner {...dummyPanHandler.panHandlers}>
           <Txt
             size={15}
             align={'center'}
@@ -197,7 +217,7 @@ export default (props: any) => {
             color={Helper.getColor().plane}
           />
         </Inner>
-      </View>
+      </WrapTouch>
     </Modal>
   );
 };

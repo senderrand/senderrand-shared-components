@@ -5,6 +5,7 @@ import {
   Dimensions,
   LayoutAnimation,
   PanResponder,
+  Keyboard,
 } from 'react-native';
 import Helper from '../../config/helper';
 
@@ -31,6 +32,24 @@ export default (props: any) => {
   let [height, setHeight] = useState(
     props.containerHeight ? props.containerHeight : modalHeight
   );
+  const [keyboard, setKeyboard] = useState(0);
+
+  useEffect(() => {
+    Keyboard.addListener('keyboardWillShow', (e: any) => {
+      setKeyboard(e.endCoordinates.height);
+      LayoutAnimation.linear();
+    });
+    Keyboard.addListener('keyboardWillHide', () => setKeyboard(0));
+
+    return () => {
+      Keyboard.removeListener('keyboardWillShow', (e: any) => {
+        setKeyboard(e.endCoordinates.height);
+        LayoutAnimation.linear();
+      });
+      Keyboard.addListener('keyboardWillHide', () => setKeyboard(0));
+    };
+  }, []);
+
   useEffect(
     () =>
       setHeight(props.containerHeight ? props.containerHeight : modalHeight),
@@ -70,7 +89,7 @@ export default (props: any) => {
     <Content
       {...panResponder.panHandlers}
       style={props.containerStyle ? props.containerStyle : {}}
-      newHeight={height}
+      newHeight={height + keyboard}
     >
       {props.children && props.children}
     </Content>

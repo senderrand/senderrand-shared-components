@@ -1,14 +1,41 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import Helper from '../../config/helper';
-import { View, Txt } from '../styles';
+import { Txt } from '../styles';
 import Image from 'react-native-remote-svg';
-import { useColorScheme } from 'react-native';
+import { Animated, PanResponder, useColorScheme } from 'react-native';
 
 const Modal = styled.Modal``;
+const WrapTouch = styled.TouchableOpacity`
+  flex: 1;
+  background-color: rgba(0, 0, 0, 0.17);
+  padding: 10px 0;
+  align-items: center;
+  justify-content: center;
+`;
+const Inner = styled(Animated.View)`
+  width: 70%;
+  height: 327.92px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16.6879px;
+  background-color: ${(props: any) =>
+    props.background ? props.background : Helper.getColor().plane};
+`;
 
 export default (props: any) => {
   let scheme = useColorScheme();
+
+  let dummyPanHandler = useMemo(
+    () =>
+      PanResponder.create({
+        onStartShouldSetPanResponder: (_evt: any, _gestureState: any) => true,
+        onPanResponderMove: (_evt: any, _gestureState: any) => {},
+        onPanResponderRelease: (_event: any, _gestureState: any) => {},
+      }),
+    []
+  );
+
   return (
     <Modal
       transparent={'true'}
@@ -16,19 +43,13 @@ export default (props: any) => {
       animationType={'slide'}
       onRequestClose={() => {}}
     >
-      <View
-        flex={1}
+      <WrapTouch
         scheme={scheme}
-        align={'center'}
-        justify={'center'}
-        background={'rgba(0, 0, 0, 0.17)'}
+        activeOpacity={1.0}
+        onPress={props.close && props.close}
       >
-        <View
-          height={327.92}
-          align={'center'}
-          justify={'center'}
-          width={'70%'}
-          radius={16.6879}
+        <Inner
+          {...dummyPanHandler.panHandlers}
           background={Helper.getColor().plane}
         >
           <Image source={require('../../../assets/media/Spinner.svg')} />
@@ -41,8 +62,8 @@ export default (props: any) => {
           >
             {props.text && props.text}
           </Txt>
-        </View>
-      </View>
+        </Inner>
+      </WrapTouch>
     </Modal>
   );
 };

@@ -55,7 +55,6 @@ const Map = styled(MapView)`
 `;
 
 export default (props: any) => {
-
   return (
     <Wrap>
       <Box onPress={props.press && props.press}>

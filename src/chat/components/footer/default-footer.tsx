@@ -260,7 +260,7 @@ export default (props: any) => {
                 ? () => props.changeType('audio')
                 : null
             }
-            background={text === '' ? '#FD5710' : Helper.getColor().primary}
+            background={text === '' ? '#FD5710' : Helper.getColor().chatBoxTwo}
           >
             {loading || props.loading ? (
               <ActivityIndicator size={'small'} color={'#fff'} />

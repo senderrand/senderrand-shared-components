@@ -22,6 +22,7 @@ import SwipeUp from './common/modals/swipe-up';
 import Header2 from './common/header';
 import LoadingModal from './common/modals/loading-modal';
 import InvoiceModal from './common/modals/invoice-modal';
+import ReasonSwipe from './chat/components/footer/reason-swipe';
 import {
   WebView,
   WebViewProps,
@@ -57,6 +58,7 @@ export {
   Header2,
   LoadingModal,
   InvoiceModal,
+  ReasonSwipe,
   // WebView Components
   WebView,
   WebViewProps,

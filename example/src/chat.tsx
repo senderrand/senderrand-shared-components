@@ -17,7 +17,7 @@ import {
   NewRunner,
   InvoiceBox,
   TrackBox,
-  SwipeUp,
+  ReasonSwipe,
   ImageBox, // @ts-ignore
 } from 'senderrand-shared-components';
 import {
@@ -26,7 +26,7 @@ import {
   Ionicons,
   AntDesign,
   Fontisto,
-  Feather,
+  Feather, FontAwesome5,
 } from '@expo/vector-icons';
 
 const pattern = require('../../assets/media/pattern.png');
@@ -214,6 +214,7 @@ export default () => {
             renderItem={renderItem}
             keyExtractor={keyExtractor}
             ref={(ref: any) => (list = ref)}
+            keyboardDismissMode={'on-drag'}
             showsVerticalScrollIndicator={false}
             contentContainerStyle={others.listContainer}
           />
@@ -248,7 +249,14 @@ export default () => {
           <FleetFooter />
         </Avoid>
       </Inner>
-      <SwipeUp />
+      <ReasonSwipe
+        ionicons={Ionicons}
+        family={family}
+        data={reasons}
+        textKey={'reason'}
+        onSend={(item) => console.log(item)}
+        onSelect={(item) => console.log(item)}
+      />
     </Wrap>
   );
 };
@@ -405,4 +413,11 @@ let data = [
     reply: null,
     data: { btnTitle: 'PAY' },
   },
+];
+
+let reasons = [
+  { reason: 'Runner took too long to respond' },
+  { reason: 'Wrong pickup location' },
+  { reason: 'I don’t need the service anymore' },
+  { reason: 'Have to attend to an Emergency' },
 ];
