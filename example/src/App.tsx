@@ -17,7 +17,6 @@ export default function App() {
       require('../../assets/media/recieved.wav'),
     ]);
     await Font.loadAsync({
-      Ionicons: require('@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/Ionicons.ttf'),
       ExtraLight: require('../../assets/font/Niramit/Niramit-ExtraLight.ttf'),
       Light: require('../../assets/font/Niramit/Niramit-Light.ttf'),
       Regular: require('../../assets/font/Niramit/Niramit-Regular.ttf'),

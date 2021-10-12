@@ -73,6 +73,7 @@ const Footer = (props: any) => {
   `;
 
   let [value, setValue] = useState('');
+  let [lang] = useState(props.lang ? props.lang : 'en');
 
   return (
     <FootWrap>
@@ -80,7 +81,7 @@ const Footer = (props: any) => {
         family={props.family && props.family}
         color={Helper.getColor().secondaryTxt}
       >
-        {props.othersTxt ? props.othersTxt : 'Others:'}
+        {props.othersTxt ? props.othersTxt : Helper.t('others_colon', lang)}
       </OthersTxt>
       <InputWrap>
         <Input value={value} onChangeText={(val: string) => setValue(val)} />
@@ -96,6 +97,7 @@ let keyExtractor = (_item: any, index: number) => index.toString();
 export default (props: any) => (
   <SwipeUp
     avoid
+    lang={props.lang && props.lang}
     containerStyle={containerStyle}
     containerHeight={
       props.data && props.data.length ? props.data.length * 50 + 100 : 200
@@ -111,12 +113,14 @@ export default (props: any) => (
           press={() => {
             props.onSelect && props.onSelect(item);
           }}
+          lang={props.lang && props.lang}
           text={item[props.textKey] ? item[props.textKey] : ''}
           family={props.family && props.family}
         />
       )}
       ListFooterComponent={
         <Footer
+          lang={props.lang && props.lang}
           send={props.onSend && props.onSend}
           family={props.family && props.family}
           ionicons={props.ionicons && props.ionicons}

@@ -96,6 +96,7 @@ export default () => {
       <BoxWrap sender={item.sender.id === 1}>
         {item.type === 'text' ? (
           <TextBox
+            lang={'en'}
             family={family}
             ionicons={Ionicons}
             reply={item.reply}
@@ -109,6 +110,7 @@ export default () => {
           />
         ) : item.type === 'audio' ? (
           <VoiceNote
+            lang={'en'}
             image={null}
             entypo={Entypo}
             ionicons={Ionicons}
@@ -120,6 +122,7 @@ export default () => {
           />
         ) : item.type === 'image' ? (
           <ImageBox
+            lang={'en'}
             ionicons={Ionicons}
             status={item.status}
             date={item.date}
@@ -130,6 +133,7 @@ export default () => {
           />
         ) : item.type === 'video' ? (
           <VideoBox
+            lang={'en'}
             ionicons={Ionicons}
             status={item.status}
             date={item.date}
@@ -140,10 +144,11 @@ export default () => {
         ) : item.type === 'purchase_location' ||
           item.type === 'delivery_location' ? (
           <LocationBox
+            lang={'en'}
             family={family}
             ionicons={Ionicons}
             entypo={Entypo}
-            fontisto={Fontisto}
+            materialIcons={MaterialIcons}
             status={item.status} // 0: not sent, 1: sent, 2: received, 3:read
             text={item.data && item.data.address && item.data.address}
             date={item.date}
@@ -153,6 +158,7 @@ export default () => {
           />
         ) : item.type === 'fleet' ? (
           <FleetBox
+            lang={'en'}
             date={item.date}
             index={item.data && item.data.index && item.data.index}
             sender={item.sender.id === 1}
@@ -160,6 +166,7 @@ export default () => {
           />
         ) : item.type === 'status' ? (
           <StatusBox
+            lang={'en'}
             family={family}
             text={item.text}
             color={item.data && item.data.color && item.data.color}
@@ -167,6 +174,7 @@ export default () => {
           />
         ) : item.type === 'new_runner' ? (
           <NewRunner
+            lang={'en'}
             antDesign={AntDesign}
             family={family}
             text={'Runner YINKA joined the chat'}
@@ -179,6 +187,7 @@ export default () => {
           />
         ) : item.type === 'invoice' ? (
           <InvoiceBox
+            lang={'en'}
             text={item.text}
             date={item.date}
             family={family}
@@ -187,6 +196,7 @@ export default () => {
           />
         ) : item.type === 'tracker' ? (
           <TrackBox
+            lang={'en'}
             feather={Feather}
             text={item.text}
             date={item.date}
@@ -203,6 +213,7 @@ export default () => {
     <Wrap scheme={scheme}>
       <Inner source={pattern}>
         <Header
+          lang={'en'}
           entypo={Entypo}
           detail={'Typing..'}
           title={'SendErrand'}
@@ -221,6 +232,7 @@ export default () => {
             contentContainerStyle={others.listContainer}
           />
           <FooterOptions
+            lang={'en'}
             family={family}
             press={(index: number) => console.log(index)}
             options={[
@@ -229,6 +241,7 @@ export default () => {
             ]}
           />
           <Footer
+            lang={'en'}
             send={send}
             reply={reply}
             family={family}
@@ -239,6 +252,7 @@ export default () => {
             onError={(message: string) => Alert.alert('Failed', message)}
           />
           <Footer
+            lang={'en'}
             runner
             send={send}
             family={family}
@@ -252,6 +266,7 @@ export default () => {
         </Avoid>
       </Inner>
       <ReasonSwipe
+        lang={'en'}
         ionicons={Ionicons}
         family={family}
         data={reasons}
@@ -260,6 +275,7 @@ export default () => {
         onSelect={(item) => console.log(item)}
       />
       <LocationSwipe
+        lang={'en'}
         family={family}
         data={locations}
         ionicons={Ionicons}

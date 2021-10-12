@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Helper from '../../config/helper';
 import MapView, { Marker } from 'react-native-maps';
@@ -55,6 +55,7 @@ const Map = styled(MapView)`
 `;
 
 export default (props: any) => {
+  let [lang] = useState(props.lang ? props.lang : 'en');
   return (
     <Wrap>
       <Box onPress={props.press && props.press}>
@@ -78,7 +79,7 @@ export default (props: any) => {
           ) : null}
           <Box2>
             <Box2Text family={props.family && props.family} color={'#fff'}>
-              {props.text ? props.text : 'Track Delivery'}
+              {props.text ? props.text : Helper.t('track_delivery', lang)}
             </Box2Text>
           </Box2>
         </Box1>

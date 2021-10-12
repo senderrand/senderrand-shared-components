@@ -87,19 +87,25 @@ const EachItem = (props: any) => {
     font-size: 18px;
   `;
 
+  let [lang] = useState(props.lang ? props.lang : 'en');
+
   return (
     <ItemWrap
       onPress={props.press && props.press}
       borderless={props.borderless}
     >
       <LeftItem>
-        <Address numberOfLines={1} ellipsizeMode={'tail'} family={props.family}>
+        <Address
+          numberOfLines={1}
+          ellipsizeMode={'tail'}
+          family={props.family && props.family}
+        >
           {props.address && props.address}
         </Address>
         <TimingWrap>
           {props.status ? (
             <StatusTxt
-              family={props.family}
+              family={props.family && props.family}
               color={
                 props.status === 3
                   ? '#D41414'
@@ -109,14 +115,14 @@ const EachItem = (props: any) => {
               }
             >
               {props.status === 3
-                ? 'Closed'
+                ? Helper.t('closed', lang)
                 : props.status === 2
-                ? 'Closing Soon'
-                : 'Open'}
+                ? Helper.t('closing_soon', lang)
+                : Helper.t('open', lang)}
             </StatusTxt>
           ) : null}
           <TimingTxt
-            family={props.family}
+            family={props.family && props.family}
             color={Helper.getColor().secondaryTxt}
           >
             {props.timing && props.timing}
@@ -131,7 +137,7 @@ const EachItem = (props: any) => {
         )}
         <TimingTxt
           space
-          family={props.family}
+          family={props.family && props.family}
           color={Helper.getColor().secondaryTxt}
         >
           {props.distance && props.distance}
@@ -147,6 +153,7 @@ let Header = (props: any) => {
     font-size: 18px;
     margin-right: 4px;
   `;
+  let [lang] = useState(props.lang ? props.lang : 'en');
 
   return (
     <HeadWrap>
@@ -156,7 +163,7 @@ let Header = (props: any) => {
           family={props.family && props.family}
           color={Helper.getColor().chatBoxTwo}
         >
-          {props.chooseTxt ? props.chooseTxt : 'Choose from map'}
+          {props.chooseTxt ? props.chooseTxt : Helper.t('choose_map', lang)}
         </ChooseTxt>
       </ChooseWrap>
       <ChooseTouch onPress={props.onPressSaved && props.onPressSaved}>
@@ -164,7 +171,7 @@ let Header = (props: any) => {
           family={props.family && props.family}
           color={Helper.getColor().chatBoxTwo}
         >
-          {props.savedTxt ? props.savedTxt : 'Saved Locations'}
+          {props.savedTxt ? props.savedTxt : Helper.t('saved_locations', lang)}
         </ChooseTxt>
       </ChooseTouch>
     </HeadWrap>
@@ -193,11 +200,13 @@ export default (props: any) => {
 
   return (
     <SwipeUp
+      lang={props.lang && props.lang}
       disableSwipe
       containerStyle={keyboard ? containerStyle2(keyboard) : containerStyle}
       containerHeight={containerHeight}
     >
       <Header
+        lang={props.lang && props.lang}
         family={props.family && props.family}
         ionicons={props.ionicons && props.ionicons}
       />
@@ -209,6 +218,7 @@ export default (props: any) => {
         keyboardShouldPersistTaps={'always'}
         renderItem={({ item, index }: any) => (
           <EachItem
+            lang={props.lang && props.lang}
             borderless={props.data && props.data.length - 1 === index}
             press={() => {
               props.onSelect && props.onSelect(item);

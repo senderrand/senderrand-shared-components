@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Helper from '../../config/helper';
 
@@ -68,6 +68,7 @@ const TimeTxt = styled.Text`
 `;
 
 export const InvoiceBox = (props: any) => {
+  let [lang] = useState(props.lang ? props.lang : 'en');
   return (
     <Wrap>
       <Box onPress={props.press && props.press}>
@@ -77,7 +78,7 @@ export const InvoiceBox = (props: any) => {
               color={Helper.getColor().primaryTxt}
               family={props.family && props.family}
             >
-              {props.txt1 ? props.txt1 : 'Invoice'}
+              {props.txt1 ? props.txt1 : Helper.t('invoice', lang)}
             </Title>
             <InvoiceID
               color={Helper.getColor().chatBoxTwo}
@@ -91,7 +92,7 @@ export const InvoiceBox = (props: any) => {
               color={Helper.getColor().chatBoxTwo}
               family={props.family && props.family}
             >
-              {props.txt2 ? props.txt2 : 'Grand Total:'}
+              {props.txt2 ? props.txt2 : Helper.t('grand_total', lang)}
             </InvoiceID>
             <TotalTxt
               color={Helper.getColor().primaryTxt}
@@ -103,7 +104,7 @@ export const InvoiceBox = (props: any) => {
         </Box1>
         <Box2>
           <Box2Text family={props.family && props.family} color={'#fff'}>
-            {props.txt3 ? props.txt3 : 'View Invoice'}
+            {props.txt3 ? props.txt3 : Helper.t('view_invoice', lang)}
           </Box2Text>
         </Box2>
       </Box>

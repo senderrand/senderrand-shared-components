@@ -35,6 +35,7 @@ export default (props: any) => {
   return (
     <Wrap>
       <Header2
+        lang={'en'}
         entypo={Entypo}
         title={'Earnings'}
         family={family}
@@ -51,12 +52,14 @@ export default (props: any) => {
         </Touch>
       </Inner>
       <LoadingModal
+        lang={'en'}
         visible={loading}
         family={family}
         text={'Processing Payment..'}
         close={() => setLoading(false)}
       />
       <InvoiceModal
+        lang={'en'}
         currency={'AED'}
         visible={invoice}
         family={family}

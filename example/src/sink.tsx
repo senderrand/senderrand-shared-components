@@ -46,6 +46,7 @@ export default (props: any) => {
         <Txt>Header/Loader/Invoice</Txt>
       </Touch>
       <SuccessModal
+        lang={'en'}
         family={family}
         visible={success1}
         title={'Congratulations'}
@@ -57,6 +58,7 @@ export default (props: any) => {
         }
       />
       <SuccessModal2
+        lang={'en'}
         entypo={Entypo}
         family={family}
         visible={success2}

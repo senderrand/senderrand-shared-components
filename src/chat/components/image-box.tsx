@@ -48,10 +48,14 @@ export default (props: any) => {
 
   let scheme = useColorScheme();
   let [imgHeight, setImageHeight] = useState(300);
+  let [lang] = useState(props.lang ? props.lang : 'en');
   let [options] = useState(
     props.options && props.options.length
-      ? [...props.options, props.cancelTxt ? props.cancelTxt : 'Cancel']
-      : ['Cancel']
+      ? [
+          ...props.options,
+          props.cancelTxt ? props.cancelTxt : Helper.t('cancel', lang),
+        ]
+      : [Helper.t('cancel', lang)]
   );
 
   useEffect(() => {
@@ -106,7 +110,9 @@ export default (props: any) => {
         options={options}
         ref={(o: any) => (sheet = o)}
         cancelButtonIndex={options.length - 1}
-        title={props.optionTitle ? props.optionTitle : 'Options'}
+        title={
+          props.optionTitle ? props.optionTitle : Helper.t('options', lang)
+        }
         onPress={(index: number) =>
           index !== options.length - 1 && select(index)
         }

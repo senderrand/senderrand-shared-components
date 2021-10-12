@@ -1,4 +1,5 @@
 import Moment from 'moment';
+import Languages from './language';
 import { Appearance } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as DocumentPicker from 'expo-document-picker';
@@ -98,6 +99,11 @@ class Helper {
     let seconds: number = Number(((millis % 60000) / 1000).toFixed(0));
     if (addition) seconds = parseInt(String(seconds), 10) + addition;
     return minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+  };
+
+  t = (word: string, lang: string) => {
+    let languageData = Languages[lang] || Languages.en;
+    return languageData[word] ? languageData[word] : '';
   };
 }
 

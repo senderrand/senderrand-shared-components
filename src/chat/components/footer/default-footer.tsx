@@ -110,9 +110,12 @@ export default (props: any) => {
       : ['Camera', 'Photo Library']
   );
   let [options, setOptions] = useState<string[]>([]);
+  let [lang] = useState(props.lang ? props.lang : 'en');
 
   useEffect(() => {
-    let opt: string[] = [props.cancetTxt ? props.cancetTxt : 'Cancel'];
+    let opt: string[] = [
+      props.cancetTxt ? props.cancetTxt : Helper.t('cancel', lang),
+    ];
     if (props.runner) {
       if (props.options && props.options.length)
         opt = [...props.options, ...opt];
@@ -153,7 +156,7 @@ export default (props: any) => {
     props.onError && props.onError(error);
   };
 
-  let recordError = () => reportError('Hold down to begin recording');
+  let recordError = () => reportError(Helper.t('hold_down', lang));
 
   let selectOption = (index: number) => {
     if (props.runner) {
@@ -276,7 +279,9 @@ export default (props: any) => {
         options={options}
         ref={(o: any) => (sheet = o)}
         cancelButtonIndex={options.length && options.length - 1}
-        title={props.sheetOneTitle ? props.sheetOneTitle : 'Options'}
+        title={
+          props.sheetOneTitle ? props.sheetOneTitle : Helper.t('options', lang)
+        }
         onPress={(index: number) =>
           index !== options.length - 1 && selectOption(index)
         }
@@ -285,10 +290,12 @@ export default (props: any) => {
         cancelButtonIndex={defaultOptions.length}
         options={[
           ...defaultOptions,
-          props.cancelTxt ? props.cancelTxt : 'Cancel',
+          props.cancelTxt ? props.cancelTxt : Helper.t('cancel', lang),
         ]}
         ref={(o: any) => (sheet2 = o)}
-        title={props.sheetTwoTitle ? props.sheetTwoTitle : 'Options'}
+        title={
+          props.sheetTwoTitle ? props.sheetTwoTitle : Helper.t('options', lang)
+        }
         onPress={(index: number) =>
           index !== defaultOptions.length && selectOptions2(index)
         }

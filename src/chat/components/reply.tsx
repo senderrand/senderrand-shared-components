@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Helper from '../../config/helper';
 import helper from '../../config/helper';
@@ -50,6 +50,7 @@ const Icon = styled.Text``;
 
 export default (props: any) => {
   let scheme = useColorScheme();
+  let [lang] = useState(props.lang ? props.lang : 'en');
   const AudioIcon = styled(props.ionicons ? props.ionicons : Icon)`
     font-size: 20px;
     color: ${(prop: any) => (prop.color ? prop.color : '#fff')};
@@ -116,7 +117,7 @@ export default (props: any) => {
               family={props.family && props.family}
               sender={props.sender}
             >
-              📷 Photo
+              📷 {Helper.t('photo', lang)}
             </ReplyMsg>
           </TxtReply>
           <ReplyImg
@@ -184,6 +185,7 @@ const WrapIcon = styled.View`
 
 export const ReplyFoot = (props: any) => {
   let scheme = useColorScheme();
+  let [lang] = useState(props.lang ? props.lang : 'en');
 
   const AudioIcon = styled(props.ionicons ? props.ionicons : Icon)`
     font-size: 20px;
@@ -206,7 +208,9 @@ export const ReplyFoot = (props: any) => {
               ? props.reply.sender.name
               : ''}
           </ImgTitle2>
-          <ReplyMsg2 family={props.family && props.family}>📷 Photo</ReplyMsg2>
+          <ReplyMsg2 family={props.family && props.family}>
+            📷 {Helper.t('photo', lang)}
+          </ReplyMsg2>
         </TxtReply2>
       ) : (
         <TxtReply2

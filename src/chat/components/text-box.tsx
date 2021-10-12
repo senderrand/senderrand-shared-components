@@ -60,10 +60,14 @@ export default (props: any) => {
   let scheme = useColorScheme();
   let sheet: any;
   const [bottomSpace, setBottomSpace] = useState(false);
+  let [lang] = useState(props.lang ? props.lang : 'en');
   let [options] = useState(
     props.options && props.options.length
-      ? [...props.options, props.cancelTxt ? props.cancelTxt : 'Cancel']
-      : ['Cancel']
+      ? [
+          ...props.options,
+          props.cancelTxt ? props.cancelTxt : Helper.t('cancel', lang),
+        ]
+      : [Helper.t('cancel', lang)]
   );
 
   let txtLayout = (res: any) => {
@@ -101,6 +105,7 @@ export default (props: any) => {
             sender={props.sender}
             toReply={props.toReply}
             ionicons={props.ionicons}
+            lang={props.lang && props.lang}
           />
         ) : null}
         <MsgTxt
@@ -137,7 +142,7 @@ export default (props: any) => {
         options={options}
         ref={(o: any) => (sheet = o)}
         cancelButtonIndex={options.length - 1}
-        title={props.optionTitle ? props.optionTitle : 'Options'}
+        title={props.optionTitle ? props.optionTitle : Helper.t('cancel', lang)}
         onPress={(index: number) =>
           index !== options.length - 1 && select(index)
         }

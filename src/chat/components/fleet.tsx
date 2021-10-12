@@ -96,10 +96,14 @@ const TimeTxt = styled.Text`
 
 export const FleetBox = (props: any) => {
   let sheet: any;
+  let [lang] = useState(props.lang ? props.lang : 'en');
   let [options] = useState(
     props.options && props.options.length
-      ? [...props.options, props.cancelTxt ? props.cancelTxt : 'Cancel']
-      : ['Cancel']
+      ? [
+          ...props.options,
+          props.cancelTxt ? props.cancelTxt : Helper.t('cancel', lang),
+        ]
+      : [Helper.t('cancel', lang)]
   );
   let getFleet = () => {
     switch (props.index) {
@@ -127,7 +131,9 @@ export const FleetBox = (props: any) => {
         options={options}
         ref={(o: any) => (sheet = o)}
         cancelButtonIndex={options.length && options.length - 1}
-        title={props.optionTitle ? props.optionTitle : 'Options'}
+        title={
+          props.optionTitle ? props.optionTitle : Helper.t('options', lang)
+        }
         onPress={(index: number) =>
           index !== options.length - 1 && selectOption(index)
         }

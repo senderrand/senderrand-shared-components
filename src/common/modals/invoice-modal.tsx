@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { View, Txt } from '../styles';
 import styled from 'styled-components';
 import Helper from '../../config/helper';
@@ -76,6 +76,13 @@ const BtnTxt = styled.Text`
 
 export default (props: any) => {
   let scheme = useColorScheme();
+  let [lang] = useState(props.lang ? props.lang : 'en');
+  let dummyTitles = [
+    Helper.t('description', lang),
+    Helper.t('rate', lang),
+    Helper.t('qty', lang),
+    Helper.t('subtotal', lang),
+  ];
 
   let dummyPanHandler = useMemo(
     () =>
@@ -107,7 +114,7 @@ export default (props: any) => {
             color={Helper.getColor().primaryTxt}
             family={props.family && props.family.bold}
           >
-            {props.txt1 ? props.txt1 : 'You’ve received an invoice'}
+            {props.txt1 ? props.txt1 : Helper.t('received_invoice', lang)}
           </Txt>
           <Txt
             size={10}
@@ -116,7 +123,7 @@ export default (props: any) => {
             color={Helper.getColor().chatBoxTwo}
             family={props.family && props.family.regular}
           >
-            {props.txt2 ? props.txt2 : 'Runner'}
+            {props.txt2 ? props.txt2 : Helper.t('runner', lang)}
           </Txt>
           <Txt
             size={10}
@@ -195,6 +202,7 @@ export default (props: any) => {
           </InvoiceWrap>
           <InvoiceWrap>
             <GrandTotal
+              lang={props.lang && props.lang}
               family={props.family && props.family}
               grandTotal={props.grandTotal && props.grandTotal}
               grandTotalTxt={props.grandTotalTxt && props.grandTotalTxt}
@@ -203,8 +211,9 @@ export default (props: any) => {
           <InvoiceWrap borderless>
             {props.press ? (
               <CTA
-                family={props.family && props.family}
                 press={props.press}
+                lang={props.lang && props.lang}
+                family={props.family && props.family}
                 acceptTxt={props.acceptTxt && props.acceptTxt}
                 declineTxt={props.declineTxt && props.declineTxt}
               />
@@ -339,42 +348,48 @@ const TotalItem = (props: any) => (
   </View>
 );
 
-let GrandTotal = (props: any) => (
-  <View align={'center'} direction={'row'} justify={'space-between'}>
-    <Txt
-      size={12}
-      color={'#FD5710'}
-      family={
-        props.family && props.family.medium ? props.family.medium : 'Medium'
-      }
-    >
-      {props.grandTotalTxt ? props.grandTotalTxt : 'GRAND TOTAL'}
-    </Txt>
-    <Txt
-      size={12}
-      color={Helper.getColor().secondaryTxt}
-      family={
-        props.family && props.family.medium ? props.family.medium : 'Medium'
-      }
-    >
-      {props.grandTotal ? props.grandTotal : ''}
-    </Txt>
-  </View>
-);
+let GrandTotal = (props: any) => {
+  let [lang] = useState(props.lang ? props.lang : 'en');
+  return (
+    <View align={'center'} direction={'row'} justify={'space-between'}>
+      <Txt
+        size={12}
+        color={'#FD5710'}
+        family={
+          props.family && props.family.medium ? props.family.medium : 'Medium'
+        }
+      >
+        {props.grandTotalTxt
+          ? props.grandTotalTxt
+          : Helper.t('grand_total2', lang)}
+      </Txt>
+      <Txt
+        size={12}
+        color={Helper.getColor().secondaryTxt}
+        family={
+          props.family && props.family.medium ? props.family.medium : 'Medium'
+        }
+      >
+        {props.grandTotal ? props.grandTotal : ''}
+      </Txt>
+    </View>
+  );
+};
 
-let CTA = (props: any) => (
-  <View direction={'row'} align={'center'} justify={'space-between'}>
-    <Btn blue onPress={() => props.press && props.press(1)}>
-      <BtnTxt family={props.family && props.family} blue>
-        {props.acceptTxt ? props.acceptTxt : 'Accept'}
-      </BtnTxt>
-    </Btn>
-    <Btn onPress={() => props.press && props.press(2)}>
-      <BtnTxt family={props.family && props.family}>
-        {props.declineTxt ? props.declineTxt : 'Decline'}
-      </BtnTxt>
-    </Btn>
-  </View>
-);
-
-let dummyTitles = ['DESCRIPTION', 'RATE', 'QTY', 'SUBTOTAL'];
+let CTA = (props: any) => {
+  let [lang] = useState(props.lang ? props.lang : 'en');
+  return (
+    <View direction={'row'} align={'center'} justify={'space-between'}>
+      <Btn blue onPress={() => props.press && props.press(1)}>
+        <BtnTxt family={props.family && props.family} blue>
+          {props.acceptTxt ? props.acceptTxt : Helper.t('accept', lang)}
+        </BtnTxt>
+      </Btn>
+      <Btn onPress={() => props.press && props.press(2)}>
+        <BtnTxt family={props.family && props.family}>
+          {props.declineTxt ? props.declineTxt : Helper.t('decline', lang)}
+        </BtnTxt>
+      </Btn>
+    </View>
+  );
+};

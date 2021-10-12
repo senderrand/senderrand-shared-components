@@ -1,27 +1,29 @@
 import React, { Component } from 'react';
 import * as Animatable from 'react-native-animatable';
 
-class ListAnimate extends Component<any> {
+class ListAnimate extends Component<any, any> {
   state = {
     isVisible: true,
     isVisibleView: true,
   };
   private animatedRef: any;
 
-  shouldComponentUpdate(nextProps: any): boolean {
-    if (nextProps.isDeleted !== this.props.isDeleted) {
-      this.setState({ isVisible: nextProps.isDeleted !== true });
-      // this.forceUpdate()
-      this.animatedRef.startAnimation();
-    }
-    return true;
+  componentDidUpdate(
+    prevProps: Readonly<any>,
+    _prevState: Readonly<any>,
+    _snapshot?: any
+  ) {
+    if (prevProps.isDeleted !== this.props.isDeleted) this.change(prevProps);
   }
+
+  change = (prevProps: any) => {
+    this.setState({ isVisible: !prevProps.isDeleted });
+    this.animatedRef.startAnimation();
+  };
 
   animationEnded = () => {
     const { isVisible } = this.state;
-    if (!isVisible) {
-      this.setState({ isVisibleView: false });
-    }
+    if (!isVisible) this.setState({ isVisibleView: false });
   };
 
   render() {
@@ -41,9 +43,7 @@ class ListAnimate extends Component<any> {
 
     let animationType = isVisible ? inAnimation : outAnimation;
 
-    if (animation) {
-      animationType = animation;
-    }
+    if (animation) animationType = animation;
 
     const durationInt = parseInt(duration, 10);
 

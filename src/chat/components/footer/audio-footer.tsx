@@ -1,10 +1,10 @@
 import { Audio } from 'expo-av';
 import styled from 'styled-components';
 import Helper from '../../../config/helper';
+import helper from '../../../config/helper';
 import * as FileSystem from 'expo-file-system';
 import { ActivityIndicator } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import helper from '../../../config/helper';
 
 const RecordWrap = styled.View`
   flex-direction: row;
@@ -99,6 +99,7 @@ export default (props: any) => {
 
   const [duration, setDuration] = useState(0);
   const [record] = useState(new Audio.Recording());
+  let [lang] = useState(props.lang ? props.lang : 'en');
 
   let reportError = (error: string) => {
     props.onError && props.onError(error);
@@ -110,7 +111,7 @@ export default (props: any) => {
       else {
         Audio.requestPermissionsAsync().then((res2) => {
           if (res2.status === 'granted') startRecording().then();
-          else reportError(permitError);
+          else reportError(Helper.t('audio_permission_error', lang));
         });
       }
     });
@@ -163,7 +164,7 @@ export default (props: any) => {
       </MicBox>
       <CancelAudio onPress={() => onStopRecord('cancel')}>
         <CancelAudioTxt family={props.family && props.family}>
-          {props.cancelTxt ? props.cancelTxt : 'Cancel'}
+          {props.cancelTxt ? props.cancelTxt : Helper.t('cancel', lang)}
         </CancelAudioTxt>
       </CancelAudio>
       <SendBtn
@@ -179,6 +180,3 @@ export default (props: any) => {
     </RecordWrap>
   );
 };
-
-let permitError =
-  'Permission is required to be granted to record audio, go to settings to grant permission.';

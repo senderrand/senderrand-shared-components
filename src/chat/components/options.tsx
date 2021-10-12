@@ -63,7 +63,7 @@ export const LocationBox = (props: any) => {
     margin-right: ${(prop: any) => (prop.sender ? '10px' : '0px')};
     margin-left: ${(prop: any) => (prop.sender ? '0px' : '10px')};
   `;
-  const StoreIcon = styled(props.fontisto ? props.fontisto : Icon)`
+  const StoreIcon = styled(props.materialIcons ? props.materialIcons : Icon)`
     color: #fd5710;
     font-size: 20px;
     margin-right: ${(prop: any) => (prop.sender ? '10px' : '0px')};
@@ -74,7 +74,7 @@ export const LocationBox = (props: any) => {
     <Wrap2 sender={props.sender}>
       <TextBox {...props} />
       {props.location_type && props.location_type === 'store' ? (
-        <StoreIcon name={'shopping-store'} sender={props.sender} />
+        <StoreIcon name={'store-mall-directory'} sender={props.sender} />
       ) : (
         <PinIcon name={'location'} sender={props.sender} />
       )}
