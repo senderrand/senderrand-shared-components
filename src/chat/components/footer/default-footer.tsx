@@ -125,6 +125,7 @@ export default (props: any) => {
       else opt = [...defaultOptions, ...opt];
     }
     setOptions(opt);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.options]);
 
   useEffect(() => {

@@ -6,11 +6,13 @@ import Fleetless from '../../common/svg/fleetless';
 import Bike from '../../common/svg/bike';
 import Car from '../../common/svg/car';
 import Truck from '../../common/svg/truck';
+import Bicycle from '../../common/svg/bicycle';
+import Canoe from '../../common/svg/canoe';
 import ActionSheet from 'react-native-actionsheet';
 
 const FleetContainer = styled.View`
   width: 100%;
-  padding: 0 30px 20px 30px;
+  padding: 0 20px 20px 20px;
   height: 100px;
   flex-direction: row;
   align-items: center;
@@ -41,6 +43,10 @@ const CheckInner = styled.View`
   background-color: ${(props: any) =>
     props.check ? Helper.getColor().chatBoxTwo : 'transparent'};
 `;
+const WrapFleet = styled.View`
+  height: 40px;
+  justify-content: flex-end;
+`;
 
 let EachFleet = (props: any) => {
   let [check, setCheck] = useState(false);
@@ -52,7 +58,7 @@ let EachFleet = (props: any) => {
 
   return (
     <EachCheck onPress={toggle}>
-      {props.fleet && props.fleet}
+      <WrapFleet>{props.fleet && props.fleet}</WrapFleet>
       <FleetCheck>
         <CheckInner check={check} />
       </FleetCheck>
@@ -77,9 +83,11 @@ export const FleetFooter = (props: any) => {
 
 let fleets = [
   { id: 1, name: 'Fleetless', icon: <Fleetless /> },
-  { id: 2, name: 'Bike', icon: <Bike /> },
-  { id: 3, name: 'Car', icon: <Car /> },
-  { id: 4, name: 'Truck', icon: <Truck /> },
+  { id: 2, name: 'Bike', icon: <Bicycle /> },
+  { id: 3, name: 'Car', icon: <Bike /> },
+  { id: 4, name: 'Truck', icon: <Car /> },
+  { id: 5, name: 'Truck', icon: <Truck /> },
+  { id: 6, name: 'Truck', icon: <Canoe /> },
 ];
 
 const BoxWrap = styled.TouchableOpacity`
@@ -110,11 +118,15 @@ export const FleetBox = (props: any) => {
       case 0:
         return <Fleetless />;
       case 1:
-        return <Bike />;
+        return <Bicycle />;
       case 2:
-        return <Car />;
+        return <Bike />;
       case 3:
+        return <Car />;
+      case 4:
         return <Truck />;
+      case 5:
+        return <Canoe />;
       default:
         return <Fleetless />;
     }

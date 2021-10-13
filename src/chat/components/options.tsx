@@ -42,7 +42,7 @@ export const FooterOptions = (props: any) => (
             onPress={() => props.press && props.press(index)}
           >
             <BtnTxt family={props.family && props.family} blue={index === 0}>
-              {item.name && item.name}
+              {item.title && item.title}
             </BtnTxt>
           </Btn>
         ))

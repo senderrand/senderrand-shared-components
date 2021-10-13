@@ -115,6 +115,7 @@ export default (props: any) => {
         });
       }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   let startRecording = async () => {

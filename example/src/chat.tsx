@@ -26,7 +26,6 @@ import {
   MaterialCommunityIcons,
   Ionicons,
   AntDesign,
-  Fontisto,
   Feather,
   MaterialIcons,
 } from '@expo/vector-icons';
@@ -160,13 +159,13 @@ export default () => {
           <FleetBox
             lang={'en'}
             date={item.date}
+            family={family}
             index={item.data && item.data.index && item.data.index}
             sender={item.sender.id === 1}
             onSelectOption={() => {}}
           />
         ) : item.type === 'status' ? (
           <StatusBox
-            lang={'en'}
             family={family}
             text={item.text}
             color={item.data && item.data.color && item.data.color}
@@ -236,8 +235,8 @@ export default () => {
             family={family}
             press={(index: number) => console.log(index)}
             options={[
-              { id: 1, name: 'Purchase' },
-              { id: 2, name: 'Pick Up' },
+              { id: 1, title: 'Purchase' },
+              { id: 2, title: 'Pick Up' },
             ]}
           />
           <Footer
@@ -271,8 +270,8 @@ export default () => {
         family={family}
         data={reasons}
         textKey={'reason'}
-        onSend={(item) => console.log(item)}
-        onSelect={(item) => console.log(item)}
+        onSend={(item: string) => console.log(item)}
+        onSelect={(item: any) => console.log(item)}
       />
       <LocationSwipe
         lang={'en'}
@@ -280,8 +279,7 @@ export default () => {
         data={locations}
         ionicons={Ionicons}
         materialIcons={MaterialIcons}
-        change={(val) => console.log(val)}
-        onSelect={(item) => console.log(item)}
+        onSelect={(item: any) => console.log(item)}
       />
     </Wrap>
   );

@@ -124,6 +124,7 @@ export default (props: any) => (
           send={props.onSend && props.onSend}
           family={props.family && props.family}
           ionicons={props.ionicons && props.ionicons}
+          othersTxt={props.othersTxt && props.othersTxt}
         />
       }
     />

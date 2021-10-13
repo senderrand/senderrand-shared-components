@@ -200,15 +200,19 @@ export default (props: any) => {
 
   return (
     <SwipeUp
-      lang={props.lang && props.lang}
       disableSwipe
-      containerStyle={keyboard ? containerStyle2(keyboard) : containerStyle}
+      lang={props.lang && props.lang}
       containerHeight={containerHeight}
+      containerStyle={keyboard ? containerStyle2(keyboard) : containerStyle}
     >
       <Header
         lang={props.lang && props.lang}
         family={props.family && props.family}
         ionicons={props.ionicons && props.ionicons}
+        savedTxt={props.savedTxt && props.savedTxt}
+        chooseTxt={props.chooseTxt && props.chooseTxt}
+        onPressSaved={props.onPressSaved && props.onPressSaved}
+        onPressChoose={props.onPressChoose && props.onPressChoose}
       />
       <List
         keyboard={keyboard}

@@ -53,7 +53,7 @@ export default (props: any) => {
   useEffect(
     () =>
       setHeight(props.containerHeight ? props.containerHeight : modalHeight),
-    [props.containerHeight, props.visible]
+    [props.containerHeight]
   );
 
   let panResponder = useMemo(
