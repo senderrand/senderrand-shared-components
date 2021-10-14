@@ -7,7 +7,7 @@ const Modal = styled.Modal``;
 const Icon = styled.Text``;
 const Touch = styled.TouchableOpacity`
   width: 100%;
-  height: 30px;
+  height: 38px;
   background-color: ${Helper.getColor().primary};
   align-items: center;
   justify-content: center;
@@ -72,7 +72,7 @@ export default (props: any) => {
           </Txt>
           <Touch onPress={props.press && props.press}>
             <Txt
-              size={12}
+              size={14}
               color={'#fff'}
               family={props.family && props.family.regular}
             >

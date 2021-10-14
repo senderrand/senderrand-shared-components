@@ -227,9 +227,9 @@ Below are the listed props that can be passed to the header component
 ## Success Modal 1
 
 ```typescript
-import { Header } from 'senderrand-shared-components';
+import { SuccessModal } from 'senderrand-shared-components';
 import { useState } from 'react';
-import { Ionicons } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
 
 const family = {
   light: 'Light',
@@ -277,7 +277,7 @@ Below are the listed props that can be passed to the header component
 ## Success Modal 2
 
 ```typescript
-import { Header } from 'senderrand-shared-components';
+import { SuccessModal2 } from 'senderrand-shared-components';
 import { useState } from 'react';
 import { Entypo } from '@expo/vector-icons';
 
