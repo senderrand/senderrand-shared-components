@@ -52,7 +52,7 @@ export default (props: any) => {
           {...dummyPanHandler.panHandlers}
           background={Helper.getColor().plane}
         >
-          <Image source={require('../../../assets/media/Spinner.svg')} />
+          <Image source={require('../../assets/media/Spinner.svg')} />
           <Txt
             size={15}
             align={'center'}

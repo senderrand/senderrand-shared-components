@@ -5,7 +5,7 @@ import Helper from '../../config/helper';
 import { verticalScale } from 'react-native-size-matters';
 import { StatusBar, Platform, useColorScheme } from 'react-native';
 
-const blue = require('../../../assets/media/blue.png');
+const blue = require('../../assets/media/blue.png');
 const statusBar = Constants.statusBarHeight;
 const Outer = styled.View``;
 const Wrap = styled.View`
