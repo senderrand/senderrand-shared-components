@@ -1,6 +1,6 @@
 {
   "name": "senderrand-shared-components",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "WIP: intented collection of similar components used across out applications",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
