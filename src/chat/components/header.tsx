@@ -102,7 +102,7 @@ export default (props: any) => {
 
   let menuSelect = (index: number) => {
     setVisible(false);
-    props.onPressOption && props.onPressOption(index);
+    props.onSelectOption && props.onSelectOption(index);
   };
 
   const Dot = styled(props.entypo ? props.entypo : Icon)`
@@ -132,7 +132,7 @@ export default (props: any) => {
               >
                 {props.title ? props.title : ''}
               </Title>
-              {props.detail && (
+              {props.detail ? (
                 <Detail
                   family={props.family && props.family}
                   color={Helper.getColor().secondaryTxt}
@@ -140,17 +140,17 @@ export default (props: any) => {
                 >
                   {typeof props.detail === 'string' ? props.detail : ''}
                 </Detail>
-              )}
+              ) : null}
             </TxtBox>
           </LeftBox>
-          {props.options && props.options.length && (
+          {props.options && props.options.length ? (
             <RightTouch onPress={() => setVisible(true)}>
               <Dot
                 name={'dots-three-vertical'}
                 color={Helper.getColor().primaryTxt}
               />
             </RightTouch>
-          )}
+          ) : null}
         </Head>
       </Wrap>
       <Modal
@@ -171,7 +171,7 @@ export default (props: any) => {
                     style={props.optionTxtStyle ? props.optionTxtStyle : {}}
                     color={scheme === 'dark' ? '#fff' : '#184859'}
                   >
-                    {item}
+                    {typeof item === 'string' ? item : ''}
                   </MenuTxt>
                 </EachMenu>
               )}

@@ -52,7 +52,7 @@ export default (props: any) => {
       >
         {props.text && props.text}
       </Txt1>
-      <ImgWrap>
+      <ImgWrap onPress={props.press && props.press}>
         <Img source={props.image && { uri: props.image }} />
       </ImgWrap>
       <RunnerName family={props.family && props.family}>

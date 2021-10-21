@@ -104,13 +104,13 @@ export default (props: any) => {
   let scheme = useColorScheme();
   let [text, setText] = useState('');
   let [loading, setLoading] = useState(false);
+  let [options, setOptions] = useState<string[]>([]);
+  let [lang] = useState(props.lang ? props.lang : 'en');
   let [defaultOptions] = useState(
     props.defaultOptions && props.defaultOptions.length
       ? props.defaultOptions
-      : ['Camera', 'Photo Library']
+      : [Helper.t('camera', lang), Helper.t('photo_library', lang)]
   );
-  let [options, setOptions] = useState<string[]>([]);
-  let [lang] = useState(props.lang ? props.lang : 'en');
 
   useEffect(() => {
     let opt: string[] = [
@@ -149,7 +149,7 @@ export default (props: any) => {
     let newFile = file ? Helper.formatFile(file) : null;
     let message = { type: 'text', text, file: newFile };
     if (file) message.type = file.type;
-    props.send(message);
+    props.send && props.send(message);
     setText('');
   };
 
@@ -157,11 +157,11 @@ export default (props: any) => {
     props.onError && props.onError(error);
   };
 
-  let recordError = () => reportError(Helper.t('hold_down', lang));
+  // let recordError = () => reportError(Helper.t('hold_down', lang));
 
   let selectOption = (index: number) => {
     if (props.runner) {
-      if (props.onSelectOption) props.onSelectOption(index);
+      props.onSelectOption && props.onSelectOption(index);
     } else {
       if (index === 0 || index === 1) selectOptions2(index);
       else {
@@ -171,23 +171,16 @@ export default (props: any) => {
   };
 
   let selectOptions2 = (index: number) => {
-    switch (index) {
-      case 0:
-        setLoading(true);
-        Helper.mediaPicker('camera', {
-          mediaTypes: MediaTypeOptions.All,
-          allowsMultipleSelection: true,
-        }).then(handleMedia);
-        break;
-      case 1:
-        setLoading(true);
-        Helper.mediaPicker('library', {
-          mediaTypes: MediaTypeOptions.All,
-          allowsMultipleSelection: true,
-        }).then(handleMedia);
-        break;
-      default:
-        break;
+    if (!props.defaultOptions) {
+      setLoading(true);
+      Helper.mediaPicker(index === 0 ? 'camera' : 'library', {
+        mediaTypes: MediaTypeOptions.All,
+        allowsMultipleSelection: true,
+      }).then(handleMedia);
+    } else {
+      if (props.runner)
+        props.onSelectDefaultOption && props.onSelectDefaultOption(index);
+      else props.onSelectOption && props.onSelectOption(index);
     }
   };
 
@@ -256,7 +249,7 @@ export default (props: any) => {
               loading || props.loading
                 ? null
                 : text === ''
-                ? recordError
+                ? () => props.changeType('audio') //recordError
                 : () => send()
             }
             onLongPress={

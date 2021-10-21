@@ -210,6 +210,7 @@ Below are the listed props that can be passed to the header component
 | `send` | `function` | `false` | A functions that returns the message object as a parameter. |
 | `onError` | `function` | `false` | A function that returns error message as a parameter. |
 | `onSelectOption` | `function` | `false` | The function returns the index of the selected option as parameter. |
+| `onSelectDefaultOption` | `function` | `false` | The function returns the index of the selected option as parameter. |
 | `ionicons` | `@expo/vector-icons` | `true` | It takes in Ionicons component to display icons in the footer component |
 | `family` | `object` | `true` | An object that contains the font family used for the text elements in the footer component. An example is shown above. |
 | `multiline` | `boolean` | `false` | The multiline props for the footer text input. |
@@ -572,10 +573,7 @@ const Example = () => {
     <FooterOptions
       family={family}
       press={(index: number) => console.log(index)}
-      options={[
-        { id: 1, title: 'Purchase' },
-        { id: 2, title: 'Pick Up' },
-      ]}
+      options={['Purchase', 'Pick Up']}
     />
   )
 }
@@ -590,7 +588,7 @@ Below are the listed props that can be passed to the FooterOptions
 
 | Property | Type | Required | Description |
 | ------ | ------ | ------ | ------ |
-| `options` | `array` | `true` | The array representing each button to be displayed. Each object must contain the `title` key for each button title. |
+| `options` | `array` | `true` | The string array representing each button to be displayed. Each button displays the string passed. |
 | `family` | `object` | `true` | An object containing the app font family, example above |
 | `press` | `function` | `true` | The function called when a button is pressed, with the index of the particular button pressed. |
 

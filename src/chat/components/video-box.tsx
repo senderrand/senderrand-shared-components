@@ -2,6 +2,7 @@ import { Video } from 'expo-av';
 import styled from 'styled-components';
 import Helper from '../../config/helper';
 import React, { useState } from 'react';
+import ActionSheet from 'react-native-actionsheet';
 import { Animated, Dimensions, useColorScheme } from 'react-native';
 
 const Wrap = styled(Animated.View)`
@@ -45,11 +46,26 @@ export default (props: any) => {
 
   let scheme = useColorScheme();
   let [vidHeight, setVidHeight] = useState(210.9375);
+  let [lang] = useState(props.lang ? props.lang : 'en');
+  let [options] = useState(
+    props.options && props.options.length
+      ? [
+          ...props.options,
+          props.cancelTxt ? props.cancelTxt : Helper.t('cancel', lang),
+        ]
+      : [Helper.t('cancel', lang)]
+  );
 
+  let select = (index: number) => {
+    props.onSelectOption && props.onSelectOption(index);
+  };
+
+  let sheet: any;
   return (
     <Wrap scheme={scheme}>
       <VidWrap
-        sender={props.sender}
+        onLongPress={() => sheet.show()}
+        sender={props.sender && props.sender}
         height={vidHeight}
         background={
           props.sender
@@ -57,32 +73,52 @@ export default (props: any) => {
             : Helper.getColor().chatBoxOne
         }
       >
-        <Vid
-          useNativeControls
-          resizeMode={'contain'}
-          style={{ height: vidHeight }}
-          source={{ uri: props.video }}
-          onReadyForDisplay={(response: any) => {
-            let box = (70 / 100) * screenWidth;
-            const { width, height } = response.naturalSize;
-            const heightScaled = height * (box / width);
-            setVidHeight(heightScaled);
-          }}
-        />
+        {props.video ? (
+          <Vid
+            useNativeControls
+            resizeMode={'contain'}
+            style={{ height: vidHeight }}
+            source={{ uri: props.video }}
+            onReadyForDisplay={(response: any) => {
+              let box = (70 / 100) * screenWidth;
+              const { width, height } = response.naturalSize;
+              const heightScaled = height * (box / width);
+              setVidHeight(heightScaled - 6);
+            }}
+          />
+        ) : null}
         <TickTime>
-          <TimeTxt family={props.family && props.family} sender={props.sender}>
-            {typeof props.date === 'object'
+          <TimeTxt
+            family={props.family && props.family}
+            sender={props.sender && props.sender}
+          >
+            {props.date && typeof props.date === 'object'
               ? Helper.getDate(props.date)
-              : props.date}
+              : props.date && props.date}
           </TimeTxt>
           {props.sender && (
             <TickIcon
-              read={props.status === 3}
-              name={props.status > 1 ? 'ios-checkmark-done' : 'ios-checkmark'}
+              read={props.status && props.status === 3}
+              name={
+                props.status && props.status > 1
+                  ? 'ios-checkmark-done'
+                  : 'ios-checkmark'
+              }
             />
           )}
         </TickTime>
       </VidWrap>
+      <ActionSheet
+        options={options}
+        ref={(o: any) => (sheet = o)}
+        cancelButtonIndex={options.length - 1}
+        title={
+          props.optionTitle ? props.optionTitle : Helper.t('options', lang)
+        }
+        onPress={(index: number) =>
+          index !== options.length - 1 && select(index)
+        }
+      />
     </Wrap>
   );
 };

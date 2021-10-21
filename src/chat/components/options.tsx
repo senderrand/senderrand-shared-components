@@ -39,7 +39,7 @@ export const FooterOptions = (props: any) => (
           <Btn
             key={index}
             blue={index === 0}
-            onPress={() => props.press && props.press(index)}
+            onPress={() => props.press && props.press(index, item)}
           >
             <BtnTxt family={props.family && props.family} blue={index === 0}>
               {item.title && item.title}
@@ -71,12 +71,15 @@ export const LocationBox = (props: any) => {
   `;
 
   return (
-    <Wrap2 sender={props.sender}>
+    <Wrap2 sender={props.sender && props.sender}>
       <TextBox {...props} />
       {props.location_type && props.location_type === 'store' ? (
-        <StoreIcon name={'store-mall-directory'} sender={props.sender} />
+        <StoreIcon
+          name={'store-mall-directory'}
+          sender={props.sender && props.sender}
+        />
       ) : (
-        <PinIcon name={'location'} sender={props.sender} />
+        <PinIcon name={'location'} sender={props.sender && props.sender} />
       )}
     </Wrap2>
   );

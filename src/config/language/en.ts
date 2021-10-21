@@ -25,4 +25,17 @@ export let en = {
   rate: 'RATE',
   qty: 'QTY',
   subtotal: 'SUBTOTAL',
+  copy: 'Copy',
+  reply: 'Reply',
+  edit: 'Edit',
+  remove: 'Delete',
+  change: 'Change',
+  camera: 'Camera',
+  photo_library: 'Photo Library',
+  total_amount_txt: (options?: string[]) =>
+    `The total cost for the items purchased in ${
+      options?.length ? options[0] : ''
+    } is ${
+      options && options?.length > 0 ? options[1] : ''
+    }. Tap Accept below to pay for this errand or tap on Decline to decline the price.`,
 };

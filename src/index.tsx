@@ -1,5 +1,3 @@
-import React from 'react';
-import { View } from 'react-native';
 import Header from './chat/components/header';
 import Footer from './chat/components/footer/footer';
 import SuccessModal from './common/modals/success-modal';
@@ -24,6 +22,12 @@ import LoadingModal from './common/modals/loading-modal';
 import InvoiceModal from './common/modals/invoice-modal';
 import ReasonSwipe from './chat/components/footer/reason-swipe';
 import LocationSwipe from './chat/components/footer/locations-swipe';
+import {
+  getInvoiceMessage,
+  getTrackerMessage,
+  getStatusMessage,
+} from './chat/functions';
+import Chat from './chat';
 import {
   WebView,
   WebViewProps,
@@ -72,9 +76,7 @@ import ZigzagLines from 'react-native-zigzag-lines';
 import SwipeableViews from 'react-swipeable-views-native';
 import styled from 'styled-components';
 
-export default () => {
-  return <View />;
-};
+export default Chat;
 
 export {
   Header,
@@ -100,6 +102,9 @@ export {
   InvoiceModal,
   ReasonSwipe,
   LocationSwipe,
+  getInvoiceMessage,
+  getTrackerMessage,
+  getStatusMessage,
   // react-native-webview
   WebView,
   WebViewProps,

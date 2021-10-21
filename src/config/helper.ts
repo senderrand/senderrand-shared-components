@@ -81,7 +81,7 @@ class Helper {
     let filename = file.uri.split('/').pop();
     let match = /\.(\w+)$/.exec(filename);
     let type = match
-      ? `${file.type ? file.type : ''}/${match[1]}`
+      ? `${getFileType(match[1])}/${match[1]}`
       : file.type
       ? file.type
       : 'file';
@@ -105,6 +105,13 @@ class Helper {
     let languageData = Languages[lang] || Languages.en;
     return languageData[word] ? languageData[word] : '';
   };
+
+  t2 = (word: string, lang: string, options?: string[]) => {
+    let languageData = Languages[lang] || Languages.en;
+    if (languageData[word] && typeof languageData[word] === 'function') {
+      return languageData[word](options);
+    } else return '';
+  };
 }
 
 let message =
@@ -125,6 +132,19 @@ export const colors = {
   chatBoxOneDark: '#3c3b3d',
   chatBoxTwo: '#0a78a1',
   chatBoxTwoDark: '#0a78a1',
+};
+
+let getFileType = (type: string) => {
+  switch (type) {
+    case 'pdf':
+      return 'application';
+    case 'doc':
+      return 'application';
+    case 'docx':
+      return 'application';
+    default:
+      return 'image';
+  }
 };
 
 export default new Helper();

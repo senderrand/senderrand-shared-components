@@ -80,6 +80,7 @@ export default () => {
     };
     setMessages((state) => [data, ...state]);
     setReply(null);
+    list.scrollToEnd({ animate: true });
   };
 
   let keyExtractor = (_item: any, index: number) => index.toString();
@@ -235,8 +236,8 @@ export default () => {
             family={family}
             press={(index: number) => console.log(index)}
             options={[
-              { id: 1, title: 'Purchase' },
-              { id: 2, title: 'Pick Up' },
+              { id: 'purchase', title: 'Purchase' },
+              { id: 'pickup', title: 'Pick Up' },
             ]}
           />
           <Footer
@@ -299,7 +300,7 @@ export const family = {
   italic: 'RegularItalic',
 };
 
-let data = [
+export let data = [
   {
     sender: { id: 2, name: 'The sender' },
     id: 7,
@@ -436,6 +437,23 @@ let data = [
     type: 'text',
     reply: null,
     data: { btnTitle: 'PAY' },
+  },
+  {
+    sender: { id: 2, name: 'The sender' },
+    id: 107,
+    status: 3,
+    date: new Date(),
+    text: 'What kind of fleet can handle this errand? \nSelect from the options below:',
+    file: null,
+    type: 'text',
+    reply: null,
+    data: {
+      footer: 'fleet',
+      // options: [
+      //   { id: 'purchase', title: 'Purchase' },
+      //   { id: 'pickup', title: 'Pickup' },
+      // ],
+    },
   },
 ];
 

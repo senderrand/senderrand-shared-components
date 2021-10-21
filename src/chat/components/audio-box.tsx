@@ -75,9 +75,10 @@ export default (props: any) => {
       try {
         await Audio.setAudioModeAsync(mode);
         setLoading(true);
-        await sound
-          .loadAsync({ uri: props.audio })
-          .then(() => setLoading(false));
+        props.audio &&
+          (await sound
+            .loadAsync({ uri: props.audio })
+            .then(() => setLoading(false)));
         await sound
           .getStatusAsync()
           .then((res) => {
@@ -160,7 +161,7 @@ export default (props: any) => {
   return (
     <Wrap scheme={scheme}>
       <AudioWrap
-        sender={props.sender}
+        sender={props.sender && props.sender}
         onLongPress={() => sheet.show()}
         background={
           props.sender
@@ -196,31 +197,33 @@ export default (props: any) => {
           <SliderBottom>
             <TimeTxt
               family={props.family && props.family}
-              sender={props.sender}
+              sender={props.sender && props.sender}
             >
               {Helper.millisToTime(playing ? position : duration)}
             </TimeTxt>
             <TickTime2>
               <TimeTxt
                 family={props.family && props.family}
-                sender={props.sender}
+                sender={props.sender && props.sender}
               >
-                {typeof props.date === 'object'
+                {props.date && typeof props.date === 'object'
                   ? Helper.getDate(props.date)
-                  : props.date}
+                  : props.date && props.date}
               </TimeTxt>
               {props.sender && (
                 <TickIcon
-                  read={props.status === 3}
+                  read={props.status && props.status === 3}
                   name={
-                    props.status > 1 ? 'ios-checkmark-done' : 'ios-checkmark'
+                    props.status && props.status > 1
+                      ? 'ios-checkmark-done'
+                      : 'ios-checkmark'
                   }
                 />
               )}
             </TickTime2>
           </SliderBottom>
         </SliderBox>
-        <ImgBox source={{ uri: props.image && props.image }} />
+        <ImgBox source={props.image && { uri: props.image }} />
       </AudioWrap>
       <ActionSheet
         options={options}

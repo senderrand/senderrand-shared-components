@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Helper from '../../config/helper';
 import helper from '../../config/helper';
+import ListAnimate from '../../common/list-animate';
 import { Dimensions, useColorScheme } from 'react-native';
 import { verticalScale, moderateScale } from 'react-native-size-matters';
 
@@ -61,13 +62,13 @@ export default (props: any) => {
       {props.reply.type === 'text' || props.reply.type === 'audio' ? (
         <ReplyBox
           scheme={scheme}
-          sender={props.sender}
+          sender={props.sender && props.sender}
           onPress={props.toReply && props.toReply}
         >
           <TxtReply>
             <TitleReply
               family={props.family && props.family}
-              sender={props.sender}
+              sender={props.sender && props.sender}
             >
               {props.reply.sender && props.reply.sender.name
                 ? props.reply.sender.name
@@ -83,7 +84,7 @@ export default (props: any) => {
                 </WrapIcon>
                 <ReplyMsg2
                   family={props.family && props.family}
-                  sender={props.sender}
+                  sender={props.sender && props.sender}
                   color={props.sender ? '#fff' : helper.getColor().primaryTxt}
                 >
                   {Helper.millisToTime(props.reply.duration)}
@@ -92,22 +93,22 @@ export default (props: any) => {
             ) : (
               <ReplyMsg
                 family={props.family && props.family}
-                sender={props.sender}
+                sender={props.sender && props.sender}
               >
-                {props.reply.text}
+                {props.reply.text && props.reply.text}
               </ReplyMsg>
             )}
           </TxtReply>
         </ReplyBox>
       ) : (
         <ReplyBox
-          sender={props.sender}
+          sender={props.sender && props.sender}
           onPress={props.toReply && props.toReply}
         >
           <TxtReply>
             <ImgTitle
               family={props.family && props.family}
-              sender={props.sender}
+              sender={props.sender && props.sender}
             >
               {props.reply.sender && props.reply.sender.name
                 ? props.reply.sender.name
@@ -115,7 +116,7 @@ export default (props: any) => {
             </ImgTitle>
             <ReplyMsg
               family={props.family && props.family}
-              sender={props.sender}
+              sender={props.sender && props.sender}
             >
               📷 {Helper.t('photo', lang)}
             </ReplyMsg>
@@ -197,73 +198,81 @@ export const ReplyFoot = (props: any) => {
   `;
 
   return (
-    <ReplyWrap background={Helper.getColor().plane} scheme={scheme}>
-      {props.reply.type === 'image' ? (
-        <TxtReply2 media={props.reply.type !== 'text'}>
-          <ImgTitle2
-            family={props.family && props.family}
-            sender={props.sender}
+    <ListAnimate
+      outAnimation={'fadeOut'}
+      inAnimation={'slideInUp'}
+      duration={500}
+      isDeleted={false}
+      id={'animate'}
+    >
+      <ReplyWrap background={Helper.getColor().plane} scheme={scheme}>
+        {props.reply.type === 'image' ? (
+          <TxtReply2 media={props.reply.type !== 'text'}>
+            <ImgTitle2
+              family={props.family && props.family}
+              sender={props.sender && props.sender}
+            >
+              {props.reply.sender && props.reply.sender.name
+                ? props.reply.sender.name
+                : ''}
+            </ImgTitle2>
+            <ReplyMsg2 family={props.family && props.family}>
+              📷 {Helper.t('photo', lang)}
+            </ReplyMsg2>
+          </TxtReply2>
+        ) : (
+          <TxtReply2
+            media={props.reply.type !== 'text' && props.reply.type !== 'audio'}
           >
-            {props.reply.sender && props.reply.sender.name
-              ? props.reply.sender.name
-              : ''}
-          </ImgTitle2>
-          <ReplyMsg2 family={props.family && props.family}>
-            📷 {Helper.t('photo', lang)}
-          </ReplyMsg2>
-        </TxtReply2>
-      ) : (
-        <TxtReply2
-          media={props.reply.type !== 'text' && props.reply.type !== 'audio'}
-        >
-          <TitleReply2
-            sender={props.sender}
-            family={props.family && props.family}
-          >
-            {props.reply.sender && props.reply.sender.name
-              ? props.reply.sender.name
-              : ''}
-          </TitleReply2>
-          {props.reply.type === 'audio' ? (
-            <AudioIconWrap2>
-              <WrapIcon>
-                <AudioIcon
-                  name={'mic-outline'}
-                  color={helper.getColor().primaryTxt}
-                />
-              </WrapIcon>
+            <TitleReply2
+              sender={props.sender && props.sender}
+              family={props.family && props.family}
+            >
+              {props.reply.sender && props.reply.sender.name
+                ? props.reply.sender.name
+                : ''}
+            </TitleReply2>
+            {props.reply.type === 'audio' ? (
+              <AudioIconWrap2>
+                <WrapIcon>
+                  <AudioIcon
+                    name={'mic-outline'}
+                    color={helper.getColor().primaryTxt}
+                  />
+                </WrapIcon>
+                <ReplyMsg2
+                  color={Helper.getColor().primaryTxt}
+                  family={props.family && props.family}
+                  ellipsizeMode={'tail'}
+                  numberOfLines={1}
+                >
+                  {props.reply.duration &&
+                    Helper.millisToTime(props.reply.duration)}
+                </ReplyMsg2>
+              </AudioIconWrap2>
+            ) : (
               <ReplyMsg2
                 color={Helper.getColor().primaryTxt}
                 family={props.family && props.family}
                 ellipsizeMode={'tail'}
                 numberOfLines={1}
               >
-                {props.reply.duration &&
-                  Helper.millisToTime(props.reply.duration)}
+                {props.reply.text && props.reply.text}
               </ReplyMsg2>
-            </AudioIconWrap2>
-          ) : (
-            <ReplyMsg2
-              color={Helper.getColor().primaryTxt}
-              family={props.family && props.family}
-              ellipsizeMode={'tail'}
-              numberOfLines={1}
-            >
-              {props.reply.text && props.reply.text}
-            </ReplyMsg2>
-          )}
-        </TxtReply2>
-      )}
-      <CancelWrap>
-        {props.reply.type !== 'text' && props.reply.type !== 'audio' ? (
-          <ReplyImg2
-            source={{ uri: props.reply.file && props.reply.file.uri }}
-          />
-        ) : null}
-        <CancelTouch onPress={props.close && props.close}>
-          <PlusIcon name={'closecircleo'} color={'#ff733e'} />
-        </CancelTouch>
-      </CancelWrap>
-    </ReplyWrap>
+            )}
+          </TxtReply2>
+        )}
+        <CancelWrap>
+          {props.reply.type !== 'text' && props.reply.type !== 'audio' ? (
+            <ReplyImg2
+              source={{ uri: props.reply.file && props.reply.file.uri }}
+            />
+          ) : null}
+          <CancelTouch onPress={props.closeReply && props.closeReply}>
+            <PlusIcon name={'closecircleo'} color={'#ff733e'} />
+          </CancelTouch>
+        </CancelWrap>
+      </ReplyWrap>
+    </ListAnimate>
   );
 };

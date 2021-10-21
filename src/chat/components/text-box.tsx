@@ -91,7 +91,7 @@ export default (props: any) => {
   return (
     <Wrap scheme={scheme}>
       <MessageBox
-        sender={props.sender}
+        sender={props.sender && props.sender}
         onLongPress={() => sheet.show()}
         background={
           props.sender
@@ -102,20 +102,20 @@ export default (props: any) => {
         {props.reply ? (
           <Reply
             reply={props.reply}
-            sender={props.sender}
-            toReply={props.toReply}
-            ionicons={props.ionicons}
             lang={props.lang && props.lang}
+            sender={props.sender && props.sender}
+            toReply={props.toReply && props.toReply}
+            ionicons={props.ionicons && props.ionicons}
           />
         ) : null}
         <MsgTxt
           space={bottomSpace}
-          sender={props.sender}
           onTextLayout={txtLayout}
+          sender={props.sender && props.sender}
           family={props.family && props.family}
           color={props.sender ? '#fff' : Helper.getColor().primaryTxt}
         >
-          {props.text}
+          {props.text && props.text}
         </MsgTxt>
         {props.btnTitle ? (
           <Btn onPress={props.btnPress && props.btnPress}>
@@ -125,15 +125,22 @@ export default (props: any) => {
           </Btn>
         ) : null}
         <TickTime>
-          <TimeTxt family={props.family && props.family} sender={props.sender}>
-            {typeof props.date === 'object'
+          <TimeTxt
+            family={props.family && props.family}
+            sender={props.sender && props.sender}
+          >
+            {props.date && typeof props.date === 'object'
               ? Helper.getDate(props.date)
-              : props.date}
+              : props.date && props.date}
           </TimeTxt>
           {props.sender && (
             <TickIcon
-              read={props.status === 3}
-              name={props.status > 1 ? 'ios-checkmark-done' : 'ios-checkmark'}
+              read={props.status && props.status === 3}
+              name={
+                props.status && props.status > 1
+                  ? 'ios-checkmark-done'
+                  : 'ios-checkmark'
+              }
             />
           )}
         </TickTime>
@@ -142,7 +149,9 @@ export default (props: any) => {
         options={options}
         ref={(o: any) => (sheet = o)}
         cancelButtonIndex={options.length - 1}
-        title={props.optionTitle ? props.optionTitle : Helper.t('cancel', lang)}
+        title={
+          props.optionTitle ? props.optionTitle : Helper.t('options', lang)
+        }
         onPress={(index: number) =>
           index !== options.length - 1 && select(index)
         }

@@ -36,6 +36,9 @@ export default (props: any) => {
       <Touch onPress={() => props.navigation.navigate('Chat')}>
         <Txt>Chat</Txt>
       </Touch>
+      <Touch onPress={() => props.navigation.navigate('Chat2')}>
+        <Txt>Rigid Chat</Txt>
+      </Touch>
       <Touch onPress={() => setSuccess1(true)}>
         <Txt>Success Modal</Txt>
       </Touch>

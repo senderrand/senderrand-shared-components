@@ -115,6 +115,9 @@ export default (props: any) => {
         });
       }
     });
+    return () => {
+      record.setOnRecordingStatusUpdate(null);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -133,7 +136,6 @@ export default (props: any) => {
         await FileSystem.deleteAsync(record.getURI() as string, {
           idempotent: true,
         });
-        await record.stopAndUnloadAsync();
       } catch (error) {
         console.log(error, 'stop error');
       }
@@ -146,13 +148,14 @@ export default (props: any) => {
           file: Helper.formatFile(info),
           duration,
         });
-        await record.stopAndUnloadAsync();
       } catch (error) {
         console.log(error, 'playback error');
       }
     }
-    setDuration(0);
-    props.changeType('default');
+    record.stopAndUnloadAsync().then(() => {
+      setDuration(0);
+      props.changeType && props.changeType('default');
+    });
   };
 
   return (

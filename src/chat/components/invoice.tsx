@@ -109,9 +109,9 @@ export const InvoiceBox = (props: any) => {
         </Box2>
       </Box>
       <TimeTxt family={props.family && props.family}>
-        {typeof props.date === 'object'
+        {props.date && typeof props.date === 'object'
           ? Helper.getDate(props.date)
-          : props.date}
+          : props.date && props.date}
       </TimeTxt>
     </Wrap>
   );

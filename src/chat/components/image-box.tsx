@@ -77,7 +77,7 @@ export default (props: any) => {
   return (
     <Wrap scheme={scheme}>
       <ImgWrap
-        sender={props.sender}
+        sender={props.sender && props.sender}
         height={imgHeight}
         onLongPress={() => sheet.show()}
         background={
@@ -93,15 +93,22 @@ export default (props: any) => {
           style={{ ...others.imageRadius, height: imgHeight }}
         />
         <TickTime>
-          <TimeTxt family={props.family && props.family} sender={props.sender}>
-            {typeof props.date === 'object'
+          <TimeTxt
+            family={props.family && props.family}
+            sender={props.sender && props.sender}
+          >
+            {props.date && typeof props.date === 'object'
               ? Helper.getDate(props.date)
-              : props.date}
+              : props.date && props.date}
           </TimeTxt>
           {props.sender && (
             <TickIcon
-              read={props.status === 3}
-              name={props.status > 1 ? 'ios-checkmark-done' : 'ios-checkmark'}
+              read={props.status && props.status === 3}
+              name={
+                props.status && props.status > 1
+                  ? 'ios-checkmark-done'
+                  : 'ios-checkmark'
+              }
             />
           )}
         </TickTime>
