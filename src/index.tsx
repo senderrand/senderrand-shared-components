@@ -26,8 +26,71 @@ import {
   getInvoiceMessage,
   getTrackerMessage,
   getStatusMessage,
+  getNewRunnerMessage,
+  runnerInterface,
+  coordinateInterface,
 } from './chat/functions';
-import Chat from './chat';
+import {
+  createTable,
+  sendMessage,
+  getMessages,
+  updateMessage,
+  deleteMessage,
+} from './chat/sql';
+import { xmppSend, sendRecording, sendTyping, sendRead } from './chat/xmpp';
+import XMPPFactory from './chat/xmpp/factory';
+import XmppClient from './chat/xmpp/client';
+import Chat, { UID, messageInterface, senderInterface } from './chat';
+
+export default Chat;
+
+export {
+  Header,
+  Footer,
+  SuccessModal,
+  TextBox,
+  VoiceNote,
+  ImageBox,
+  VideoBox,
+  ListAnimate,
+  SuccessModal2,
+  FooterOptions,
+  LocationBox,
+  FleetFooter,
+  FleetBox,
+  StatusBox,
+  NewRunner,
+  InvoiceBox,
+  TrackBox,
+  SwipeUp,
+  Header2,
+  LoadingModal,
+  InvoiceModal,
+  ReasonSwipe,
+  LocationSwipe,
+  getInvoiceMessage,
+  getTrackerMessage,
+  getStatusMessage,
+  getNewRunnerMessage,
+  UID,
+  createTable,
+  getMessages,
+  sendMessage,
+  updateMessage,
+  deleteMessage,
+  XMPPFactory,
+  XmppClient,
+  xmppSend,
+  sendTyping,
+  sendRecording,
+  sendRead,
+  // Interface
+  runnerInterface,
+  coordinateInterface,
+  messageInterface,
+  senderInterface,
+};
+
 import {
   WebView,
   WebViewProps,
@@ -76,35 +139,7 @@ import ZigzagLines from 'react-native-zigzag-lines';
 import SwipeableViews from 'react-swipeable-views-native';
 import styled from 'styled-components';
 
-export default Chat;
-
 export {
-  Header,
-  Footer,
-  SuccessModal,
-  TextBox,
-  VoiceNote,
-  ImageBox,
-  VideoBox,
-  ListAnimate,
-  SuccessModal2,
-  FooterOptions,
-  LocationBox,
-  FleetFooter,
-  FleetBox,
-  StatusBox,
-  NewRunner,
-  InvoiceBox,
-  TrackBox,
-  SwipeUp,
-  Header2,
-  LoadingModal,
-  InvoiceModal,
-  ReasonSwipe,
-  LocationSwipe,
-  getInvoiceMessage,
-  getTrackerMessage,
-  getStatusMessage,
   // react-native-webview
   WebView,
   WebViewProps,

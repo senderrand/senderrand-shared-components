@@ -1,9 +1,10 @@
 import Helper from '../config/helper';
-import { messageInterface, sender, UID } from './index';
+import { messageInterface, senderInterface, UID } from './index';
 
 export let getInvoiceMessage = (
+  orderID: string,
   price: string,
-  senderData: sender,
+  senderData: senderInterface,
   location: string,
   lang?: string,
   invoiceID?: string
@@ -11,6 +12,7 @@ export let getInvoiceMessage = (
   let ng = lang ? lang : 'en';
   let data: any = { price };
   let msg: messageInterface = {
+    orderID,
     sender: senderData,
     id: UID(),
     status: 0,
@@ -35,7 +37,7 @@ export let getInvoiceMessage = (
   return { ...msg, data };
 };
 
-interface coordinateInterface {
+export interface coordinateInterface {
   longitude: number;
   latitude: number;
   longitudeDelta?: number;
@@ -43,13 +45,15 @@ interface coordinateInterface {
 }
 
 export let getTrackerMessage = (
+  orderID: string,
   region: coordinateInterface,
   position: coordinateInterface,
-  senderData: sender,
+  senderData: senderInterface,
   lang?: string
 ) => {
   let ng = lang ? lang : 'en';
   let msg: messageInterface = {
+    orderID,
     sender: senderData,
     id: UID(),
     status: 0,
@@ -63,12 +67,14 @@ export let getTrackerMessage = (
 };
 
 export let getStatusMessage = (
+  orderID: string,
   status: string,
-  senderData: sender,
+  senderData: senderInterface,
   loading?: boolean,
   color?: string
 ) => {
   let msg: messageInterface = {
+    orderID,
     sender: senderData,
     id: UID(),
     status: 0,
@@ -77,6 +83,38 @@ export let getStatusMessage = (
     file: null,
     type: 'status',
     data: { loading, color },
+  };
+  return msg;
+};
+
+export interface runnerInterface {
+  id: string | number;
+  name: string;
+  image: string;
+  rate: number;
+  runs: number;
+}
+export const getNewRunnerMessage = (
+  orderID: string,
+  runner: runnerInterface,
+  lang?: string
+) => {
+  let ng = lang ? lang : 'en';
+  let msg: messageInterface = {
+    orderID,
+    sender: { id: runner.id, name: runner.name, image: runner.image },
+    id: UID(),
+    status: 0,
+    date: new Date(),
+    text: Helper.t2('runner_joined', ng, [runner.name]),
+    file: null,
+    type: 'new_runner',
+    data: {
+      name: runner.name,
+      image: runner.image,
+      rate: runner.rate,
+      runs: `${runner.runs}+ Runs`,
+    },
   };
   return msg;
 };

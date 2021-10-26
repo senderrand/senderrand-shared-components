@@ -310,6 +310,7 @@ export let data = [
     file: null,
     type: 'text',
     reply: null,
+    orderID: 1,
   },
   {
     sender: { id: 1, name: 'The sender' },
@@ -319,6 +320,7 @@ export let data = [
     text: 'The reply to the top statement.',
     file: null,
     type: 'text',
+    orderID: 1,
     reply: {
       sender: { id: 2, name: 'The sender' },
       id: 7,
@@ -341,6 +343,7 @@ export let data = [
     },
     type: 'image',
     reply: null,
+    orderID: 1,
   },
   {
     sender: { id: 1, name: 'The sender' },
@@ -351,6 +354,7 @@ export let data = [
     file: null,
     type: 'purchase_location',
     reply: null,
+    orderID: 1,
     data: {
       address: 'Deira International Market',
       longitude: 20,
@@ -367,6 +371,7 @@ export let data = [
     file: null,
     type: 'fleet',
     reply: null,
+    orderID: 1,
     data: { index: 3 },
   },
   {
@@ -378,6 +383,7 @@ export let data = [
     file: null,
     type: 'status',
     reply: null,
+    orderID: 1,
     data: { loading: true },
   },
   {
@@ -389,6 +395,7 @@ export let data = [
     file: null,
     type: 'new_runner',
     reply: null,
+    orderID: 1,
     data: { loading: true },
   },
   {
@@ -400,6 +407,7 @@ export let data = [
     file: null,
     type: 'status',
     reply: null,
+    orderID: 1,
     data: { loading: false, color: '#66CF4A' },
   },
   {
@@ -411,6 +419,7 @@ export let data = [
     file: null,
     type: 'invoice',
     reply: null,
+    orderID: 1,
     data: { id: '#12345678', price: 500 },
   },
   {
@@ -422,6 +431,7 @@ export let data = [
     file: null,
     type: 'tracker',
     reply: null,
+    orderID: 1,
     data: {
       region: { longitude: 55.3863, latitude: 25.1279 },
       position: { longitude: 55.3775, latitude: 25.1218 },
@@ -436,6 +446,7 @@ export let data = [
     file: null,
     type: 'text',
     reply: null,
+    orderID: 1,
     data: { btnTitle: 'PAY' },
   },
   {
@@ -447,6 +458,7 @@ export let data = [
     file: null,
     type: 'text',
     reply: null,
+    orderID: 1,
     data: {
       footer: 'fleet',
       // options: [

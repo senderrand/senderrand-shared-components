@@ -38,4 +38,6 @@ export let en = {
     } is ${
       options && options?.length > 0 ? options[1] : ''
     }. Tap Accept below to pay for this errand or tap on Decline to decline the price.`,
+  runner_joined: (options?: string[]) =>
+    `Runner ${options?.length ? options[0] : ''} joined the chat`,
 };

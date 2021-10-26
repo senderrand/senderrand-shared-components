@@ -3,6 +3,8 @@ import Route from './route';
 import { useEffect } from 'react';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
+// @ts-ignore
+import { XmppClient } from 'senderrand-shared-components';
 
 export default function App() {
   useEffect(() => {
@@ -27,5 +29,19 @@ export default function App() {
     });
   };
 
-  return <Route />;
+  return (
+    <>
+      <Route />
+      <XmppClient
+        user={{
+          id: 1,
+          jabber_id: '',
+          phone: '',
+        }}
+        service={''}
+        domain={''}
+        change={(res: any) => console.log(res, 'hello there')}
+      />
+    </>
+  );
 }

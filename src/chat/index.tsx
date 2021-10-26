@@ -53,7 +53,7 @@ interface familyInterface {
   bold: string;
   italic: string;
 }
-export interface sender {
+export interface senderInterface {
   id: string | number;
   name?: string;
   image?: string;
@@ -61,14 +61,15 @@ export interface sender {
 export interface messageInterface {
   id: string | number;
   text: string;
-  date: Date;
+  date: Date | number;
   file: any;
   duration?: number;
-  sender: sender;
+  sender: senderInterface;
   reply?: messageInterface | null;
   data?: any;
   type: string;
   status: number;
+  orderID: string | number;
 }
 
 interface userData {
@@ -121,6 +122,7 @@ interface Chat {
   headerOnSelectOption?: (index: number) => void;
   headerOptions?: string[];
   newRunnerPress?: () => void;
+  orderID: string | number;
 }
 
 export default (props: Chat) => {
@@ -140,9 +142,10 @@ export default (props: Chat) => {
     let data = {
       ...msg,
       id: UID(),
-      date: new Date(),
+      date: +new Date(),
       status: 0,
       reply,
+      orderID: props.orderID,
       sender: props.user && props.user,
     };
     props.send && props.send(data);
@@ -506,8 +509,8 @@ export default (props: Chat) => {
             keyboardDismissMode={'on-drag'}
             ref={(ref: any) => (list = ref)}
             showsVerticalScrollIndicator={false}
-            data={props.messages && props.messages.length ? props.messages : []}
             contentContainerStyle={others.listContainer}
+            data={props.messages && props.messages.length ? props.messages : []}
           />
           {renderFooter()}
         </Avoid>
@@ -541,5 +544,5 @@ let emptyMessage = {
   sender: null,
   id: null,
   status: 0,
-  date: new Date(),
+  date: +new Date(),
 };

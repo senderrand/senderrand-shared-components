@@ -153,6 +153,8 @@ export const FleetBox = (props: any) => {
       <TimeTxt family={props.family && props.family}>
         {props.date && typeof props.date === 'object'
           ? Helper.getDate(props.date)
+          : props.date && typeof props.date === 'number'
+          ? Helper.getDate(new Date(props.date))
           : props.date && props.date}
       </TimeTxt>
     </BoxWrap>

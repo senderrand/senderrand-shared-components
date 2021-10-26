@@ -131,6 +131,8 @@ export default (props: any) => {
           >
             {props.date && typeof props.date === 'object'
               ? Helper.getDate(props.date)
+              : props.date && typeof props.date === 'number'
+              ? Helper.getDate(new Date(props.date))
               : props.date && props.date}
           </TimeTxt>
           {props.sender && (
