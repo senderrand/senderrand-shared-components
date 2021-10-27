@@ -123,6 +123,8 @@ interface Chat {
   headerOptions?: string[];
   newRunnerPress?: () => void;
   orderID: string | number;
+  footerSetTyping?: (typing: boolean) => void;
+  footerSetRecording?: (recording: boolean) => void;
 }
 
 export default (props: Chat) => {
@@ -427,6 +429,8 @@ export default (props: Chat) => {
         antDesign={props.antDesign && props.antDesign}
         options={props.footerOptions && props.footerOptions}
         onError={props.footerOnError && props.footerOnError}
+        setTyping={props.footerSetTyping && props.footerSetTyping}
+        setRecording={props.footerSetRecording && props.footerSetRecording}
         onChangeText={props.footerOnChangeText && props.footerOnChangeText}
         defaultOptions={
           props.footerDefaultOptions && props.footerDefaultOptions

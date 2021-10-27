@@ -12,21 +12,20 @@ export default (props: any) => {
     props.send && props.send(message);
   };
 
+  let switchType = (value: string) => {
+    setType(value);
+    value === 'audio'
+      ? props.setRecording && props.setRecording(true)
+      : props.setRecording && props.setRecording(false);
+  };
+
   return (
     <Wrap>
       {type === 'default' && (
-        <Default
-          {...props}
-          send={send}
-          changeType={(value: string) => setType(value)}
-        />
+        <Default {...props} send={send} changeType={switchType} />
       )}
       {type === 'audio' && (
-        <Recorder
-          {...props}
-          send={send}
-          changeType={(value: string) => setType(value)}
-        />
+        <Recorder {...props} send={send} changeType={switchType} />
       )}
     </Wrap>
   );

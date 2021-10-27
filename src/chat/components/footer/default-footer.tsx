@@ -106,6 +106,7 @@ export default (props: any) => {
   let [loading, setLoading] = useState(false);
   let [options, setOptions] = useState<string[]>([]);
   let [lang] = useState(props.lang ? props.lang : 'en');
+  let [typing, setTyping] = useState(false);
   let [defaultOptions] = useState(
     props.defaultOptions && props.defaultOptions.length
       ? props.defaultOptions
@@ -192,6 +193,18 @@ export default (props: any) => {
     }
   };
 
+  let handleChange = (value: React.SetStateAction<string>) => {
+    setText(value);
+    props.onChangeText && props.onChangeText(value);
+    !typing && setTyping(true);
+    !typing && props.setTyping && props.setTyping(true);
+  };
+
+  let endEditing = () => {
+    setTyping(false);
+    props.setTyping && props.setTyping(false);
+  };
+
   return (
     <Wrap>
       {props.reply && <ReplyFoot {...props} />}
@@ -230,10 +243,8 @@ export default (props: any) => {
             multiline={props.multiline ? props.multiline : true}
             placeholder={props.placeholder ? props.placeholder : ''}
             keyboardType={props.keyboardType ? props.keyboardType : 'default'}
-            onChangeText={(value: React.SetStateAction<string>) => {
-              setText(value);
-              props.onChangeText && props.onChangeText(value);
-            }}
+            onChangeText={handleChange}
+            onEndEditing={endEditing}
           />
           {props.runner && (
             <PaperClipTouch

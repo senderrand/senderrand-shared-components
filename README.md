@@ -8,7 +8,7 @@ WIP: intented collection of similar components used across out applications
 npm install senderrand-shared-components
 ```
 
-Content
+UI Components
 ========================
 * [Header](#header-component-usage)
 * [Header2](#header2-component-usage)
@@ -34,10 +34,34 @@ Content
 * [LocationSwipe Component](#locationswipe-component)
 * [Exported Libraries](#exported-libraries)
 
-## Usage
+Chat & Functionalities
+========================
+* [Chat](#header-component-usage)
+* [getInvoiceMessage](#header2-component-usage)
+* [getTrackerMessage](#footer-component-usage)
+* [getStatusMessage](#success-modal-1)
+* [getNewRunnerMessage](#success-modal-2)
+* [UID](#textbox-component)
+* [createTable](#voicenote-component)
+* [getMessages](#imagebox-component)
+* [sendMessage](#videobox-component)
+* [updateMessage](#footeroptions-component)
+* [deleteMessage](#locationbox-component)
+* [XMPPFactory](#fleetfooter-component)
+* [XmppClient](#fleetbox-component)
+* [xmppSend](#statusbox-component)
+* [sendTyping](#newrunner-component)
+* [sendRecording](#invoicebox-component)
+* [sendRead](#trackbox-component)
+* [runnerInterface](#swipeup-component)
+* [coordinateInterface](#LoadingModal)
+* [messageInterface](#InvoiceModal)
+* [senderInterface](#reasonswipe-component)
+
+## Rigid Chat
 
 ```js
-import SenderrandSharedComponents from "senderrand-shared-components";
+import Chat from "senderrand-shared-components";
 
 // ...
 

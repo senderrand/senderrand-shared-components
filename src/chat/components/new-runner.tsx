@@ -19,7 +19,7 @@ const Txt1 = styled.Text`
 const ImgWrap = styled.TouchableOpacity`
   width: 110px;
   height: 110px;
-  border: 2px solid ${Helper.getColor().primary};
+  border: 2px solid ${Helper.getColor().chatBoxTwo};
   border-radius: 55px;
   margin-top: 10px;
   align-items: center;
