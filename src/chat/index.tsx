@@ -117,8 +117,8 @@ interface Chat {
   footerOnSelectDefaultOption?: (index: number) => void;
   footerOptionsPress?: (index: number, option: btnOptions) => void;
   footerType?: string;
-  headerDetail?: string;
   headerTitle?: string;
+  headerDetail?: string;
   headerOnSelectOption?: (index: number) => void;
   headerOptions?: string[];
   newRunnerPress?: () => void;

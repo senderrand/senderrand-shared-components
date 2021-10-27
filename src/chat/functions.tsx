@@ -2,7 +2,7 @@ import Helper from '../config/helper';
 import { messageInterface, senderInterface, UID } from './index';
 
 export let getInvoiceMessage = (
-  orderID: string,
+  orderID: string | number,
   price: string,
   senderData: senderInterface,
   location: string,

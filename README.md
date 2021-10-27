@@ -34,39 +34,24 @@ UI Components
 * [LocationSwipe Component](#locationswipe-component)
 * [Exported Libraries](#exported-libraries)
 
-Chat & Functionalities
+Right Chat & Functionalities
 ========================
-* [Chat](#header-component-usage)
-* [getInvoiceMessage](#header2-component-usage)
-* [getTrackerMessage](#footer-component-usage)
-* [getStatusMessage](#success-modal-1)
-* [getNewRunnerMessage](#success-modal-2)
-* [UID](#textbox-component)
-* [createTable](#voicenote-component)
-* [getMessages](#imagebox-component)
-* [sendMessage](#videobox-component)
-* [updateMessage](#footeroptions-component)
-* [deleteMessage](#locationbox-component)
-* [XMPPFactory](#fleetfooter-component)
-* [XmppClient](#fleetbox-component)
-* [xmppSend](#statusbox-component)
-* [sendTyping](#newrunner-component)
-* [sendRecording](#invoicebox-component)
-* [sendRead](#trackbox-component)
-* [runnerInterface](#swipeup-component)
-* [coordinateInterface](#LoadingModal)
-* [messageInterface](#InvoiceModal)
-* [senderInterface](#reasonswipe-component)
-
-## Rigid Chat
-
-```js
-import Chat from "senderrand-shared-components";
-
-// ...
-
-const result = await SenderrandSharedComponents.multiply(3, 7);
-```
+* [Chat](#rigid-chat)
+* [getInvoiceMessage](#get-invoice-message)
+* [getTrackerMessage](#get-tracker-message)
+* [getStatusMessage](#get-status-message)
+* [getNewRunnerMessage](#get-new-runner-message)
+* [createTable](#create-table)
+* [sendMessage](#send-message)
+* [getMessages](#get-messages)
+* [updateMessage](#update-message)
+* [deleteMessage](#delete-message)
+* [XmppClient](#xmpp-client)
+* [xmppSend](#xmpp-send)
+* [sendTyping](#send-typing)
+* [sendRecording](#send-recording)
+* [sendRead](#send-read)
+* [Interfaces](#interfaces)
 
 ## Header Component Usage
 
@@ -98,7 +83,6 @@ const Example = () => (
 - Styled Header with logo, title, detail & options
 
 ## Tech
-
 The Header component uses a number of open source projects to work properly:
 
 - `styled-components` - For styling.
@@ -247,6 +231,8 @@ Below are the listed props that can be passed to the header component
 | `sheetTwoTitle` | `string` | `false` | The title of the second action sheet, defaults to `Options`.  |
 | `onChangeText` | `function` | `false` |  Handles text input change, returns text string as parameter.  |
 | `lang` | `string` | `false` | The language that should be used for the default text in the component. Defaults to `en`. |
+| `setTyping` | `function` | `false` | This function property lets know when user is typing by sending true when typing and false when not. |
+| `setRecording` | `function` | `false` | This function property lets know when user is recording by sending true when recording and false when not. |
 
 
 ## Success Modal 1
@@ -1277,6 +1263,505 @@ Below are the listed props that can be passed to the LocationSwipe
 * react-swipeable-views-native
 * styled-components
 ## Contributing
+
+## Rigid Chat
+
+```js
+import Errand from "senderrand-shared-components";
+import {
+  Ionicons,
+  AntDesign,
+  Feather,
+  MaterialIcons,
+  MaterialCommunityIcons,
+  Entypo,
+} from '@expo/vector-icons';
+import Chat, {
+  getInvoiceMessage,
+  getStatusMessage,
+  getNewRunnerMessage,
+  xmppSend,
+  runnerInterface,
+  getTrackerMessage, // @ts-ignore
+} from 'senderrand-shared-components';
+
+const family = {
+  light: 'Light',
+  regular: 'Regular',
+  medium: 'Medium',
+  bold: 'Bold',
+  italic: 'RegularItalic',
+};
+
+let sender = { id: 1, name: 'Ollan Monsur' };
+let sender2 = { id: 2, name: 'Yinka Azeez' };
+let msg = getInvoiceMessage('1', '20 AED', sender2, 'Mirdif City Center', 'ar');
+let msg2 = getTrackerMessage(
+  '1',
+  { longitude: 55.3863, latitude: 25.1279 },
+  { longitude: 55.3775, latitude: 25.1218 },
+  sender2,
+  'en'
+);
+let msg3 = getStatusMessage(
+  '1',
+  'Yinka is arriving somewhere currently',
+  sender2
+);
+let runner: runnerInterface = {
+  ...sender2,
+  image:
+    'url.png',
+  rate: 4,
+  runs: 110,
+};
+let msg4 = getNewRunnerMessage('1', runner, 'ar');
+
+// ...
+
+export default () => {
+  let [messages, setMessages] = useState([...data, msg, msg2, msg3, msg4]);
+  let send = (message: any) => {
+    setMessages([...messages, message]);
+    xmppSend('from jabber id', 'to jabber id', message);
+  };
+
+  return (
+    <Wrap>
+      <Errand
+        orderID={1}
+        headerOptions={['History', 'Locations', 'Settings', 'FAQ']}
+        headerOnSelectOption={(index) => console.log(index)}
+        family={family}
+        user={sender}
+        send={send}
+        messages={messages}
+        ionicons={Ionicons}
+        entypo={Entypo}
+        materialIcons={MaterialIcons}
+        antDesign={AntDesign}
+        invoiceBoxPress={(item) => console.log(item)}
+        trackBoxPress={(item) => console.log(item)}
+        feather={Feather}
+        loading={false}
+        footerOnError={(error: string) => Alert.alert('Failed', error)}
+        materialCommunityIcons={MaterialCommunityIcons}
+      />
+    </Wrap>
+  );
+};
+```
+
+## props
+
+Below are the listed props that can be passed to the header component
+
+| Property | Type | Required | Description |
+| ------ | ------ | ------ | ------ |
+| `lang` | `string` | `false` | The language code for the chat. Defaults to `en`. |
+| `user` | `userData` | `true` | This is the currently logged in user. It's an object that should consist of `id`, `name` and `image`. `image` is not compulsory. |
+| `send` | `function` | `true` | Takes in the message data as parameter. See example above. |
+| `textBoxOnSelectOption` | `function` | `false` | Takes the index and the item selected from the text box options. |
+| `mediaOnSelectOption` | `function` | `false` | Takes the index and the item selected from the media box options. |
+| `locationBoxOnSelectOption` | `function` | `false` | Takes the index and the item selected from the location box options. |
+| `fleetBoxOnSelectOption` | `function` | `false` | Takes the index and the item selected from the fleet box options. |
+| `footerOnSelectOption` | `function` | `false` | Takes the index of the selected option from the footer options. |
+| `footerOnSelectDefaultOption` | `function` | `false` | Takes the index of the selected option from the default footer options. |
+| `headerOnSelectOption` | `function` | `false` | Takes the index of the selected option from the header options. |
+| `family` | `object` | `true` | An object that contains the font family used for the text elements in the component. An example is shown above. |
+| `messages` | `array` | `true` | An array of messages. |
+| `entypo` | `@expo/vector-icons` | `true` | It takes in Entypo component to display icons in the component. Example above. |
+| `ionicons` | `@expo/vector-icons` | `true` | It takes in Ionicons component to display icons in the component. Example above. |
+| `materialIcons` | `@expo/vector-icons` | `true` | It takes in MaterialIcons component to display icons in the component. Example above. |
+| `antDesign` | `@expo/vector-icons` | `true` | It takes in AntDesign component to display icons in the component. Example above. |
+| `feather` | `@expo/vector-icons` | `true` | It takes in Feather component to display icons in the component. Example above. |
+| `materialCommunityIcons` | `@expo/vector-icons` | `true` | It takes in MaterialCommunityIcons component to display icons in the component. Example above. |
+| `textBoxOptions` | `array` | `false` | An array of string passed as the text box options. |
+| `voiceNoteOptions` | `array` | `false` | An array of string passed as the voice note options. |
+| `imageBoxOptions` | `array` | `false` | An array of string passed as the image box options. |
+| `errandLocationOptions` | `array` | `false` | An array of string passed as the errand location box options. |
+| `fleetBoxOptions` | `array` | `false` | An array of string passed as the fleet box options. |
+| `footerOptions` | `array` | `false` | An array of string passed as the footer options. |
+| `footerDefaultOptions` | `array` | `false` | An array of string passed as the footer default options. Defaults to `['Camera', 'Library']` |
+| `headerOptions` | `array` | `false` | An array of string passed as the header options. |
+| `textBoxBtnPress` | `function` | `false` | The property called when the button in the text box is pressed. It returns the message item as parameter. |
+| `invoiceBoxPress` | `function` | `false` | The prop called when the invoice box is pressed. It returns the message item as parameter. |
+| `trackBoxPress` | `function` | `false` | The props called when the tracker box is pressed. It returns the message item as parameter. |
+| `loading` | `boolean` | `false` | To disable actions in the component and show loading. |
+| `footerOnError` | `function` | `true` | The function called to return the error parameter when there is an error to report in the component. |
+| `footerOnChangeText` | `function` | `false` | Handles the onChangeText for the footer TextInput. |
+| `footerOptionsPress` | `function` | `false` | The prop called when a button is pressed from the footer button options. It returns the index and item as parameter. |
+| `footerType` | `string` | `false` | To change the footer type. The available types are `fleet, options, footer`. Defaults to footer. |
+| `headerTitle` | `string` | `false` | The string title passed to the header. |
+| `headerDetail` | `string` | `false` | The text shown below the header title. |
+| `newRunnerPress` | `function` | `false` | The prop called when the new runner component is tapped. |
+| `footerSetTyping` | `function` | `false` | The prop called when user starts and stops typing. It take in a boolean as parameter. True for typing, False for not typing. |
+| `footerSetRecording` | `function` | `false` | The prop called when user starts and stops recording. It take in a boolean as parameter. True for recording, False for not recording. |
+
+## Get Invoice Message
+
+```typescript
+import { getInvoiceMessage } from 'senderrand-shared-components';
+
+let sender2 = { id: 2, name: 'Abdul Mumin' };
+let msg = getInvoiceMessage('1', '20 Naira', sender2, 'Mirdif City Center', 'ar', '#invoiceID');
+```
+## Details
+A function call to get the message data structure of an invoice message. The message is then sent to the chat.
+NOTE: Pass invoiceID when there is a full invoice and don't pass it when there is only total price.
+
+## parameters
+Below are the listed parameter to be passed to the function
+
+| Property | Type | Required | Description |
+| ------ | ------ | ------ | ------ |
+| `orderID` | `string or number` | `true` | The order ID |
+| `price` | `string` | `true` | The total price to be displayed. EX `'120 Naira'` |
+| `senderData` | `senderInterface` | `true` | The senders data which includes `id`, `name`, and `image` where image image is not compulsory. |
+| `location` | `string` | `true` | The invoice location, which is the point of purchase. Example above. |
+| `lang` | `string` | `false` | The language that should be used for the default text. Defaults to `en`. |
+| `invoiceID` | `string` | `false` | When invoiceID is passed, it means invoice has been computed. If not passed, it means there is only total price. |
+
+## Get Tracker Message
+
+```typescript
+import { getTrackerMessage } from 'senderrand-shared-components';
+
+let sender2 = { id: 2, name: 'Abdul Mumin' };
+let msg = getTrackerMessage(
+  '1',
+  { longitude: 55.3863, latitude: 25.1279 },
+  { longitude: 55.3775, latitude: 25.1218 },
+  sender2,
+  'en'
+);
+```
+## Details
+A function call to get the message data structure of a tracking message. The message is then sent to the chat.
+
+## parameters
+Below are the listed parameter to be passed to the function
+
+| Property | Type | Required | Description |
+| ------ | ------ | ------ | ------ |
+| `orderID` | `string or number` | `true` | The order ID |
+| `region` | `coordinateInterface` | `true` | The coordinate of the region where the user is. |
+| `position` | `coordinateInterface` | `true` | The coordinate of the current user position. |
+| `senderData` | `senderInterface` | `true` | The senders data which includes `id`, `name`, and `image` where image image is not compulsory. |
+| `lang` | `string` | `false` | The language that should be used for the default text. Defaults to `en`. |
+
+## Get Status Message
+
+```typescript
+import { getStatusMessage } from 'senderrand-shared-components';
+
+let sender2 = { id: 2, name: 'Abdul Mumin' };
+let msg =  getStatusMessage(
+  '1',
+  'Yinka is arriving somewhere currently',
+  sender2
+);
+```
+## Details
+A function call to get the message data structure of a status message. The message is then sent to the chat.
+
+## parameters
+Below are the listed parameter to be passed to the function
+
+| Property | Type | Required | Description |
+| ------ | ------ | ------ | ------ |
+| `orderID` | `string or number` | `true` | The order ID |
+| `status` | `string` | `true` | The status to be sent. |
+| `loading` | `boolean` | `false` | To add loading indicator to the status. |
+| `senderData` | `senderInterface` | `true` | The senders data which includes `id`, `name`, and `image` where image image is not compulsory. |
+| `color` | `string` | `false` | To change the color of the status text. |
+
+
+## Get New Runner Message
+
+```typescript
+import { getNewRunnerMessage, runnerInterface } from 'senderrand-shared-components';
+
+let sender2 = { id: 2, name: 'Abdul Mumin' };
+let runner: runnerInterface = {
+  ...sender2,
+  image: 'oseni.png',
+  rate: 4,
+  runs: 110,
+};
+let msg = getNewRunnerMessage('1', runner, 'ar');
+```
+## Details
+A function call to get the message data structure of a new runner message. The message is then sent to the chat.
+
+## parameters
+Below are the listed parameter to be passed to the function
+
+| Property | Type | Required | Description |
+| ------ | ------ | ------ | ------ |
+| `orderID` | `string / number` | `true` | The order ID |
+| `runner` | `runnerInterface` | `true` | The runners data which includes `id`, `name`, `image`, `rate`, `runs`. |
+| `lang` | `string` | `false` | The language that should be used for the default text. Defaults to `en`. |
+
+## Create Table
+
+```typescript
+import { createTable } from 'senderrand-shared-components';
+
+createTable()
+```
+## Details
+The function is to be called to create the sql table if it doesn't exist, when the application opens.
+
+
+## Send Message
+
+```typescript
+import { sendMessage, messageInterface } from 'senderrand-shared-components';
+
+let message: messageInterface = {
+  sender: { id: 2, name: 'The sender' },
+  id: 76,
+  status: 3,
+  date: new Date(),
+  text: 'The sender has accepted the Invoice, Proceed to make payment.',
+  file: null,
+  type: 'text',
+  reply: null,
+  orderID: 1,
+  data: { btnTitle: 'PAY' },
+} // Pass required data
+sendMessage(
+  message,
+  (res) => res && console.log(res)
+);
+```
+## Details
+The function is called to send message into the device, after sending you can call the getMessages to get updates.
+The response is false if it fails to send.
+
+## parameters
+Below are the listed parameter to be passed to the function
+
+| Property | Type | Required | Description |
+| ------ | ------ | ------ | ------ |
+| `message` | `messageInterface` | `true` | The message to be sent to the chat. Example above |
+| `callback` | `function` | `true` | Callback when the promise completes. The response is false if sending fails, but returns an array of messages when it succeeds. |
+
+## Get Messages
+
+```typescript
+import { getMessages } from 'senderrand-shared-components';
+
+getMessages('order ID')
+```
+## Details
+The function is called to get the messages on the device,
+
+## parameters
+Below are the listed parameter to be passed to the function
+
+| Property | Type | Required | Description |
+| ------ | ------ | ------ | ------ |
+| `orderID` | `string` | `true` | The order id of the messages to be retrieved. |
+
+## Update Message
+
+```typescript
+import { updateMessage } from 'senderrand-shared-components';
+
+updateMessage(
+  'status',
+  3,
+  'orderID',
+  orderID,
+  (res) => res && callback({ type: 'messages' })
+);
+```
+## Details
+The function is called to update messages on the device,
+
+## parameters
+Below are the listed parameter to be passed to the function
+
+| Property | Type | Required | Description |
+| ------ | ------ | ------ | ------ |
+| `primaryKey` | `string` | `true` | The key of the item to be updated ex: `status`, `file`. |
+| `primaryValue` | `string / number` | `true` | The value to be updated with. Stringify it if the value is neither string nor number. |
+| `secondaryKey` | `string` | `true` | A key in the particular row to be updated. ex `id`, `orderID` |
+| `secondaryValue` | `string | number` | `true` | The value of the secondary key. |
+| `callback` | `function` | `true` | Callback when the promise completes. The response is false if update fails, but returns an array of messages when it succeeds. |
+
+## Delete Message
+
+```typescript
+import { deleteMessage } from 'senderrand-shared-components';
+
+deleteMessage(
+  'id',
+  3,
+  (res) => res && callback({ type: 'messages' })
+);
+```
+## Details
+The function is called to delete messages on the device,
+
+## parameters
+Below are the listed parameter to be passed to the function
+
+| Property | Type | Required | Description |
+| ------ | ------ | ------ | ------ |
+| `key` | `string` | `true` | A key in the object to be deleted. |
+| `value` | `string / number` | `true` | The value to be deleted. **Stringify** it if the value is neither string nor number. |
+| `callback` | `function` | `true` | Callback when the promise completes. The response is false if delete fails, but returns an array of messages when it succeeds. |
+
+
+## XMPP Client
+
+```typescript
+import { XmppClient } from 'senderrand-shared-components';
+
+const App = () => (
+  <XmppClient
+    user={{
+      id: 1,
+      jabber_id: '',
+      phone: '',
+    }}
+    service={''}
+    domain={''}
+    change={(res: any) => console.log(res, 'hello there')}
+  />
+)
+```
+## Details
+The component is used globally in the app to handle xmpp request and response.,
+
+## props
+Below are the listed properties to be passed to the component
+
+| Property | Type | Required | Description |
+| ------ | ------ | ------ | ------ |
+| `user` | `object` | `true` | The user object containing the user `id` `jabber_id` and `phone` number. |
+| `service` | `string` | `true` | The server url. |
+| `domain` | `string` | `true` | The service domain. |
+| `change` | `function` | `true` | When there is an update on the xmpp. |
+
+## XMPP Send
+
+```typescript
+import { xmppSend } from 'senderrand-shared-components';
+
+xmppSend('from', 'to', {/* data */})
+```
+## Details
+The function is called to send request to xmpp,
+
+## parameters
+Below are the listed parameter to be passed to the function
+
+| Property | Type | Required | Description |
+| ------ | ------ | ------ | ------ |
+| `from` | `string` | `true` | The senders jabber id. |
+| `to` | `string` | `true` | The receivers jabber id. |
+| `data` | `object` | `true` | The data to be sent through xmpp. |
+
+## Send Typing
+
+```typescript
+import { sendTyping } from 'senderrand-shared-components';
+
+sendTyping(true, 'orderID', 'from', 'to')
+```
+## Details
+The function is called to denote that user is currently typing.
+
+## parameters
+Below are the listed parameter to be passed to the function
+
+| Property | Type | Required | Description |
+| ------ | ------ | ------ | ------ |
+| `typing` | `boolean` | `true` | Weather typing is true or false. |
+| `orderID` | `string` | `true` | The orderID of the current conversation. |
+| `from` | `string` | `true` | The senders jabber id. |
+| `to` | `string` | `true` | The receivers jabber id. |
+
+## Send Recording
+
+```typescript
+import { sendRecording } from 'senderrand-shared-components';
+
+sendRecording(true, 'orderID', 'from', 'to')
+```
+## Details
+The function is called to denote that user is currently recording voice note.
+
+## parameters
+Below are the listed parameter to be passed to the function
+
+| Property | Type | Required | Description |
+| ------ | ------ | ------ | ------ |
+| `recording` | `boolean` | `true` | Weather recording is true or false. |
+| `orderID` | `string` | `true` | The orderID of the current conversation. |
+| `from` | `string` | `true` | The senders jabber id. |
+| `to` | `string` | `true` | The receivers jabber id. |
+
+## Send Read
+
+```typescript
+import { sendRead } from 'senderrand-shared-components';
+
+sendRead('orderID', 'from', 'to')
+```
+## Details
+The function is called to denote that user has read received messages.
+
+## parameters
+Below are the listed parameter to be passed to the function
+
+| Property | Type | Required | Description |
+| ------ | ------ | ------ | ------ |
+| `orderID` | `string` | `true` | The orderID of the current conversation. |
+| `from` | `string` | `true` | The senders jabber id. |
+| `to` | `string` | `true` | The receivers jabber id. |
+
+## Interfaces
+
+```typescript
+export interface runnerInterface {
+  id: string | number;
+  name: string;
+  image: string;
+  rate: number;
+  runs: number;
+}
+
+export interface coordinateInterface {
+  longitude: number;
+  latitude: number;
+  longitudeDelta?: number;
+  latitudeDelta?: number;
+}
+
+export interface senderInterface {
+  id: string | number;
+  name?: string;
+  image?: string;
+}
+export interface messageInterface {
+  id: string | number;
+  text: string;
+  date: Date | number;
+  file: any;
+  duration?: number;
+  sender: senderInterface;
+  reply?: messageInterface | null;
+  data?: any;
+  type: string;
+  status: number;
+  orderID: string | number;
+}
+```
 
 See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
 
