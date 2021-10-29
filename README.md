@@ -15,6 +15,7 @@ UI Components
 * [Footer](#footer-component-usage)
 * [Success Modal 1](#success-modal-1)
 * [Success Modal 2](#success-modal-2)
+* [Custom Modal](#custom-modal)
 * [TextBox Component](#textbox-component)
 * [VoiceNote Component](#voicenote-component)
 * [ImageBox Component](#imagebox-component)
@@ -332,6 +333,43 @@ Below are the listed props that can be passed to the header component
 | `text` | `string` | `false` | The text string to be displayed as title ex: 'Verified Successfully' |
 | `press` | `function` | `false` | A function called after the button is pressed |
 | `btnTitle` | `string` | `false` | The title of the button displayed |
+
+
+## Custom Modal
+
+```typescript
+import { CustomModal } from 'senderrand-shared-components';
+import { useState } from 'react';
+import { AntDesign } from '@expo/vector-icons';
+
+const Example = () => {
+  let [visible, setVisible] = useState(true)
+
+  return (
+    <CustomModal
+      visible={visible}
+      close={() => setVisible(false)}
+      antdesign={AntDesign}
+    > 
+      <Text>Hello, here is a sample modal content</Text>
+    </CustomModal>
+  )
+}
+```
+
+## Features
+- A styled custom modal, that takes in a JSX Element as children to be displayed in the modal container.
+
+## props
+
+Below are the listed props that can be passed to the custom modal component
+
+| Property | Type | Required | Description |
+| ------ | ------ | ------ | ------ |
+| `visible` | `boolean` | `true` | Set the visibility of the modal to true or false |
+| `antdesign` | `@expo/vector-icons` | `true` | It takes in AntDesign component to display icons in the component |
+| `close` | `function` | `true` | A function called after the close button is pressed |
+| `children` | `JSX.Element` | `true` | Children element that is displayed in the modal |
 
 ## TextBox Component
 

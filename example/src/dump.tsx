@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { family } from './chat';
 import styled from 'styled-components';
-import { Entypo, MaterialIcons } from '@expo/vector-icons';
+import { Entypo, MaterialIcons, AntDesign } from '@expo/vector-icons';
 import {
   Header2,
   LoadingModal,
+  CustomModal,
   InvoiceModal, // @ts-ignore
 } from 'senderrand-shared-components';
 
@@ -28,10 +29,15 @@ const Txt = styled.Text`
   font-size: 15px;
   color: #fff;
 `;
+const TxtBlack = styled.Text`
+  font-size: 15px;
+  color: #000;
+`;
 
 export default (props: any) => {
   let [loading, setLoading] = useState(false);
   let [invoice, setInvoice] = useState(false);
+  let [custom, setCustom] = useState(false);
   return (
     <Wrap>
       <Header2
@@ -50,7 +56,17 @@ export default (props: any) => {
         <Touch onPress={() => setInvoice(true)}>
           <Txt>Invoice Modal</Txt>
         </Touch>
+        <Touch onPress={() => setCustom(true)}>
+          <Txt>Custom Modal</Txt>
+        </Touch>
       </Inner>
+      <CustomModal
+        visible={custom}
+        close={() => setCustom(false)}
+        antdesign={AntDesign}
+      >
+        <TxtBlack>Hello You can put anything here really!</TxtBlack>
+      </CustomModal>
       <LoadingModal
         lang={'en'}
         visible={loading}

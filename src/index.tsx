@@ -7,6 +7,7 @@ import ImageBox from './chat/components/image-box';
 import VideoBox from './chat/components/video-box';
 import ListAnimate from './common/list-animate';
 import SuccessModal2 from './common/modals/success-modal2';
+import CustomModal from './common/modals/custom-modal';
 import NewRunner from './chat/components/new-runner';
 import {
   FooterOptions,
@@ -54,6 +55,7 @@ export {
   VideoBox,
   ListAnimate,
   SuccessModal2,
+  CustomModal,
   FooterOptions,
   LocationBox,
   FleetFooter,
