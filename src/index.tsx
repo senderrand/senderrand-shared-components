@@ -39,11 +39,11 @@ import {
   deleteMessage,
 } from './chat/sql';
 import { xmppSend, sendRecording, sendTyping, sendRead } from './chat/xmpp';
-import XMPPFactory from './chat/xmpp/factory';
+// import XMPPFactory from './chat/xmpp/factory';
 import XmppClient from './chat/xmpp/client';
 import Chat, { UID, messageInterface, senderInterface } from './chat';
 
-export default Chat;
+// export default Chat;
 
 export {
   Header,
@@ -80,12 +80,13 @@ export {
   sendMessage,
   updateMessage,
   deleteMessage,
-  XMPPFactory,
+  // XMPPFactory,
   XmppClient,
   xmppSend,
   sendTyping,
   sendRecording,
   sendRead,
+  Chat,
   // Interface
   runnerInterface,
   coordinateInterface,
@@ -93,122 +94,122 @@ export {
   senderInterface,
 };
 
-import {
-  WebView,
-  WebViewProps,
-  WebViewNavigation,
-  WebViewMessageEvent,
-  FileDownload,
-} from 'react-native-webview';
-import SvgImage from 'react-native-remote-svg';
-import { Asset, useAssets, AssetMetadata } from 'expo-asset';
-import {
-  Audio,
-  Video,
-  AVPlaybackStatus,
-  AVPlaybackStatusToSet,
-  AVPlaybackNativeSource,
-  VideoNativeProps,
-  VideoProps,
-  VideoNaturalSize,
-  VideoState,
-  VideoFullscreenUpdateEvent,
-  VideoReadyForDisplayEvent,
-  ResizeMode,
-} from 'expo-av';
-import Constants from 'expo-constants';
-import * as DocumentPicker from 'expo-document-picker';
-import * as FileSystem from 'expo-file-system';
-import * as Font from 'expo-font';
-import * as ImageManipulator from 'expo-image-manipulator';
-import * as ImagePicker from 'expo-image-picker';
-import Moment from 'moment';
-import ActionSheet from 'react-native-actionsheet';
-import * as Animatable from 'react-native-animatable';
-import MapView, {
-  Marker,
-  PROVIDER_DEFAULT,
-  PROVIDER_GOOGLE,
-  Region,
-  MAP_TYPES,
-  Camera,
-  Address,
-} from 'react-native-maps';
-import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
-import Slider from 'react-native-sliders';
-import Svg from 'react-native-svg';
-import ZigzagLines from 'react-native-zigzag-lines';
-import SwipeableViews from 'react-swipeable-views-native';
-import styled from 'styled-components';
-
-export {
-  // react-native-webview
-  WebView,
-  WebViewProps,
-  WebViewNavigation,
-  WebViewMessageEvent,
-  FileDownload,
-  // react-native-remote-svg
-  SvgImage,
-  // expo-asset
-  AssetMetadata,
-  Asset,
-  useAssets,
-  // expo-av
-  AVPlaybackNativeSource,
-  AVPlaybackStatusToSet,
-  AVPlaybackStatus,
-  Audio,
-  Video,
-  VideoNaturalSize,
-  VideoProps,
-  VideoNativeProps,
-  VideoReadyForDisplayEvent,
-  VideoFullscreenUpdateEvent,
-  VideoState,
-  ResizeMode,
-  // expo-constants
-  Constants,
-  // expo-document-picker
-  DocumentPicker,
-  // expo-file-system
-  FileSystem,
-  // expo-font
-  Font,
-  // expo-image-manipulator
-  ImageManipulator,
-  // expo-image-picker
-  ImagePicker,
-  // moment
-  Moment,
-  // react-native-actionsheet
-  ActionSheet,
-  // react-native-animatable
-  Animatable,
-  // react-native-maps
-  MapView,
-  MAP_TYPES,
-  Camera,
-  Region,
-  PROVIDER_GOOGLE,
-  PROVIDER_DEFAULT,
-  Address,
-  Marker,
-  // react-native-size-matters
-  scale,
-  moderateScale,
-  verticalScale,
-  // react-native-sliders
-  Slider,
-  // react-native-svg
-  Svg,
-  // react-native-zigzag-lines
-  ZigzagLines,
-  // react-swipeable-views-native
-  SwipeableViews,
-  // styled-components
-  styled,
-};
+// import {
+//   WebView,
+//   WebViewProps,
+//   WebViewNavigation,
+//   WebViewMessageEvent,
+//   FileDownload,
+// } from 'react-native-webview';
+// import SvgImage from 'react-native-remote-svg';
+// import { Asset, useAssets, AssetMetadata } from 'expo-asset';
+// import {
+//   Audio,
+//   Video,
+//   AVPlaybackStatus,
+//   AVPlaybackStatusToSet,
+//   AVPlaybackNativeSource,
+//   VideoNativeProps,
+//   VideoProps,
+//   VideoNaturalSize,
+//   VideoState,
+//   VideoFullscreenUpdateEvent,
+//   VideoReadyForDisplayEvent,
+//   ResizeMode,
+// } from 'expo-av';
+// import Constants from 'expo-constants';
+// import * as DocumentPicker from 'expo-document-picker';
+// import * as FileSystem from 'expo-file-system';
+// import * as Font from 'expo-font';
+// import * as ImageManipulator from 'expo-image-manipulator';
+// import * as ImagePicker from 'expo-image-picker';
+// import Moment from 'moment';
+// import ActionSheet from 'react-native-actionsheet';
+// import * as Animatable from 'react-native-animatable';
+// import MapView, {
+//   Marker,
+//   PROVIDER_DEFAULT,
+//   PROVIDER_GOOGLE,
+//   Region,
+//   MAP_TYPES,
+//   Camera,
+//   Address,
+// } from 'react-native-maps';
+// import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
+// import Slider from 'react-native-sliders';
+// import Svg from 'react-native-svg';
+// import ZigzagLines from 'react-native-zigzag-lines';
+// import SwipeableViews from 'react-swipeable-views-native';
+// import styled from 'styled-components';
+//
+// export {
+//   // react-native-webview
+//   WebView,
+//   WebViewProps,
+//   WebViewNavigation,
+//   WebViewMessageEvent,
+//   FileDownload,
+//   // react-native-remote-svg
+//   SvgImage,
+//   // expo-asset
+//   AssetMetadata,
+//   Asset,
+//   useAssets,
+//   // expo-av
+//   AVPlaybackNativeSource,
+//   AVPlaybackStatusToSet,
+//   AVPlaybackStatus,
+//   Audio,
+//   Video,
+//   VideoNaturalSize,
+//   VideoProps,
+//   VideoNativeProps,
+//   VideoReadyForDisplayEvent,
+//   VideoFullscreenUpdateEvent,
+//   VideoState,
+//   ResizeMode,
+//   // expo-constants
+//   Constants,
+//   // expo-document-picker
+//   DocumentPicker,
+//   // expo-file-system
+//   FileSystem,
+//   // expo-font
+//   Font,
+//   // expo-image-manipulator
+//   ImageManipulator,
+//   // expo-image-picker
+//   ImagePicker,
+//   // moment
+//   Moment,
+//   // react-native-actionsheet
+//   ActionSheet,
+//   // react-native-animatable
+//   Animatable,
+//   // react-native-maps
+//   MapView,
+//   MAP_TYPES,
+//   Camera,
+//   Region,
+//   PROVIDER_GOOGLE,
+//   PROVIDER_DEFAULT,
+//   Address,
+//   Marker,
+//   // react-native-size-matters
+//   scale,
+//   moderateScale,
+//   verticalScale,
+//   // react-native-sliders
+//   Slider,
+//   // react-native-svg
+//   Svg,
+//   // react-native-zigzag-lines
+//   ZigzagLines,
+//   // react-swipeable-views-native
+//   SwipeableViews,
+//   // styled-components
+//   styled,
+// };
 
 /* TODO: Libraries with warning
  * react-native-remote-svg

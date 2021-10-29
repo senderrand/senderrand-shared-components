@@ -43,6 +43,7 @@ const NewInput = styled.TextInput.attrs((props: any) => {
   color: ${(props: any) => props.color};
   padding: 7px 12px;
   margin-top: ${(props: any) => (props.space ? '2px' : '0px')};
+  height: 100%;
 `;
 const PlusWrap = styled(Animated.View)`
   width: 12%;

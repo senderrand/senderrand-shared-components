@@ -9,7 +9,8 @@ import {
   MaterialCommunityIcons,
   Entypo,
 } from '@expo/vector-icons';
-import Chat, {
+import {
+  Chat,
   getInvoiceMessage,
   getStatusMessage,
   getNewRunnerMessage,
@@ -58,7 +59,7 @@ export default () => {
       <Chat
         orderID={1}
         headerOptions={['History', 'Locations', 'Settings', 'FAQ']}
-        headerOnSelectOption={(index) => console.log(index)}
+        headerOnSelectOption={(index: number) => console.log(index)}
         family={family}
         user={sender}
         send={send}
@@ -67,8 +68,8 @@ export default () => {
         entypo={Entypo}
         materialIcons={MaterialIcons}
         antDesign={AntDesign}
-        invoiceBoxPress={(item) => console.log(item)}
-        trackBoxPress={(item) => console.log(item)}
+        invoiceBoxPress={(item: any) => console.log(item)}
+        trackBoxPress={(item: any) => console.log(item)}
         feather={Feather}
         loading={false}
         footerOnError={(error: string) => Alert.alert('Failed', error)}
