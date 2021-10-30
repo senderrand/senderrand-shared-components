@@ -1,6 +1,6 @@
 import { Audio } from 'expo-av';
+import { UID } from '../index';
 import { client, xml } from '@xmpp/client';
-import { xmppSend } from './index';
 import { sendMessage, updateMessage } from '../sql';
 // import debug from '@xmpp/debug';
 
@@ -20,8 +20,8 @@ let XMPPFactory = (() => {
     const xmpp = client({
       service: service,
       domain: domain,
-      username: user.jabber_id ? user.jabber_id : '',
-      password: user.phone ? user.phone : '',
+      username: user && user.jabber_id ? user.jabber_id : '',
+      password: user && user.phone ? user.phone : '',
       resource: 'example',
     });
     let received = 'received';
@@ -152,3 +152,19 @@ let XMPPFactory = (() => {
 })();
 
 export default XMPPFactory;
+
+const xmppSend = async (from: string, to: string, data: any) => {
+  let xmpp = XMPPFactory.getInstance();
+  let stanzaParams = {
+    from,
+    to,
+    type: 'chat',
+    id: data.id ? data.id : UID(),
+  };
+  let messageStanza = xml('message', stanzaParams);
+  await messageStanza
+    .c('body', {})
+    .t(typeof data === 'string' ? data : JSON.stringify(data))
+    .up();
+  await xmpp.send(messageStanza);
+};
