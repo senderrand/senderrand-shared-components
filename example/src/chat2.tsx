@@ -9,8 +9,7 @@ import {
   MaterialCommunityIcons,
   Entypo,
 } from '@expo/vector-icons';
-import {
-  Chat,
+import Chat, {
   getInvoiceMessage,
   getStatusMessage,
   getNewRunnerMessage,

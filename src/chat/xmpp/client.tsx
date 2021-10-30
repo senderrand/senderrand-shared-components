@@ -41,7 +41,7 @@ const XmppClient = (props: client) => {
   };
 
   useEffect(() => {
-    if (props.user && props.user.jabber_id) {
+    if (props.user && props.user.jabber_id && props.user.jabber_id) {
       // First instantiation of XMPP across the project
       const XMPPClient = XMPPFactory.getInstance(
         props.user,

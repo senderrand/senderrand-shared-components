@@ -20,8 +20,8 @@ let XMPPFactory = (() => {
     const xmpp = client({
       service: service,
       domain: domain,
-      username: user.jabber_id,
-      password: user.phone,
+      username: user.jabber_id ? user.jabber_id : '',
+      password: user.phone ? user.phone : '',
       resource: 'example',
     });
     let received = 'received';
