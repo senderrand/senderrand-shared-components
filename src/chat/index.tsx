@@ -72,11 +72,6 @@ export interface messageInterface {
   orderID: string | number;
 }
 
-interface userData {
-  id: string | number;
-  name: string;
-  image?: string;
-}
 interface btnOptions {
   id: string;
   title: string;
@@ -85,7 +80,7 @@ interface btnOptions {
 
 interface Chat {
   lang?: string;
-  user: userData;
+  user: senderInterface;
   send: (data: messageInterface) => void;
   textBoxOnSelectOption?: (index: number, item: messageInterface) => void;
   mediaOnSelectOption?: (index: number, item: messageInterface) => void;
@@ -117,6 +112,7 @@ interface Chat {
   footerOnSelectDefaultOption?: (index: number) => void;
   footerOptionsPress?: (index: number, option: btnOptions) => void;
   footerType?: string;
+  footerPlaceholder?: string;
   headerTitle?: string;
   headerDetail?: string;
   headerOnSelectOption?: (index: number) => void;
@@ -430,6 +426,7 @@ export default (props: Chat) => {
         options={props.footerOptions && props.footerOptions}
         onError={props.footerOnError && props.footerOnError}
         setTyping={props.footerSetTyping && props.footerSetTyping}
+        placeholder={props.footerPlaceholder && props.footerPlaceholder}
         setRecording={props.footerSetRecording && props.footerSetRecording}
         onChangeText={props.footerOnChangeText && props.footerOnChangeText}
         defaultOptions={

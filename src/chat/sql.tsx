@@ -18,11 +18,11 @@ export const sendMessage = async (
 ) => {
   return db.transaction((tx) => {
     return tx.executeSql(
-      'insert into items (id text, text, date, file, duration, sender, reply, data, type, status, orderID) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? );',
+      'insert into items (id, text, date, file, duration, sender, reply, data, type, status, orderID) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);',
       [
         data.id,
         data.text,
-        typeof data.date === 'object' ? data.date.toDateString() : data.date,
+        typeof data.date === 'object' ? +new Date(data.date) : data.date,
         data.file ? JSON.stringify(data.file) : data.file,
         data.duration ? data.duration : 0,
         data.sender ? JSON.stringify(data.sender) : null,
@@ -43,42 +43,19 @@ export const sendMessage = async (
   });
 };
 
-export const sendMessage2 = async (data: messageInterface) => {
-  return db.transaction((tx) => {
-    return tx.executeSql(
-      'insert into items (id text, text, date, file, duration, sender, reply, data, type, status, orderID) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? );',
-      [
-        data.id,
-        data.text,
-        typeof data.date === 'object' ? data.date.toDateString() : data.date,
-        data.file ? JSON.stringify(data.file) : data.file,
-        data.duration ? data.duration : 0,
-        data.sender ? JSON.stringify(data.sender) : null,
-        data.reply ? JSON.stringify(data.reply) : null,
-        data.data ? JSON.stringify(data.data) : null,
-        data.type,
-        data.status,
-        data.orderID,
-      ],
-      (_res, resultSet) => {
-        return { ...data, id: resultSet.insertId };
-      },
-      (_, _error) => {
-        return false;
-      }
-    );
-  });
-};
-
-export const getMessages = async (orderID: string) => {
+export const getMessages = async (
+  orderID: string,
+  callback: (res: any) => void
+) => {
   return db.transaction((tx) => {
     return tx.executeSql(
       'select * from items where orderID = ?',
       [orderID],
       (_, { rows: { _array } }) => {
-        return formatMessages(_array);
+        callback(formatMessages(_array));
       },
       (_, _error) => {
+        callback(false);
         return false;
       }
     );
