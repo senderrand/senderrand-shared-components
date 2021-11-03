@@ -141,7 +141,7 @@ let XMPPFactory = (() => {
       domain?: string,
       callback?: (data: any) => void
     ) => {
-      if (!instance) {
+      if (!instance || !instance.xmpp.options.service) {
         // @ts-ignore
         instance = new Singleton(user, service, domain, callback);
         delete instance.constructor;
