@@ -22,8 +22,8 @@ import { Alert } from 'react-native';
 const Wrap = styled.View`
   flex: 1;
 `;
-let sender = { id: 1, name: 'Ollan Monsur' };
-let sender2 = { id: 2, name: 'Yinka Azeez' };
+let sender = { id: '1', name: 'Ollan Monsur' };
+let sender2 = { id: '2', name: 'Yinka Azeez' };
 let msg = getInvoiceMessage('1', '20 AED', sender2, 'Mirdif City Center', 'ar');
 let msg2 = getTrackerMessage(
   '1',

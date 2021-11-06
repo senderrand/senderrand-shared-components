@@ -2,7 +2,7 @@ import Helper from '../config/helper';
 import { messageInterface, senderInterface, UID } from './index';
 
 export let getInvoiceMessage = (
-  orderID: string | number,
+  orderID: string,
   price: string,
   senderData: senderInterface,
   location: string,
@@ -30,7 +30,7 @@ export let getInvoiceMessage = (
       footer: 'options',
       options: [
         { id: 'accept', title: Helper.t('accept', ng) },
-        { id: 'accept', title: Helper.t('decline', ng) },
+        { id: 'decline', title: Helper.t('decline', ng) },
       ],
     };
   }
@@ -88,7 +88,7 @@ export let getStatusMessage = (
 };
 
 export interface runnerInterface {
-  id: string | number;
+  id: string;
   name: string;
   image: string;
   rate: number;

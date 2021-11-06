@@ -246,6 +246,9 @@ export default (props: any) => {
             keyboardType={props.keyboardType ? props.keyboardType : 'default'}
             onChangeText={handleChange}
             onEndEditing={endEditing}
+            placeholderTextColor={
+              scheme === 'dark' ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)'
+            }
           />
           {props.runner && (
             <PaperClipTouch

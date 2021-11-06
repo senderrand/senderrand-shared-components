@@ -54,12 +54,12 @@ interface familyInterface {
   italic: string;
 }
 export interface senderInterface {
-  id: string | number;
+  id: string;
   name?: string;
   image?: string;
 }
 export interface messageInterface {
-  id: string | number;
+  id: string;
   text: string;
   date: Date | number;
   file: any;
@@ -69,7 +69,7 @@ export interface messageInterface {
   data?: any;
   type: string;
   status: number;
-  orderID: string | number;
+  orderID: string;
 }
 
 interface btnOptions {
@@ -130,10 +130,7 @@ export default (props: Chat) => {
   let [reply, setReply] = useState(null);
   let [option1] = useState([Helper.t('reply', lang), Helper.t('copy', lang)]);
   let [option2] = useState([Helper.t('reply', lang)]);
-  let [errandLocationOption] = useState([
-    Helper.t('edit', lang),
-    Helper.t('remove', lang),
-  ]);
+  let [errandLocationOption] = useState([Helper.t('edit', lang)]);
   let [fleetOption] = useState([Helper.t('change', lang)]);
 
   let send = (msg: any) => {

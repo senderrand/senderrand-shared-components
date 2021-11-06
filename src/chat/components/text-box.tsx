@@ -40,14 +40,15 @@ const TimeTxt = styled.Text`
 `;
 const Icon = styled.Text``;
 const Btn = styled.TouchableOpacity`
-  border-radius: 10px;
+  border-radius: 5px;
   height: 30px;
   width: 100%;
   align-items: center;
   justify-content: center;
   background-color: ${(props: any) =>
     props.background ? props.background : Helper.getColor().chatBoxTwo};
-  margin: 10px 0;
+  margin-bottom: 10px;
+  margin-top: ${(props: any) => (props.space ? '0' : '10px')};
 `;
 const BtnTxt = styled.Text`
   color: #fff;
@@ -118,7 +119,7 @@ export default (props: any) => {
           {props.text && props.text}
         </MsgTxt>
         {props.btnTitle ? (
-          <Btn onPress={props.btnPress && props.btnPress}>
+          <Btn onPress={props.btnPress && props.btnPress} space={bottomSpace}>
             <BtnTxt family={props.family && props.family}>
               {props.btnTitle}
             </BtnTxt>

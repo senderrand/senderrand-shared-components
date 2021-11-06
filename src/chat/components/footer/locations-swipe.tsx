@@ -183,18 +183,19 @@ export default (props: any) => {
   const [keyboard, setKeyboard] = useState(0);
 
   useEffect(() => {
-    Keyboard.addListener('keyboardWillShow', (e: any) => {
-      setKeyboard(e.endCoordinates.height);
-      LayoutAnimation.linear();
-    });
-    Keyboard.addListener('keyboardWillHide', () => setKeyboard(0));
-
-    return () => {
-      Keyboard.removeListener('keyboardWillShow', (e: any) => {
+    const showSubscription = Keyboard.addListener(
+      'keyboardWillShow',
+      (e: any) => {
         setKeyboard(e.endCoordinates.height);
         LayoutAnimation.linear();
-      });
-      Keyboard.addListener('keyboardWillHide', () => setKeyboard(0));
+      }
+    );
+    const hideSubscription = Keyboard.addListener('keyboardWillHide', () =>
+      setKeyboard(0)
+    );
+    return () => {
+      showSubscription.remove();
+      hideSubscription.remove();
     };
   }, []);
 
