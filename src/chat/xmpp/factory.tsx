@@ -62,13 +62,14 @@ let XMPPFactory = (() => {
     let handleSentReceived = (message: string) => {
       let msg = message.replace(received, '');
       let parsed = JSON.parse(msg);
+      let orderID = parsed.orderID;
       if (parsed.sender.id === user.id) {
         updateMessage(
           'status',
           2,
           'id',
           parsed.id,
-          (res) => res && callback({ type: 'messages' })
+          (res) => res && callback({ type: 'messages', orderID })
         );
       }
     };
@@ -76,7 +77,7 @@ let XMPPFactory = (() => {
     let handleReceived = async (message: any, from: string, to: string) => {
       await sendMessage(message, async (res) => {
         if (res) {
-          callback({ type: 'messages' });
+          callback({ type: 'messages', orderID: message.orderID });
           await playSound();
           await xmppSend(to, from, `${received}${JSON.stringify(message)}`);
         }
@@ -89,7 +90,7 @@ let XMPPFactory = (() => {
         3,
         'orderID',
         orderID,
-        (res) => res && callback({ type: 'messages' })
+        (res) => res && callback({ type: 'messages', orderID })
       );
     };
 

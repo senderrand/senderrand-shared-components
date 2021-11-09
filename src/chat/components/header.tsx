@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Constants from 'expo-constants';
 import Helper from '../../config/helper';
+import Logo from '../../common/svg/logo';
 import { verticalScale } from 'react-native-size-matters';
 import { StatusBar, Platform, useColorScheme } from 'react-native';
 
@@ -39,6 +40,16 @@ const ImgBox = styled.Image`
   width: 33px;
   border-radius: 16.5px;
   margin-right: 9px;
+  background-color: ${Helper.getColor().primary};
+`;
+const LogoWrap = styled.View`
+  height: 33px;
+  width: 33px;
+  border-radius: 16.5px;
+  margin-right: 9px;
+  background-color: ${Helper.getColor().chatBoxTwo};
+  justify-content: center;
+  align-items: center;
 `;
 const TxtBox = styled.View`
   margin-top: -4px;
@@ -123,7 +134,13 @@ export default (props: any) => {
         {Platform.OS === 'android' ? null : <StatusWrap />}
         <Head>
           <LeftBox>
-            <ImgBox source={props.image ? { uri: props.image } : blue} />
+            {props.image ? (
+              <ImgBox source={props.image ? { uri: props.image } : blue} />
+            ) : (
+              <LogoWrap>
+                <Logo />
+              </LogoWrap>
+            )}
             <TxtBox>
               <Title
                 family={props.family && props.family}

@@ -142,6 +142,16 @@ let getFileType = (type: string) => {
       return 'application';
     case 'docx':
       return 'application';
+    case 'aac':
+      return 'audio';
+    case 'mp3':
+      return 'audio';
+    case 'wav':
+      return 'audio';
+    case 'mov':
+      return 'video';
+    case 'mp4':
+      return 'video';
     default:
       return 'image';
   }

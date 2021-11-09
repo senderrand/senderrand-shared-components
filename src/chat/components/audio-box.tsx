@@ -76,20 +76,15 @@ export default (props: any) => {
         await Audio.setAudioModeAsync(mode);
         setLoading(true);
         props.audio &&
-          (await sound
-            .loadAsync({ uri: props.audio })
-            .then(() => setLoading(false)));
-        await sound
-          .getStatusAsync()
-          .then((res) => {
+          (await sound.loadAsync({ uri: props.audio }).then((res) => {
+            setLoading(false);
             if (res.isLoaded) {
               setDuration(res.durationMillis as number);
               setMaximumValue(
                 Math.floor((res.durationMillis as number) * 0.001)
               );
             }
-          })
-          .catch((error) => console.log(error));
+          }));
       } catch (error) {
         console.log(error);
       }
