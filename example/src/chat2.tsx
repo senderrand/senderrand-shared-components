@@ -13,7 +13,7 @@ import Chat, {
   getInvoiceMessage,
   getStatusMessage,
   getNewRunnerMessage,
-  // xmppSend,
+  xmppSend,
   runnerInterface,
   getTrackerMessage, // @ts-ignore
 } from 'senderrand-shared-components';
@@ -50,7 +50,7 @@ export default () => {
   let [messages, setMessages] = useState([...data, msg, msg2, msg3, msg4]);
   let send = (message: any) => {
     setMessages([...messages, message]);
-    // xmppSend('', '', message);
+    xmppSend('', '', message);
   };
 
   return (

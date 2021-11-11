@@ -2,8 +2,8 @@ import XMPPFactory from './factory';
 import { UID } from '../../chat/index';
 import { xml } from '@xmpp/client';
 
-let xmpp = XMPPFactory.getInstance();
 export const xmppSend = async (from: string, to: string, data: any) => {
+  let xmpp = XMPPFactory.getInstance();
   let stanzaParams = {
     from,
     to,
