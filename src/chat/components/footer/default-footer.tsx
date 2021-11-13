@@ -238,7 +238,10 @@ export default (props: any) => {
             space={text === ''}
             runner={props.runner}
             family={props.family && props.family}
-            ref={(ref: any) => (inputRef = ref)}
+            ref={(ref: any) => {
+              inputRef = ref;
+              props.inputRef && props.inputRef(ref);
+            }}
             color={Helper.getColor().primaryTxt}
             underlineColorAndroid={'transparent'}
             multiline={props.multiline ? props.multiline : true}

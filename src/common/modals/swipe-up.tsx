@@ -6,6 +6,7 @@ import {
   LayoutAnimation,
   PanResponder,
   Keyboard,
+  useColorScheme,
 } from 'react-native';
 import Helper from '../../config/helper';
 
@@ -29,6 +30,7 @@ const Content = styled(Animated.View)`
 `;
 
 export default (props: any) => {
+  let scheme = useColorScheme();
   let [height, setHeight] = useState(
     props.containerHeight ? props.containerHeight : modalHeight
   );
@@ -92,6 +94,8 @@ export default (props: any) => {
 
   return (
     <Content
+      scheme={scheme}
+      background={Helper.getColor().plane}
       {...panResponder.panHandlers}
       style={props.containerStyle ? props.containerStyle : {}}
       newHeight={props.avoid ? height + keyboard : height}

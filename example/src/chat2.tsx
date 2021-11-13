@@ -13,7 +13,7 @@ import Chat, {
   getInvoiceMessage,
   getStatusMessage,
   getNewRunnerMessage,
-  xmppSend,
+  // xmppSend,
   runnerInterface,
   getTrackerMessage, // @ts-ignore
 } from 'senderrand-shared-components';
@@ -47,10 +47,11 @@ let runner: runnerInterface = {
 let msg4 = getNewRunnerMessage('1', runner, 'ar');
 
 export default () => {
+  // let inputRef: any;
   let [messages, setMessages] = useState([...data, msg, msg2, msg3, msg4]);
   let send = (message: any) => {
     setMessages([...messages, message]);
-    xmppSend('', '', message);
+    // xmppSend('', '', message);
   };
 
   return (
@@ -73,6 +74,9 @@ export default () => {
         loading={false}
         footerOnError={(error: string) => Alert.alert('Failed', error)}
         materialCommunityIcons={MaterialCommunityIcons}
+        // footerKeyboardType={'phone-pad'}
+        // removeFooter={true}
+        // footerInputRef={(ref: any) => (inputRef = ref)}
       />
     </Wrap>
   );

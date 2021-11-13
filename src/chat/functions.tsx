@@ -118,3 +118,34 @@ export const getNewRunnerMessage = (
   };
   return msg;
 };
+
+export const getMsg = (
+  sender: senderInterface,
+  orderID: string,
+  type: string,
+  status?: number,
+  text?: string,
+  file?: any,
+  data?: any,
+  reply?: messageInterface,
+  duration?: number
+) => {
+  let msg: messageInterface = {
+    id: UID(),
+    date: +new Date(),
+    text: text ? text : '',
+    file,
+    sender,
+    type,
+    orderID,
+    data,
+    reply,
+    status: status ? status : 1,
+    duration,
+  };
+  return msg;
+};
+
+export const formatURLMsg = (msg: messageInterface, url: string) => {
+  return { ...msg, file: { ...msg.file, uri: url } };
+};

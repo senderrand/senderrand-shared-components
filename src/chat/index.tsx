@@ -121,6 +121,9 @@ interface Chat {
   orderID: string | number;
   footerSetTyping?: (typing: boolean) => void;
   footerSetRecording?: (recording: boolean) => void;
+  removeFooter?: boolean;
+  footerKeyboardType?: string;
+  footerInputRef?: (ref: any) => void;
 }
 
 export default (props: Chat) => {
@@ -195,6 +198,20 @@ export default (props: Chat) => {
     if (msgIndex) list.scrollToIndex({ animated: true, index: '' + msgIndex });
   };
 
+  let getTxtBoxOptions = (msg: messageInterface) => {
+    let opt = [...option1];
+    if (props.textBoxOptions && props.textBoxOptions.length)
+      opt = [...opt, props.textBoxOptions];
+    if (
+      msg.data &&
+      msg.data.options &&
+      msg.data.options.length &&
+      typeof msg.data.options[0] === 'string'
+    )
+      opt = [...opt, msg.data.options];
+    return opt;
+  };
+
   let keyExtractor = (_item: any, index: number) => index.toString();
   let renderItem = ({ item }: any) => {
     let box: any;
@@ -213,11 +230,7 @@ export default (props: Chat) => {
             sender={item.sender && getSender(item.sender)}
             btnTitle={item.data && item.data.btnTitle && item.data.btnTitle}
             onSelectOption={(index: number) => textOptionSelect(index, item)}
-            options={
-              props.textBoxOptions && props.textBoxOptions.length
-                ? [...option1, ...props.textBoxOptions]
-                : option1
-            }
+            options={getTxtBoxOptions(item)}
             btnPress={() =>
               props.textBoxBtnPress && props.textBoxBtnPress(item)
             }
@@ -418,12 +431,14 @@ export default (props: Chat) => {
           setReply(null);
           LayoutAnimation.spring();
         }}
+        inputRef={props.footerInputRef && props.footerInputRef}
         ionicons={props.ionicons && props.ionicons}
         antDesign={props.antDesign && props.antDesign}
         options={props.footerOptions && props.footerOptions}
         onError={props.footerOnError && props.footerOnError}
         setTyping={props.footerSetTyping && props.footerSetTyping}
         placeholder={props.footerPlaceholder && props.footerPlaceholder}
+        keyboardType={props.footerKeyboardType && props.footerKeyboardType}
         setRecording={props.footerSetRecording && props.footerSetRecording}
         onChangeText={props.footerOnChangeText && props.footerOnChangeText}
         defaultOptions={
@@ -510,7 +525,7 @@ export default (props: Chat) => {
             contentContainerStyle={others.listContainer}
             data={props.messages && props.messages.length ? props.messages : []}
           />
-          {renderFooter()}
+          {!props.removeFooter && renderFooter()}
         </Avoid>
       </Inner>
     </Wrap>

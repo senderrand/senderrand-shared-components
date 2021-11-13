@@ -30,6 +30,8 @@ import {
   getNewRunnerMessage,
   runnerInterface,
   coordinateInterface,
+  getMsg,
+  formatURLMsg,
 } from './chat/functions';
 import {
   createTable,
@@ -86,6 +88,8 @@ export {
   sendTyping,
   sendRecording,
   sendRead,
+  getMsg,
+  formatURLMsg,
   // Interface
   runnerInterface,
   coordinateInterface,

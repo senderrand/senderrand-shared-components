@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Helper from '../../../config/helper';
 import SwipeUp from '../../../common/modals/swipe-up';
+import { useColorScheme } from 'react-native';
 
 const ItemWrap = styled.TouchableOpacity`
   width: 100%;
@@ -94,42 +95,46 @@ const Footer = (props: any) => {
 };
 
 let keyExtractor = (_item: any, index: number) => index.toString();
-export default (props: any) => (
-  <SwipeUp
-    avoid
-    lang={props.lang && props.lang}
-    containerStyle={containerStyle}
-    containerHeight={
-      props.data && props.data.length ? props.data.length * 50 + 100 : 200
-    }
-  >
-    <List
-      data={props.data && props.data.length ? props.data : []}
-      keyExtractor={keyExtractor}
-      keyboardDismissMode={'on-drag'}
-      keyboardShouldPersistTaps={'always'}
-      renderItem={({ item }: any) => (
-        <EachItem
-          press={() => {
-            props.onSelect && props.onSelect(item);
-          }}
-          lang={props.lang && props.lang}
-          text={item[props.textKey] ? item[props.textKey] : ''}
-          family={props.family && props.family}
-        />
-      )}
-      ListFooterComponent={
-        <Footer
-          lang={props.lang && props.lang}
-          send={props.onSend && props.onSend}
-          family={props.family && props.family}
-          ionicons={props.ionicons && props.ionicons}
-          othersTxt={props.othersTxt && props.othersTxt}
-        />
+export default (props: any) => {
+  let scheme = useColorScheme();
+  return (
+    <SwipeUp
+      avoid
+      lang={props.lang && props.lang}
+      containerStyle={containerStyle}
+      containerHeight={
+        props.data && props.data.length ? props.data.length * 50 + 100 : 200
       }
-    />
-  </SwipeUp>
-);
+    >
+      <List
+        scheme={scheme}
+        data={props.data && props.data.length ? props.data : []}
+        keyExtractor={keyExtractor}
+        keyboardDismissMode={'on-drag'}
+        keyboardShouldPersistTaps={'always'}
+        renderItem={({ item }: any) => (
+          <EachItem
+            press={() => {
+              props.onSelect && props.onSelect(item);
+            }}
+            lang={props.lang && props.lang}
+            text={item[props.textKey] ? item[props.textKey] : ''}
+            family={props.family && props.family}
+          />
+        )}
+        ListFooterComponent={
+          <Footer
+            lang={props.lang && props.lang}
+            send={props.onSend && props.onSend}
+            family={props.family && props.family}
+            ionicons={props.ionicons && props.ionicons}
+            othersTxt={props.othersTxt && props.othersTxt}
+          />
+        }
+      />
+    </SwipeUp>
+  );
+};
 
 let containerStyle = {
   borderColor: 'rgba(119, 134, 158, 0.297312)',

@@ -52,6 +52,8 @@ Right Chat & Functionalities
 * [sendTyping](#send-typing)
 * [sendRecording](#send-recording)
 * [sendRead](#send-read)
+* [formatURLMsg](#format-url-msg)
+* [getMsg](#get-msg)
 * [Interfaces](#interfaces)
 
 ## Header Component Usage
@@ -163,7 +165,8 @@ Below are the listed props that can be passed to the header2 component
 | `onPressOption` | `Function` | `false` | This function call when each menu option is tapped. It returns the index of the tapped option as parameter |
 | `family` | `object` | `true` | An object that contains the font family used for the text elements in the header component. An example is shown above. |
 | `lang` | `string` | `false` | The language that should be used for the default text in the component. Defaults to `en`. |
-
+| `inputRef` | `function` | `false` | Takes the ref of the footer input as parameter. |
+| `keyboardType` | `string` | `false` | Takes the keyboard type of the footer input. |
 
 ## Footer Component Usage
 
@@ -350,7 +353,7 @@ const Example = () => {
       visible={visible}
       close={() => setVisible(false)}
       antdesign={AntDesign}
-    > 
+    >
       <Text>Hello, here is a sample modal content</Text>
     </CustomModal>
   )
@@ -1435,6 +1438,9 @@ Below are the listed props that can be passed to the header component
 | `newRunnerPress` | `function` | `false` | The prop called when the new runner component is tapped. |
 | `footerSetTyping` | `function` | `false` | The prop called when user starts and stops typing. It take in a boolean as parameter. True for typing, False for not typing. |
 | `footerSetRecording` | `function` | `false` | The prop called when user starts and stops recording. It take in a boolean as parameter. True for recording, False for not recording. |
+| `footerInputRef` | `function` | `false` | Takes the ref of the footer input as parameter. |
+| `footerKeyboardType` | `string` | `false` | Takes the keyboard type of the footer input. |
+| `removeFooter` | `boolean` | `false` | Hides the footer, defaults to false. |
 
 ## Get Invoice Message
 
@@ -1743,6 +1749,39 @@ Below are the listed parameter to be passed to the function
 | `orderID` | `string` | `true` | The orderID of the current conversation. |
 | `from` | `string` | `true` | The senders jabber id. |
 | `to` | `string` | `true` | The receivers jabber id. |
+
+## Get Msg
+
+```typescript
+import { getMsg } from 'senderrand-shared-components';
+
+getMsg() // messageInterface parameters
+// sender
+// orderID
+// type
+// status
+// text
+// file
+// data
+// reply
+// duration
+```
+## Details
+The function is called to format message data, It takes in messageInterface parameters where `sender`, `orderID` and `type` are compulsory.
+
+
+## Format URL Msg
+
+```typescript
+import { formatURLMsg } from 'senderrand-shared-components';
+
+formatURLMsg({}, 'http//') // messageInterface parameters
+// messageInterface
+// url
+
+```
+## Details
+The function is called when replacing uri with url. Pass the message data and the url, then get new message format.
 
 ## Send Read
 
