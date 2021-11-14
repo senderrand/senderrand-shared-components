@@ -117,6 +117,7 @@ interface Chat {
   headerDetail?: string;
   headerOnSelectOption?: (index: number) => void;
   headerOptions?: string[];
+  headerImage?: string;
   newRunnerPress?: () => void;
   orderID: string | number;
   footerSetTyping?: (typing: boolean) => void;
@@ -201,14 +202,14 @@ export default (props: Chat) => {
   let getTxtBoxOptions = (msg: messageInterface) => {
     let opt = [...option1];
     if (props.textBoxOptions && props.textBoxOptions.length)
-      opt = [...opt, props.textBoxOptions];
+      opt = [...opt, ...props.textBoxOptions];
     if (
       msg.data &&
       msg.data.options &&
       msg.data.options.length &&
       typeof msg.data.options[0] === 'string'
     )
-      opt = [...opt, msg.data.options];
+      opt = [...opt, ...msg.data.options];
     return opt;
   };
 
@@ -503,6 +504,7 @@ export default (props: Chat) => {
           lang={lang}
           entypo={props.entypo && props.entypo}
           family={props.family && props.family}
+          image={props.headerImage && props.headerImage}
           detail={props.headerDetail && props.headerDetail}
           title={props.headerTitle ? props.headerTitle : 'SendErrand'}
           onSelectOption={
