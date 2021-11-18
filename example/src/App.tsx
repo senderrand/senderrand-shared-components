@@ -17,6 +17,7 @@ export default function App() {
       require('../../assets/media/pattern.png'),
       require('../../assets/media/blue.png'),
       require('../../assets/media/recieved.wav'),
+      require('../../assets/media/Spinner.svg'),
     ]);
     await Font.loadAsync({
       ExtraLight: require('../../assets/font/Niramit/Niramit-ExtraLight.ttf'),

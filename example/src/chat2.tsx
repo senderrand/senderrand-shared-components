@@ -24,7 +24,14 @@ const Wrap = styled.View`
 `;
 let sender = { id: '1', name: 'Ollan Monsur' };
 let sender2 = { id: '2', name: 'Yinka Azeez' };
-let msg = getInvoiceMessage('1', '20 AED', sender2, 'Mirdif City Center', 'ar');
+let msg = getInvoiceMessage(
+  '1',
+  '#1223342',
+  '20 AED',
+  sender2,
+  'Mirdif City Center',
+  'ar'
+);
 let msg2 = getTrackerMessage(
   '1',
   { longitude: 55.3863, latitude: 25.1279 },

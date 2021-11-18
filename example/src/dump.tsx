@@ -81,12 +81,12 @@ export default (props: any) => {
         family={family}
         totalItems={totals}
         items={dummyInvoice}
-        nameKey={'item'}
-        qtyKey={'quantity'}
-        rateKey={'price'}
-        grandTotal={'610 AED'}
+        grandTotal={610}
         txt2={"Runner's Name: YINKA"}
         txt3={'#12345673'}
+        invoiceMessage={
+          'The runner was unable to compute invoice but sent the total price as 610 AED.'
+        }
         close={() => setInvoice(false)}
         press={(index: number) => console.log(index)}
       />
@@ -96,28 +96,28 @@ export default (props: any) => {
 
 let dummyInvoice = [
   {
-    item: 'Brake pads for Honda accord 2009 Front and Rear',
+    description: 'Brake pads for Honda accord 2009 Front and Rear',
     quantity: 1,
-    price: 200,
+    rate: 200,
   },
   {
-    item: 'Brake discs for Honda accord 2009. Front and Rear',
+    description: 'Brake discs for Honda accord 2009. Front and Rear',
     quantity: 2,
-    price: 400,
+    rate: 400,
   },
   {
-    item: 'Brake Oil',
+    description: 'Brake Oil',
     quantity: 2,
-    price: 20,
+    rate: 20,
   },
   {
-    item: 'Errand cost',
+    description: 'Errand cost',
     quantity: 1,
-    price: 100,
+    rate: 100,
   },
 ];
 
 let totals = [
-  { title: 'SUBTOTAL', value: '720 AED' },
-  { title: 'DISCOUNT', value: '110 AED', discount: '3%' },
+  { name: 'SUBTOTAL', value: 720 },
+  { name: 'DISCOUNT', value: 110, discount: '3%' },
 ];

@@ -8,6 +8,7 @@ import {
   Dimensions,
   Animated,
   PanResponder,
+  ActivityIndicator,
 } from 'react-native';
 
 let zagWidth = (80 / 100) * Dimensions.get('window').width;
@@ -73,8 +74,47 @@ const BtnTxt = styled.Text`
   color: ${(props: any) =>
     props.blue ? '#fff' : Helper.getColor().primaryTxt};
 `;
+const InvoiceMessage = styled.Text`
+  color: ${(props: any) =>
+    props.color ? props.color : Helper.getColor().primaryTxt};
+  font-size: 15px;
+  font-family: ${(props: any) =>
+    props.family && props.family.regular ? props.family.regular : 'Regular'};
+`;
 
-export default (props: any) => {
+interface Items {
+  description: string;
+  quantity: number;
+  rate: number;
+}
+
+interface TotalItems {
+  name: string;
+  discount?: string;
+  value: number;
+}
+
+interface Props {
+  lang?: string;
+  visible: boolean;
+  close: () => void;
+  family: any;
+  txt1?: string;
+  txt2?: string;
+  txt3?: string;
+  titles?: string[];
+  currency: string;
+  items?: Items[];
+  totalItems: TotalItems[];
+  grandTotal: number;
+  grandTotalTxt?: string;
+  press?: (index: number) => void;
+  acceptTxt?: string;
+  declineTxt?: string;
+  loading?: boolean;
+  invoiceMessage?: string;
+}
+export default (props: Props) => {
   let scheme = useColorScheme();
   let [lang] = useState(props.lang ? props.lang : 'en');
   let dummyTitles = [
@@ -145,66 +185,57 @@ export default (props: any) => {
                 }
               />
             </View>
-            {props.items &&
-              props.items.length &&
-              props.items.map((item: any, index: number) => (
+            {props.items && props.items.length ? (
+              props.items.map((item, index: number) => (
                 <EachRow
                   key={index}
-                  name={
-                    props.nameKey && item[props.nameKey]
-                      ? item[props.nameKey]
-                      : ''
-                  }
-                  quantity={
-                    props.qtyKey && item[props.qtyKey] ? item[props.qtyKey] : ''
-                  }
-                  rate={
-                    props.rateKey && item[props.rateKey]
-                      ? `${props.currency ? props.currency : 'AED'} ${
-                          item[props.rateKey]
-                        }`
-                      : ''
-                  }
-                  subtotal={
-                    props.rateKey &&
-                    props.qtyKey &&
-                    item[props.rateKey] &&
-                    item[props.qtyKey]
-                      ? `${props.currency ? props.currency : 'AED'} ${
-                          item[props.rateKey] * item[props.qtyKey]
-                        }`
-                      : ''
-                  }
+                  name={item.description}
+                  quantity={item.quantity}
+                  rate={`${props.currency} ${item.rate}`}
+                  subtotal={`${item.rate * item.quantity} ${props.currency}`}
                 />
-              ))}
+              ))
+            ) : (
+              <InvoiceMessage
+                family={props.family}
+                color={Helper.getColor().secondaryTxt}
+              >
+                {props.invoiceMessage && props.invoiceMessage}
+              </InvoiceMessage>
+            )}
           </InvoiceWrap>
           <InvoiceWrap>
-            {props.totalItems &&
-              props.totalItems.length &&
-              props.totalItems.map((item: any, index: number) => (
-                <View
-                  key={index}
-                  viewMargin={[
-                    0,
-                    0,
-                    index + 1 === props.totalItems.length ? 0 : 8,
-                    0,
-                  ]}
-                >
-                  <TotalItem
-                    family={props.family && props.family}
-                    discount={item.discount && item.discount}
-                    title={item.title ? item.title : 'Title'}
-                    price={item.value ? item.value : 'Value'}
-                  />
-                </View>
-              ))}
+            {props.totalItems && props.totalItems.length
+              ? props.totalItems.map((item, index: number) => (
+                  <View
+                    key={index}
+                    viewMargin={[
+                      0,
+                      0,
+                      index + 1 === props.totalItems.length ? 0 : 8,
+                      0,
+                    ]}
+                  >
+                    <TotalItem
+                      family={props.family && props.family}
+                      discount={item.discount && item.discount}
+                      title={item.name ? item.name : 'Title'}
+                      price={
+                        item.value ? `${item.value} ${props.currency}` : 'Value'
+                      }
+                    />
+                  </View>
+                ))
+              : null}
           </InvoiceWrap>
           <InvoiceWrap>
             <GrandTotal
+              currency={props.currency}
               lang={props.lang && props.lang}
               family={props.family && props.family}
-              grandTotal={props.grandTotal && props.grandTotal}
+              grandTotal={
+                props.grandTotal && `${props.grandTotal} ${props.currency}`
+              }
               grandTotalTxt={props.grandTotalTxt && props.grandTotalTxt}
             />
           </InvoiceWrap>
@@ -212,6 +243,7 @@ export default (props: any) => {
             {props.press ? (
               <CTA
                 press={props.press}
+                loading={props.loading}
                 lang={props.lang && props.lang}
                 family={props.family && props.family}
                 acceptTxt={props.acceptTxt && props.acceptTxt}
@@ -380,15 +412,26 @@ let CTA = (props: any) => {
   let [lang] = useState(props.lang ? props.lang : 'en');
   return (
     <View direction={'row'} align={'center'} justify={'space-between'}>
-      <Btn blue onPress={() => props.press && props.press(1)}>
-        <BtnTxt family={props.family && props.family} blue>
-          {props.acceptTxt ? props.acceptTxt : Helper.t('accept', lang)}
-        </BtnTxt>
+      <Btn blue onPress={() => !props.loading && props.press && props.press(1)}>
+        {props.loading ? (
+          <ActivityIndicator color={'#fff'} size={'small'} />
+        ) : (
+          <BtnTxt family={props.family && props.family} blue>
+            {props.acceptTxt ? props.acceptTxt : Helper.t('accept', lang)}
+          </BtnTxt>
+        )}
       </Btn>
-      <Btn onPress={() => props.press && props.press(2)}>
-        <BtnTxt family={props.family && props.family}>
-          {props.declineTxt ? props.declineTxt : Helper.t('decline', lang)}
-        </BtnTxt>
+      <Btn onPress={() => !props.loading && props.press && props.press(2)}>
+        {props.loading ? (
+          <ActivityIndicator
+            color={Helper.getColor().primaryTxt}
+            size={'small'}
+          />
+        ) : (
+          <BtnTxt family={props.family && props.family}>
+            {props.declineTxt ? props.declineTxt : Helper.t('decline', lang)}
+          </BtnTxt>
+        )}
       </Btn>
     </View>
   );

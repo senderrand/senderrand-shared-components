@@ -1336,7 +1336,14 @@ const family = {
 
 let sender = { id: 1, name: 'Ollan Monsur' };
 let sender2 = { id: 2, name: 'Yinka Azeez' };
-let msg = getInvoiceMessage('1', '20 AED', sender2, 'Mirdif City Center', 'ar');
+let msg = getInvoiceMessage(
+  '1',
+  '#1223342',
+  '20 AED',
+  sender2,
+  'Mirdif City Center',
+  'ar'
+);
 let msg2 = getTrackerMessage(
   '1',
   { longitude: 55.3863, latitude: 25.1279 },
@@ -1448,8 +1455,14 @@ Below are the listed props that can be passed to the header component
 import { getInvoiceMessage } from 'senderrand-shared-components';
 
 let sender2 = { id: 2, name: 'Abdul Mumin' };
-let msg = getInvoiceMessage('1', '20 Naira', sender2, 'Mirdif City Center', 'ar', '#invoiceID');
-```
+let msg = getInvoiceMessage(
+  '1',
+  '#1223342',
+  '20 AED',
+  sender2,
+  'Mirdif City Center',
+  'ar'
+);```
 ## Details
 A function call to get the message data structure of an invoice message. The message is then sent to the chat.
 NOTE: Pass invoiceID when there is a full invoice and don't pass it when there is only total price.
@@ -1461,10 +1474,10 @@ Below are the listed parameter to be passed to the function
 | ------ | ------ | ------ | ------ |
 | `orderID` | `string or number` | `true` | The order ID |
 | `price` | `string` | `true` | The total price to be displayed. EX `'120 Naira'` |
+| `invoiceID` | `string` | `true` | When invoiceID is passed, it means invoice has been computed. If not passed, it means there is only total price. |
 | `senderData` | `senderInterface` | `true` | The senders data which includes `id`, `name`, and `image` where image image is not compulsory. |
-| `location` | `string` | `true` | The invoice location, which is the point of purchase. Example above. |
+| `location` | `string` | `false` | The invoice location, which is the point of purchase. Example above. |
 | `lang` | `string` | `false` | The language that should be used for the default text. Defaults to `en`. |
-| `invoiceID` | `string` | `false` | When invoiceID is passed, it means invoice has been computed. If not passed, it means there is only total price. |
 
 ## Get Tracker Message
 

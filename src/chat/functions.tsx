@@ -3,11 +3,11 @@ import { messageInterface, senderInterface, UID } from './index';
 
 export let getInvoiceMessage = (
   orderID: string,
+  invoiceID: string,
   price: string,
   senderData: senderInterface,
-  location: string,
-  lang?: string,
-  invoiceID?: string
+  location?: string,
+  lang?: string
 ) => {
   let ng = lang ? lang : 'en';
   let data: any = { price };
