@@ -82,13 +82,13 @@ const InvoiceMessage = styled.Text`
     props.family && props.family.regular ? props.family.regular : 'Regular'};
 `;
 
-interface Items {
+export interface InvoiceItems {
   description: string;
   quantity: number;
   rate: number;
 }
 
-interface TotalItems {
+export interface InvoiceTotalItems {
   name: string;
   discount?: string;
   value: number;
@@ -104,8 +104,8 @@ interface Props {
   txt3?: string;
   titles?: string[];
   currency: string;
-  items?: Items[];
-  totalItems: TotalItems[];
+  items?: InvoiceItems[];
+  totalItems: InvoiceTotalItems[];
   grandTotal: number;
   grandTotalTxt?: string;
   press?: (index: number) => void;
