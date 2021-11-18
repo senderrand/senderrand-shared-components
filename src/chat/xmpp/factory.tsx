@@ -7,7 +7,7 @@ import { sendMessage, updateMessage } from '../sql';
 export interface user {
   id: string | number;
   jabber_id: string | number;
-  phone: string | number;
+  phone?: string | number;
 }
 
 let XMPPFactory = (() => {
@@ -21,7 +21,7 @@ let XMPPFactory = (() => {
       service: service,
       domain: domain,
       username: user && user.jabber_id ? user.jabber_id : '',
-      password: user && user.phone ? user.phone : '',
+      password: user && user.id ? user.id : '',
       resource: 'example',
     });
     let received = 'received';

@@ -254,7 +254,7 @@ export default (props: Props) => {
           <ZigzagLines
             position={'bottom'}
             width={zagWidth}
-            backgroundColor={'#ccc'}
+            backgroundColor={scheme === 'dark' ? '#212124' : '#ccc'}
             color={Helper.getColor().plane}
           />
         </Inner>
