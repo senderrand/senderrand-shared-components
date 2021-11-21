@@ -47,6 +47,12 @@ import { xmppSend, sendRecording, sendTyping, sendRead } from './chat/xmpp';
 import XMPPFactory from './chat/xmpp/factory';
 import XmppClient from './chat/xmpp/client';
 import Chat, { UID, messageInterface, senderInterface } from './chat';
+import Fleetless from './common/svg/fleetless';
+import Bike from './common/svg/bike';
+import Car from './common/svg/car';
+import Truck from './common/svg/truck';
+import Bicycle from './common/svg/bicycle';
+import Canoe from './common/svg/canoe';
 
 export default Chat;
 
@@ -93,6 +99,13 @@ export {
   sendRead,
   getMsg,
   formatURLMsg,
+  // Fleet SVG
+  Fleetless,
+  Bicycle,
+  Bike,
+  Car,
+  Truck,
+  Canoe,
   // Interface
   runnerInterface,
   coordinateInterface,
