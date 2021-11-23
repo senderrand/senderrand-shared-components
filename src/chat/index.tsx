@@ -148,7 +148,7 @@ export default (props: Chat) => {
       sender: props.user && props.user,
     };
     props.send && props.send(data);
-    list && list.scrollToEnd();
+    list && list.scrollToOffset({ animated: true, offset: 0 });
     setReply(null);
   };
 
@@ -213,7 +213,7 @@ export default (props: Chat) => {
     return opt;
   };
 
-  let keyExtractor = (_item: any, index: number) => index.toString();
+  let keyExtractor = (item: any, _index: number) => JSON.stringify(item);
   let renderItem = ({ item }: any) => {
     let box: any;
     switch (item.type) {
@@ -464,11 +464,11 @@ export default (props: Chat) => {
         press={props.footerOptionsPress && props.footerOptionsPress}
         options={
           msg.length &&
-          msg[msg.length - 1] &&
-          msg[msg.length - 1].data &&
-          msg[msg.length - 1].data.options &&
-          msg[msg.length - 1].data.options.length
-            ? msg[msg.length - 1].data.options
+          msg[0] &&
+          msg[0].data &&
+          msg[0].data.options &&
+          msg[0].data.options.length
+            ? msg[0].data.options
             : []
         }
       />
@@ -481,15 +481,11 @@ export default (props: Chat) => {
           ? options
           : footer;
     } else {
-      if (
-        msg.length &&
-        msg[msg.length - 1].data &&
-        msg[msg.length - 1].data.footer
-      ) {
+      if (msg.length && msg[0].data && msg[0].data.footer) {
         footer =
-          msg[msg.length - 1].data.footer === 'fleet'
+          msg[0].data.footer === 'fleet'
             ? fleet
-            : msg[msg.length - 1].data.footer === 'options'
+            : msg[0].data.footer === 'options'
             ? options
             : footer;
       }
@@ -537,7 +533,6 @@ export default (props: Chat) => {
 const others = StyleSheet.create({
   listContainer: {
     paddingBottom: 10,
-    flexDirection: 'column-reverse',
   },
 });
 

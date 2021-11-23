@@ -114,7 +114,7 @@ let formatMessages = (_array: any[]) => {
     if (item.reply) message = { ...message, reply: JSON.parse(item.reply) };
     messages = [...messages, message];
   });
-  return messages;
+  return messages.reverse();
 };
 
 /* TODO:
