@@ -53,6 +53,7 @@ import Car from './common/svg/car';
 import Truck from './common/svg/truck';
 import Bicycle from './common/svg/bicycle';
 import Canoe from './common/svg/canoe';
+import Logo from './common/svg/logo';
 
 export default Chat;
 
@@ -106,6 +107,7 @@ export {
   Car,
   Truck,
   Canoe,
+  Logo,
   // Interface
   runnerInterface,
   coordinateInterface,

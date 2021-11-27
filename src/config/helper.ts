@@ -118,7 +118,7 @@ let message =
   'Permission is required to be granted to access camera of photo library, go to settings to grant permission.';
 
 export const colors = {
-  primary: '#3BAFDA',
+  primary: '#0a78a1', // Previous primary color '#3BAFDA',
   primaryDark: '#0a78a1',
   plane: '#fff',
   planeDark: 'rgb(23,23,23)',

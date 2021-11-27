@@ -47,7 +47,7 @@ const LogoWrap = styled.View`
   width: 33px;
   border-radius: 16.5px;
   margin-right: 9px;
-  background-color: ${Helper.getColor().chatBoxTwo};
+  background-color: ${Helper.getColor().primary};
   justify-content: center;
   align-items: center;
 `;
