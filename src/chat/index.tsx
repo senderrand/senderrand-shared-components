@@ -377,6 +377,7 @@ export default (props: Chat) => {
             text={item.text && item.text}
             date={item.date && item.date}
             family={props.family && props.family}
+            sender={item.sender && getSender(item.sender)}
             price={item.data && item.data.price && item.data.price}
             invoiceID={item.data && item.data.invoiceID && item.data.invoiceID}
             press={() => props.invoiceBoxPress && props.invoiceBoxPress(item)}
@@ -391,6 +392,7 @@ export default (props: Chat) => {
             date={item.date && item.date}
             family={props.family && props.family}
             feather={props.feather && props.feather}
+            sender={item.sender && getSender(item.sender)}
             region={item.data && item.data.region && item.data.region}
             position={item.data && item.data.position && item.data.position}
             press={() => props.trackBoxPress && props.trackBoxPress(item)}

@@ -48,6 +48,7 @@ const TimeTxt = styled.Text`
   font-size: 12px;
   font-family: ${(props: any) =>
     props.family && props.family.medium ? props.family.light : 'Light'};
+  text-align: ${(props: any) => (props.sender ? 'right' : 'left')};
 `;
 const Map = styled(MapView)`
   width: 100%;
@@ -84,7 +85,10 @@ export default (props: any) => {
           </Box2>
         </Box1>
       </Box>
-      <TimeTxt family={props.family && props.family}>
+      <TimeTxt
+        family={props.family && props.family}
+        sender={props.sender && props.sender}
+      >
         {props.date && typeof props.date === 'object'
           ? Helper.getDate(props.date)
           : props.date && typeof props.date === 'number'

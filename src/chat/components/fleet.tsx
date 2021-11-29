@@ -100,6 +100,7 @@ const TimeTxt = styled.Text`
   font-size: 12px;
   font-family: ${(props: any) =>
     props.family && props.family.medium ? props.family.light : 'Light'};
+  text-align: ${(props: any) => (props.sender ? 'right' : 'left')};
 `;
 
 export const FleetBox = (props: any) => {
@@ -150,7 +151,10 @@ export const FleetBox = (props: any) => {
           index !== options.length - 1 && selectOption(index)
         }
       />
-      <TimeTxt family={props.family && props.family}>
+      <TimeTxt
+        family={props.family && props.family}
+        sender={props.sender && props.sender}
+      >
         {props.date && typeof props.date === 'object'
           ? Helper.getDate(props.date)
           : props.date && typeof props.date === 'number'
