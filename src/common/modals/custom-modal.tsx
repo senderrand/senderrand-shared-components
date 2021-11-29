@@ -36,7 +36,7 @@ export default (props: Props) => {
   `;
   return (
     <Modal
-      transparent={'true'}
+      transparent={true}
       visible={props.visible}
       animationType={'slide'}
       onRequestClose={() => {}}

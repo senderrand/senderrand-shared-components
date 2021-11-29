@@ -51,6 +51,10 @@ const TimingTxt = styled.Text`
     props.family && props.family.regular ? props.family.regular : 'Regular'};
   margin-top: ${(props: any) => (props.space ? '2px' : '0px')};
 `;
+const TimingTxt2 = styled(TimingTxt)`
+  width: 100%;
+  text-align: right;
+`;
 const List = styled.FlatList`
   max-height: ${containerHeight - 40}px;
 `;
@@ -122,6 +126,8 @@ const EachItem = (props: any) => {
             </StatusTxt>
           ) : null}
           <TimingTxt
+            numberOfLines={1}
+            ellipsizeMode={'tail'}
             family={props.family && props.family}
             color={Helper.getColor().secondaryTxt}
           >
@@ -135,13 +141,15 @@ const EachItem = (props: any) => {
         ) : (
           <PinIcon name={'ios-location-outline'} />
         )}
-        <TimingTxt
+        <TimingTxt2
           space
           family={props.family && props.family}
           color={Helper.getColor().secondaryTxt}
+          ellipsizeMode={'tail'}
+          numberOfLines={1}
         >
           {props.distance && props.distance}
-        </TimingTxt>
+        </TimingTxt2>
       </RightItem>
     </ItemWrap>
   );
