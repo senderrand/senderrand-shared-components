@@ -4,7 +4,12 @@ import Helper from '../../config/helper';
 import Slider from 'react-native-sliders';
 import React, { useState, useEffect } from 'react';
 import ActionSheet from 'react-native-actionsheet';
-import { ActivityIndicator, StyleSheet, useColorScheme } from 'react-native';
+import {
+  ActivityIndicator,
+  Platform,
+  StyleSheet,
+  useColorScheme,
+} from 'react-native';
 
 const Wrap = styled.View`
   width: 81%;
@@ -69,6 +74,7 @@ export default (props: any) => {
         ]
       : [Helper.t('cancel', lang)]
   );
+  let inter: NodeJS.Timer;
 
   useEffect(() => {
     let loadAudio = async () => {
@@ -85,6 +91,7 @@ export default (props: any) => {
               );
             }
           }));
+        await sound.setProgressUpdateIntervalAsync(100);
       } catch (error) {
         console.log(error);
       }
@@ -95,6 +102,7 @@ export default (props: any) => {
   let onStartPlay = async (post?: number) => {
     try {
       sound.setOnPlaybackStatusUpdate(playUpdate);
+      Platform.OS === 'ios' && interval();
       post && (await sound.setPositionAsync(post));
       await sound.playAsync();
       setFirst(true);
@@ -105,31 +113,55 @@ export default (props: any) => {
     }
   };
 
+  let interval = () => {
+    inter = setInterval(() => sound.setOnPlaybackStatusUpdate(playUpdate), 100);
+  };
+
   let playUpdate = (status: any) => {
     !lastStatus && status.positionMillis && setPosition(status.positionMillis);
-    if (status.didJustFinish) {
-      setPlaying(false);
-      setPosition(0);
-      setDuration(status.positionMillis);
-      lastStatus = true;
-      setMaximumValue(Math.floor(status.positionMillis * 0.001));
-    }
+    checkIOSDone(status);
+    if (status.didJustFinish) handleDone(status);
+  };
+
+  let checkIOSDone = (status: any) => {
+    Platform.OS === 'ios' &&
+      status.positionMillis > status.durationMillis / 2 &&
+      !status.isPlaying &&
+      handleDone(status);
+  };
+
+  let handleDone = (status: any) => {
+    setPlaying(false);
+    setPosition(0);
+    setDuration(status.positionMillis);
+    lastStatus = true;
+    setMaximumValue(Math.floor(status.positionMillis * 0.001));
+    Platform.OS === 'ios' && clearInterval(inter);
   };
 
   let onPausePlay = async () => {
     lastStatus = false;
     if (first && !playing && position === 0) {
       await sound.setPositionAsync(0);
-      sound.replayAsync().then(() => setPlaying(true));
+      sound.replayAsync().then(() => {
+        setPlaying(true);
+        Platform.OS === 'ios' && interval();
+      });
     } else {
       if (playing) sound.pauseAsync().then(() => setPlaying(false));
-      else sound.playAsync().then(() => setPlaying(true));
+      else
+        sound.playAsync().then(() => {
+          setPlaying(true);
+          Platform.OS === 'ios' && interval();
+        });
     }
   };
 
   let seekPlay = async (value: Array<number>) => {
-    if (!playing) await onStartPlay(value[0] / 0.001);
-    else {
+    if (!playing) {
+      await onStartPlay(value[0] / 0.001);
+      Platform.OS === 'ios' && interval();
+    } else {
       setPosition(value[0] / 0.001);
       await sound.setPositionAsync(value[0] / 0.001);
     }

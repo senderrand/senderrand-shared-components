@@ -38,6 +38,7 @@ const TitleWrap = styled.View`
   align-items: center;
   justify-content: space-between;
   margin-bottom: 15px;
+  width: 100%;
 `;
 const Title = styled.Text`
   font-family: ${(props: any) =>
@@ -45,6 +46,7 @@ const Title = styled.Text`
   color: ${(props: any) =>
     props.color ? props.color : Helper.getColor().primaryTxt};
   font-size: 20px;
+  width: 40%;
 `;
 const InvoiceID = styled.Text`
   color: ${(props: any) =>
@@ -52,11 +54,13 @@ const InvoiceID = styled.Text`
   font-family: ${(props: any) =>
     props.family && props.family.medium ? props.family.regular : 'Regular'};
   font-size: 15px;
+  width: 60%;
 `;
 const TotalWrap = styled.View``;
 const TotalTxt = styled(Title)`
   font-size: 24px;
   margin-top: 3px;
+  width: 100%;
 `;
 const TimeTxt = styled.Text`
   margin-top: 4px;
@@ -76,12 +80,16 @@ export const InvoiceBox = (props: any) => {
         <Box1 background={Helper.getColor().plane}>
           <TitleWrap>
             <Title
+              numberOfLines={1}
+              ellipsizeMode={'tail'}
               color={Helper.getColor().primaryTxt}
               family={props.family && props.family}
             >
               {props.txt1 ? props.txt1 : Helper.t('invoice', lang)}
             </Title>
             <InvoiceID
+              numberOfLines={1}
+              ellipsizeMode={'tail'}
               color={Helper.getColor().chatBoxTwo}
               family={props.family && props.family}
             >

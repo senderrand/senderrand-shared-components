@@ -1,6 +1,7 @@
 import Moment from 'moment';
 import Languages from './language';
 import { Appearance } from 'react-native';
+import * as FileSystem from 'expo-file-system';
 import * as ImagePicker from 'expo-image-picker';
 import * as DocumentPicker from 'expo-document-picker';
 import { manipulateAsync, SaveFormat } from 'expo-image-manipulator';
@@ -65,9 +66,18 @@ class Helper {
           });
     if (img.cancelled || img.type !== 'image') return img;
     else {
+      let info = await FileSystem.getInfoAsync(img.uri);
+      let size = info.size && info.size / 1e6;
       let result = await manipulateAsync(
         img.uri,
-        [{ resize: { width: img.width / 2, height: img.height / 2 } }],
+        [
+          {
+            resize: {
+              width: img.width / getCompressionSize(size),
+              height: img.height / getCompressionSize(size),
+            },
+          },
+        ],
         {
           compress: 0.0,
           format: SaveFormat.JPEG,
@@ -91,7 +101,7 @@ class Helper {
   getDate = (date: Date) => {
     if (new Date(date).toDateString() === new Date().toDateString()) {
       return `${Moment(new Date(date)).format('h:mm a')}`;
-    } else return Moment(new Date(date)).calendar();
+    } else return Moment(new Date(date)).format('LT');
   };
 
   millisToTime = (millis: number, addition?: number) => {
@@ -155,6 +165,13 @@ let getFileType = (type: string) => {
     default:
       return 'image';
   }
+};
+
+let getCompressionSize = (size?: number) => {
+  if (size && size < 1) return 1;
+  else if (size && size < 2) return 2;
+  else if (size && size > 3) return 2;
+  else return 1;
 };
 
 export default new Helper();

@@ -213,7 +213,7 @@ export default (props: Chat) => {
     return opt;
   };
 
-  let keyExtractor = (item: any, _index: number) => JSON.stringify(item);
+  let keyExtractor = (item: messageInterface, _index: number) => item.id;
   let renderItem = ({ item }: any) => {
     let box: any;
     switch (item.type) {

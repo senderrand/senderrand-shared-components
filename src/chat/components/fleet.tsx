@@ -92,6 +92,7 @@ let fleets = [
 
 const BoxWrap = styled.TouchableOpacity`
   margin-top: 10px;
+  align-items: ${(props: any) => (props.sender ? 'flex-end' : 'flex-start')};
 `;
 const TimeTxt = styled.Text`
   margin-top: 4px;
@@ -138,7 +139,7 @@ export const FleetBox = (props: any) => {
   };
 
   return (
-    <BoxWrap onPress={() => sheet.show()}>
+    <BoxWrap onPress={() => sheet.show()} sender={props.sender && props.sender}>
       {getFleet()}
       <ActionSheet
         options={options}

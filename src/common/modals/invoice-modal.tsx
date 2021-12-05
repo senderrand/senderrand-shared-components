@@ -221,7 +221,11 @@ export default (props: Props) => {
                       discount={item.discount && item.discount}
                       title={item.name ? item.name : 'Title'}
                       price={
-                        item.value ? `${item.value} ${props.currency}` : 'Value'
+                        item.value
+                          ? `${new Intl.NumberFormat().format(
+                              Number(item.value)
+                            )} ${props.currency}`
+                          : 'Value'
                       }
                     />
                   </View>
@@ -234,7 +238,10 @@ export default (props: Props) => {
               lang={props.lang && props.lang}
               family={props.family && props.family}
               grandTotal={
-                props.grandTotal && `${props.grandTotal} ${props.currency}`
+                props.grandTotal &&
+                `${new Intl.NumberFormat().format(Number(props.grandTotal))} ${
+                  props.currency
+                }`
               }
               grandTotalTxt={props.grandTotalTxt && props.grandTotalTxt}
             />
