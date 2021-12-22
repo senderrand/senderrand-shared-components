@@ -91,11 +91,63 @@ const EachItem = (props: any) => {
     font-size: 18px;
   `;
 
+  let [data, setData] = useState<any>({});
+
   let [lang] = useState(props.lang ? props.lang : 'en');
+
+  useEffect(() => {
+    getData().then();
+    return () => setData({});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.address]);
+
+  let getData = async () => {
+    let result = await fetchGeometry(
+      props.place_id && props.place_id,
+      props.apiKey
+    );
+    let newCountry = props.country && props.country;
+    result.address_components &&
+      result.address_components.length &&
+      result.address_components.map((item: any) => {
+        if (
+          item.types &&
+          item.types.length &&
+          item.types[0] === 'country' &&
+          !props.country
+        )
+          newCountry = item.long_name;
+      });
+    let newData: any = {
+      address: props.address && props.address,
+      timing: result.name && result.name,
+      latitude: result.geometry && getLatLng(result.geometry).latitude,
+      longitude: result.geometry && getLatLng(result.geometry).longitude,
+      country: newCountry,
+    };
+    if (result.opening_hours) {
+      newData = {
+        ...newData,
+        status: result.opening_hours.open_now
+          ? getClosing(result.opening_hours.weekday_text).status
+          : 3,
+        timing: getClosing(result.opening_hours.weekday_text).hours,
+      };
+    }
+    setData(newData);
+    if (props.userLocation) {
+      let value = {
+        origin: formatLocationPayload(props.userLocation),
+        destination: formatLocationPayload(newData),
+      };
+      let geometry = await getDistance(value, props.apiKey);
+      setData({ ...newData, ...geometry });
+    }
+  };
 
   return (
     <ItemWrap
-      onPress={props.press && props.press}
+      onPress={() => props.press && props.press(data)}
       borderless={props.borderless}
     >
       <LeftItem>
@@ -107,20 +159,20 @@ const EachItem = (props: any) => {
           {props.address && props.address}
         </Address>
         <TimingWrap>
-          {props.status ? (
+          {data.status ? (
             <StatusTxt
               family={props.family && props.family}
               color={
-                props.status === 3
+                data.status === 3
                   ? '#D41414'
-                  : props.status === 2
+                  : data.status === 2
                   ? '#FFB816'
                   : '#66CF4A'
               }
             >
-              {props.status === 3
+              {data.status === 3
                 ? Helper.t('closed', lang)
-                : props.status === 2
+                : data.status === 2
                 ? Helper.t('closing_soon', lang)
                 : Helper.t('open', lang)}
             </StatusTxt>
@@ -131,12 +183,12 @@ const EachItem = (props: any) => {
             family={props.family && props.family}
             color={Helper.getColor().secondaryTxt}
           >
-            {props.timing && props.timing}
+            {data.timing && data.timing}
           </TimingTxt>
         </TimingWrap>
       </LeftItem>
       <RightItem>
-        {props.status ? (
+        {data.status ? (
           <StoreIcon name={'store-mall-directory'} />
         ) : (
           <PinIcon name={'ios-location-outline'} />
@@ -148,11 +200,87 @@ const EachItem = (props: any) => {
           ellipsizeMode={'tail'}
           numberOfLines={1}
         >
-          {props.distance && props.distance}
+          {data.distance && data.distance}
         </TimingTxt2>
       </RightItem>
     </ItemWrap>
   );
+};
+
+let distanceUrl = `https://maps.googleapis.com/maps/api/distancematrix/json?`;
+interface distanceData {
+  origin: string;
+  destination: string;
+}
+const getDistance = async (data: distanceData, ApiKey: string) => {
+  let url = `origins=${data.origin}&destinations=${data.destination}&key=${ApiKey}`;
+  return fetch(distanceUrl + url)
+    .then((res) => res.json())
+    .then((res) => {
+      if (res.rows[0] && res.rows[0].elements[0]) {
+        let distance = res.rows[0].elements[0].distance.text;
+        let duration = res.rows[0].elements[0].duration.text;
+        return { distance: duration, duration, km: distance };
+      } else return {};
+    })
+    .catch(() => {
+      return {};
+    });
+};
+
+export const getClosing = (days: any[]) => {
+  let status = 1;
+  let today = new Date().getDay();
+  let hours = days.length >= today && days[today];
+  let split = hours && hours.split(': ', 2);
+  let closingSplit = split && split[1].split(' – ', 2);
+  let hour24 = convertTo24h(closingSplit[1]);
+  if (hour24[0] === 0 && new Date().getHours() === 23) status = 2;
+  else {
+    let subtract = hour24[0] && hour24[0] - new Date().getHours();
+    if (subtract === 1 || subtract === -1) status = 2;
+  }
+  return {
+    hours: split && split.length >= 1 && split[1],
+    status: status,
+  };
+};
+
+let convertTo24h = (timeString: string) => {
+  let time = timeString && timeString.match(/(\d+):(\d+) (\w)/);
+  let hours = time && Number(time[1]);
+  let minutes = time && Number(time[2]);
+  let meridian = time && time[3].toLowerCase();
+
+  if (meridian === 'p' && hours && hours < 12) hours += 12;
+  else if (meridian === 'a' && hours === 12) hours -= 12;
+  return [hours, minutes];
+};
+
+const googlePlaceApi =
+  'https://maps.googleapis.com/maps/api/place/details/json?placeid=';
+let fetchGeometry = async (placeId: string, apiKey: string) => {
+  return fetch(`${googlePlaceApi}${placeId}&key=${apiKey}`)
+    .then((res) => res.json())
+    .then((res) => res.result)
+    .catch(() => {
+      return {};
+    });
+};
+
+let formatLocationPayload = (location: any) => {
+  return `${location.latitude && location.latitude},${
+    location.longitude && location.longitude
+  }`;
+};
+
+let getLatLng = (geometry: any) => {
+  return {
+    latitude:
+      geometry.location && geometry.location.lat && geometry.location.lat,
+    longitude:
+      geometry.location && geometry.location.lng && geometry.location.lng,
+  };
 };
 
 let Header = (props: any) => {
@@ -233,9 +361,7 @@ export default (props: any) => {
           <EachItem
             lang={props.lang && props.lang}
             borderless={props.data && props.data.length - 1 === index}
-            press={() => {
-              props.onSelect && props.onSelect(item);
-            }}
+            press={props.onSelect && props.onSelect}
             materialIcons={props.materialIcons && props.materialIcons}
             ionicons={props.ionicons && props.ionicons}
             address={item.address && item.address}
@@ -243,6 +369,9 @@ export default (props: any) => {
             distance={item.distance && item.distance}
             status={item.status && item.status}
             family={props.family && props.family}
+            place_id={item.place_id && item.place_id}
+            apiKey={props.apiKey && props.apiKey}
+            userLocation={props.userLocation && props.userLocation}
           />
         )}
       />
