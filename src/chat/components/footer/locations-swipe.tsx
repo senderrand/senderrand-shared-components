@@ -97,7 +97,9 @@ const EachItem = (props: any) => {
 
   useEffect(() => {
     getData().then();
-    return () => setData({});
+    return () => {
+      setData({});
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.address]);
 
