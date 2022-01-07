@@ -35,7 +35,7 @@ UI Components
 * [LocationSwipe Component](#locationswipe-component)
 * [Exported Libraries](#exported-libraries)
 
-Right Chat & Functionalities
+Rigid Chat & Functionalities
 ========================
 * [Chat](#rigid-chat)
 * [getInvoiceMessage](#get-invoice-message)

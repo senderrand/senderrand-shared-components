@@ -281,6 +281,8 @@ export default () => {
         ionicons={Ionicons}
         materialIcons={MaterialIcons}
         onSelect={(item: any) => console.log(item)}
+        // apiKey={'MAP_API_KEY'}
+        userLocation={null}
       />
     </Wrap>
   );

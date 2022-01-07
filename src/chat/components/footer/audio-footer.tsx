@@ -5,6 +5,7 @@ import helper from '../../../config/helper';
 import * as FileSystem from 'expo-file-system';
 import { ActivityIndicator } from 'react-native';
 import React, { useEffect, useState } from 'react';
+import type { RecordingOptions } from 'expo-av/build/Audio/Recording.types';
 
 const RecordWrap = styled.View`
   flex-direction: row;
@@ -123,7 +124,9 @@ export default (props: any) => {
 
   let startRecording = async () => {
     await Audio.setAudioModeAsync(audioSettings);
-    await record.prepareToRecordAsync(RECORDING_OPTIONS_PRESET_LOW_QUALITY);
+    await record.prepareToRecordAsync(
+      RECORDING_OPTIONS_PRESET_LOW_QUALITY as RecordingOptions
+    );
     record.setOnRecordingStatusUpdate((e: any) =>
       setDuration(e.durationMillis)
     );

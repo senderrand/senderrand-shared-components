@@ -96,7 +96,7 @@ const EachItem = (props: any) => {
   let [lang] = useState(props.lang ? props.lang : 'en');
 
   useEffect(() => {
-    getData().then();
+    props.apiKey && getData().then();
     return () => {
       setData({});
     };
@@ -109,7 +109,8 @@ const EachItem = (props: any) => {
       props.apiKey
     );
     let newCountry = props.country && props.country;
-    result.address_components &&
+    result &&
+      result.address_components &&
       result.address_components.length &&
       result.address_components.map((item: any) => {
         if (
@@ -122,12 +123,14 @@ const EachItem = (props: any) => {
       });
     let newData: any = {
       address: props.address && props.address,
-      timing: result.name && result.name,
-      latitude: result.geometry && getLatLng(result.geometry).latitude,
-      longitude: result.geometry && getLatLng(result.geometry).longitude,
+      timing: result && result.name && result.name,
+      latitude:
+        result && result.geometry && getLatLng(result.geometry).latitude,
+      longitude:
+        result && result.geometry && getLatLng(result.geometry).longitude,
       country: newCountry,
     };
-    if (result.opening_hours) {
+    if (result && result.opening_hours) {
       newData = {
         ...newData,
         status: result.opening_hours.open_now
