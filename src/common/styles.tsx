@@ -8,7 +8,7 @@ const View = styled.View.attrs((props: any) => {
   if (props.width) style = { ...style, width: props.width };
   if (props.justify) style = { ...style, justifyContent: props.justify };
   if (props.align) style = { ...style, alignItems: props.align };
-  if (props.direction) style = { ...style, flexDirection: props.direction };
+  if (props.direct) style = { ...style, flexDirection: props.direct };
   return style;
 })`
   background-color: ${(props: any) =>
@@ -35,7 +35,7 @@ const Touch = styled.TouchableOpacity.attrs((props: any) => {
   if (props.width) style = { ...style, width: props.width };
   if (props.justify) style = { ...style, justifyContent: props.justify };
   if (props.align) style = { ...style, alignItems: props.align };
-  if (props.direction) style = { ...style, flexDirection: props.direction };
+  if (props.direct) style = { ...style, flexDirection: props.direct };
   return style;
 })`
   background-color: ${(props: any) =>

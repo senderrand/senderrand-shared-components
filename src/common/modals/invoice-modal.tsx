@@ -175,7 +175,7 @@ export default (props: Props) => {
             {props.txt3 ? props.txt3 : '#12345678'}
           </Txt>
           <InvoiceWrap>
-            <View width={'100%'} direction={'row'} justify={'space-between'}>
+            <View width={'100%'} direct={'row'} justify={'space-between'}>
               <TitleRow
                 family={props.family && props.family}
                 titles={
@@ -274,7 +274,7 @@ const TitleRow = (props: any) => (
   <View
     width={'100%'}
     align={'center'}
-    direction={'row'}
+    direct={'row'}
     justify={'space-between'}
     viewMargin={[0, 0, 19, 0]}
   >
@@ -298,7 +298,7 @@ const EachRow = (props: any) => (
   <View
     width={'100%'}
     align={'center'}
-    direction={'row'}
+    direct={'row'}
     justify={'space-between'}
     viewMargin={[0, 0, 15, 0]}
   >
@@ -341,10 +341,10 @@ const TotalItem = (props: any) => (
   <View
     width={'100%'}
     align={'center'}
-    direction={'row'}
+    direct={'row'}
     justify={'space-between'}
   >
-    <View direction={'row'} align={'center'}>
+    <View direct={'row'} align={'center'}>
       <Txt
         size={12}
         color={Helper.getColor().secondaryTxt}
@@ -390,7 +390,7 @@ const TotalItem = (props: any) => (
 let GrandTotal = (props: any) => {
   let [lang] = useState(props.lang ? props.lang : 'en');
   return (
-    <View align={'center'} direction={'row'} justify={'space-between'}>
+    <View align={'center'} direct={'row'} justify={'space-between'}>
       <Txt
         size={12}
         color={'#FD5710'}
@@ -418,7 +418,7 @@ let GrandTotal = (props: any) => {
 let CTA = (props: any) => {
   let [lang] = useState(props.lang ? props.lang : 'en');
   return (
-    <View direction={'row'} align={'center'} justify={'space-between'}>
+    <View direct={'row'} align={'center'} justify={'space-between'}>
       <Btn blue onPress={() => !props.loading && props.press && props.press(1)}>
         {props.loading ? (
           <ActivityIndicator color={'#fff'} size={'small'} />

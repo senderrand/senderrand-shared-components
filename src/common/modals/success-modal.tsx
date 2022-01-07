@@ -24,7 +24,7 @@ export default (props: any) => {
     >
       <View
         flex={1}
-        direction={'column'}
+        direct={'column'}
         align={'center'}
         justify={'center'}
         pad={[0, 20, 0, 20]}
@@ -35,7 +35,7 @@ export default (props: any) => {
           width={164}
           background={'#E0FAFF'}
           radius={82}
-          directio={'row'}
+          direct={'row'}
           align={'center'}
           justify={'center'}
         >
@@ -44,7 +44,7 @@ export default (props: any) => {
             width={100}
             background={'#66CF4A'}
             radius={50}
-            directio={'row'}
+            direct={'row'}
             align={'center'}
             justify={'center'}
           >
