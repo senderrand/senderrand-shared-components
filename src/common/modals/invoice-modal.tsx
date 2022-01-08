@@ -1,8 +1,9 @@
-import React, { useMemo, useState } from 'react';
 import { View, Txt } from '../styles';
 import styled from 'styled-components';
 import Helper from '../../config/helper';
+import React, { useMemo, useState } from 'react';
 import ZigzagLines from 'react-native-zigzag-lines';
+import { currencyFormat } from '../../chat/functions';
 import {
   useColorScheme,
   Dimensions,
@@ -191,7 +192,9 @@ export default (props: Props) => {
                   key={index}
                   name={item.description}
                   quantity={item.quantity}
-                  rate={`${props.currency} ${item.rate}`}
+                  rate={`${props.currency} ${currencyFormat(
+                    Number(item.rate)
+                  )}`}
                   subtotal={`${item.rate * item.quantity} ${props.currency}`}
                 />
               ))
@@ -222,9 +225,9 @@ export default (props: Props) => {
                       title={item.name ? item.name : 'Title'}
                       price={
                         item.value
-                          ? `${new Intl.NumberFormat().format(
-                              Number(item.value)
-                            )} ${props.currency}`
+                          ? `${currencyFormat(Number(item.value))} ${
+                              props.currency
+                            }`
                           : 'Value'
                       }
                     />
@@ -239,9 +242,7 @@ export default (props: Props) => {
               family={props.family && props.family}
               grandTotal={
                 props.grandTotal &&
-                `${new Intl.NumberFormat().format(Number(props.grandTotal))} ${
-                  props.currency
-                }`
+                `${currencyFormat(Number(props.grandTotal))} ${props.currency}`
               }
               grandTotalTxt={props.grandTotalTxt && props.grandTotalTxt}
             />

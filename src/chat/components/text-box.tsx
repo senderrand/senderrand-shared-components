@@ -62,6 +62,8 @@ export default (props: any) => {
   let sheet: any;
   const [bottomSpace, setBottomSpace] = useState(false);
   let [lang] = useState(props.lang ? props.lang : 'en');
+  let [spaceSet, onSpaceSet] = useState(false);
+
   let [options] = useState(
     props.options && props.options.length
       ? [
@@ -78,6 +80,7 @@ export default (props: any) => {
       (res.nativeEvent.lines[res.nativeEvent.lines.length - 1].width / box) *
         100;
     percent > 75 ? setBottomSpace(true) : setBottomSpace(false);
+    onSpaceSet(true);
   };
 
   let select = (index: number) => {
@@ -111,7 +114,7 @@ export default (props: any) => {
         ) : null}
         <MsgTxt
           space={bottomSpace}
-          onTextLayout={txtLayout}
+          onTextLayout={!spaceSet ? txtLayout : null}
           sender={props.sender && props.sender}
           family={props.family && props.family}
           color={props.sender ? '#fff' : Helper.getColor().primaryTxt}

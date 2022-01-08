@@ -149,3 +149,7 @@ export const getMsg = (
 export const formatURLMsg = (msg: messageInterface, url: string) => {
   return { ...msg, file: { ...msg.file, uri: url } };
 };
+
+export const currencyFormat = (amount: number) => {
+  return amount.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+};

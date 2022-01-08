@@ -54,6 +54,7 @@ Rigid Chat & Functionalities
 * [sendRead](#send-read)
 * [formatURLMsg](#format-url-msg)
 * [getMsg](#get-msg)
+* [currencyFormat](#currency-format)
 * [Interfaces](#interfaces)
 
 ## Header Component Usage
@@ -1814,6 +1815,17 @@ Below are the listed parameter to be passed to the function
 | `orderID` | `string` | `true` | The orderID of the current conversation. |
 | `from` | `string` | `true` | The senders jabber id. |
 | `to` | `string` | `true` | The receivers jabber id. |
+
+## Currency Format
+
+```typescript
+import { currencyFormat } from 'senderrand-shared-components';
+
+currencyFormat(10000) // call function passing in integer value and it returns 10,000
+
+```
+## Details
+The function is called to format a number into currency value ex 10000 to 10,000.
 
 ## Interfaces
 

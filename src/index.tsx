@@ -35,6 +35,7 @@ import {
   coordinateInterface,
   getMsg,
   formatURLMsg,
+  currencyFormat,
 } from './chat/functions';
 import {
   createTable,
@@ -100,6 +101,7 @@ export {
   sendRead,
   getMsg,
   formatURLMsg,
+  currencyFormat,
   // Fleet SVG
   Fleetless,
   Bicycle,

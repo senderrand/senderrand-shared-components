@@ -102,8 +102,10 @@ export default (props: any) => {
   const [record] = useState(new Audio.Recording());
   let [lang] = useState(props.lang ? props.lang : 'en');
 
-  let reportError = (error: string) => {
+  let reportError = (error: string, close?: boolean) => {
     props.onError && props.onError(error);
+    close && setDuration(0);
+    close && props.changeType && props.changeType('default');
   };
 
   useEffect(() => {
@@ -112,7 +114,7 @@ export default (props: any) => {
       else {
         Audio.requestPermissionsAsync().then((res2) => {
           if (res2.status === 'granted') startRecording().then();
-          else reportError(Helper.t('audio_permission_error', lang));
+          else reportError(Helper.t('audio_permission_error', lang), true);
         });
       }
     });
