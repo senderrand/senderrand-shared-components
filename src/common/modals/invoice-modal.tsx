@@ -195,7 +195,9 @@ export default (props: Props) => {
                   rate={`${props.currency} ${currencyFormat(
                     Number(item.rate)
                   )}`}
-                  subtotal={`${item.rate * item.quantity} ${props.currency}`}
+                  subtotal={`${currencyFormat(item.rate * item.quantity)} ${
+                    props.currency
+                  }`}
                 />
               ))
             ) : (
