@@ -109,6 +109,7 @@ export default (props: any) => {
   };
 
   useEffect(() => {
+    Audio.setAudioModeAsync(audioSettings).then();
     Audio.getPermissionsAsync().then((res) => {
       if (res.status === 'granted') startRecording().then();
       else {
