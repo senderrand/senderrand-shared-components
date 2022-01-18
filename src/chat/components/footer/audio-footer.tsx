@@ -158,10 +158,14 @@ export default (props: any) => {
         console.log(error, 'playback error');
       }
     }
-    record.stopAndUnloadAsync().then(() => {
+    try {
+      await record.stopAndUnloadAsync();
       setDuration(0);
       props.changeType && props.changeType('default');
-    });
+    } catch (e) {
+      setDuration(0);
+      props.changeType && props.changeType('default');
+    }
   };
 
   return (
