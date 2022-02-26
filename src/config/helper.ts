@@ -1,6 +1,6 @@
 import Moment from 'moment';
 import Languages from './language';
-import { Appearance } from 'react-native';
+import { Appearance, Alert } from 'react-native';
 import * as FileSystem from 'expo-file-system';
 import * as ImagePicker from 'expo-image-picker';
 import * as DocumentPicker from 'expo-document-picker';
@@ -29,6 +29,34 @@ class Helper {
     };
   };
 
+  defaultPermission = async (access: string) => {
+    let granted = true;
+    await new Promise(async (resolve) => {
+      await Alert.alert(
+        this.t2('let_errand_access', this.lang, [access]),
+        this.t2('permission_msg', this.lang, [access]),
+        [
+          {
+            style: 'destructive',
+            text: this.t('not_now', this.lang),
+            onPress: () => {
+              granted = false;
+              resolve(granted);
+            },
+          },
+          {
+            text: this.t('give_access', this.lang),
+            onPress: () => {
+              granted = true;
+              resolve(granted);
+            },
+          },
+        ]
+      );
+    });
+    return granted;
+  };
+
   mediaPicker = async (type: string, options?: any) => {
     // Type options: 'camera', 'library', 'document'
     switch (type) {
@@ -36,6 +64,9 @@ class Helper {
         const { status } = await ImagePicker.getCameraPermissionsAsync();
         if (status === 'granted') return this.launchMedia(type, options);
         else {
+          let preRequest = await this.defaultPermission('Camera');
+          if (!preRequest)
+            return permitError(this.t('permission_error', this.lang));
           let res = await ImagePicker.requestCameraPermissionsAsync();
           if (res.status === 'granted') return this.launchMedia(type, options);
           else return { error: true, status: res.status, message };
@@ -44,6 +75,9 @@ class Helper {
         const res = await ImagePicker.getMediaLibraryPermissionsAsync();
         if (res.status === 'granted') return this.launchMedia(type, options);
         else {
+          let preRequest = await this.defaultPermission('Camera');
+          if (!preRequest)
+            return permitError(this.t('permission_error', this.lang));
           let res2 = await ImagePicker.requestMediaLibraryPermissionsAsync();
           if (res2.status === 'granted') return this.launchMedia(type, options);
           else return { error: true, status: res.status, message };
@@ -123,6 +157,14 @@ class Helper {
     } else return '';
   };
 }
+
+const permitError = (message: string, status?: string) => {
+  return {
+    error: true,
+    status: status ? status : 'denied',
+    message,
+  };
+};
 
 let message =
   'Permission is required to be granted to access camera of photo library, go to settings to grant permission.';

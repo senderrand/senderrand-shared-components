@@ -40,4 +40,13 @@ export let ar = {
     }. Tap Accept below to pay for this errand or tap on Decline to decline the price.`,
   runner_joined: (options?: string[]) =>
     `Runner ${options?.length ? options[0] : ''} joined the chat`,
+  give_access: 'Give Access',
+  not_now: 'Not Now',
+  let_errand_access: (options?: string[]) =>
+    `Let SendErrand Access ${options?.length ? options[0] : ''}?`,
+  permission_msg: (options?: string[]) =>
+    `In order to share personal information (ex, photos, voice note, location), current location & more, Kindly give SendErrand permission to access your ${
+      options?.length ? options[0] : ''
+    }`,
+  permission_error: 'Permission Denied',
 };

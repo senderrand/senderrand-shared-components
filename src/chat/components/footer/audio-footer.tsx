@@ -113,10 +113,7 @@ export default (props: any) => {
     Audio.getPermissionsAsync().then((res) => {
       if (res.status === 'granted') startRecording().then();
       else {
-        Audio.requestPermissionsAsync().then((res2) => {
-          if (res2.status === 'granted') startRecording().then();
-          else reportError(Helper.t('audio_permission_error', lang), true);
-        });
+        requestPermission().then();
       }
     });
     return () => {
@@ -124,6 +121,18 @@ export default (props: any) => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  let requestPermission = async () => {
+    let preRequest = await Helper.defaultPermission('Microphone');
+    if (!preRequest) {
+      reportError(Helper.t('permission_msg', lang), true);
+      return;
+    }
+    Audio.requestPermissionsAsync().then((res2) => {
+      if (res2.status === 'granted') startRecording().then();
+      else reportError(Helper.t('audio_permission_error', lang), true);
+    });
+  };
 
   let startRecording = async () => {
     await Audio.setAudioModeAsync(audioSettings);
