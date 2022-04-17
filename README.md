@@ -1463,7 +1463,9 @@ let msg = getInvoiceMessage(
   sender2,
   'Mirdif City Center',
   'ar'
-);```
+);
+```
+
 ## Details
 A function call to get the message data structure of an invoice message. The message is then sent to the chat.
 NOTE: Pass invoiceID when there is a full invoice and don't pass it when there is only total price.
