@@ -216,7 +216,13 @@ export default (props: any) => {
       >
         <PlusWrap>
           <SendBtn
-            onPress={loading || props.loading ? null : () => sheet.show()}
+            onPress={
+              loading || props.loading
+                ? null
+                : props.footerOnPressLaunchIcon
+                ? props.footerOnPressLaunchIcon
+                : () => sheet.show()
+            }
             background={Helper.getColor().background}
           >
             {props.runner ? (
