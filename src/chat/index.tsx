@@ -125,6 +125,7 @@ interface Chat {
   removeFooter?: boolean;
   footerKeyboardType?: string;
   footerInputRef?: (ref: any) => void;
+  footerOnPressLaunchIcon?: () => void;
 }
 
 export default (props: Chat) => {
@@ -455,6 +456,9 @@ export default (props: Chat) => {
         }
         onSelectDefaultOption={
           props.footerOnSelectDefaultOption && props.footerOnSelectDefaultOption
+        }
+        footerOnPressLaunchIcon={
+          props.footerOnPressLaunchIcon && props.footerOnPressLaunchIcon
         }
       />
     );
