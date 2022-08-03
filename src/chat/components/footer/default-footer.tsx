@@ -206,6 +206,11 @@ export default (props: any) => {
     props.setTyping && props.setTyping(false);
   };
 
+  const handleLaunchIconPress = () => {
+    if (loading || props.loading) return null;
+    if (props.footerOnPressLaunchIcon) return props.footerOnPressLaunchIcon();
+    return sheet.show();
+  };
   return (
     <Wrap>
       {props.reply && <ReplyFoot {...props} />}
@@ -216,13 +221,7 @@ export default (props: any) => {
       >
         <PlusWrap>
           <SendBtn
-            onPress={
-              loading || props.loading
-                ? null
-                : props.footerOnPressLaunchIcon
-                ? props.footerOnPressLaunchIcon
-                : () => sheet.show()
-            }
+            onPress={handleLaunchIconPress}
             background={Helper.getColor().background}
           >
             {props.runner ? (
