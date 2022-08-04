@@ -260,6 +260,9 @@ export default () => {
             antDesign={AntDesign}
             materialCommunityIcons={MaterialCommunityIcons}
             onSelectOption={(index: number) => console.log(index)}
+            footerOnPressLaunchIcon={() => {
+              console.log(`Override default Icon launch`);
+            }}
             onError={(message: string) => Alert.alert('Failed', message)}
           />
           <FleetFooter />
