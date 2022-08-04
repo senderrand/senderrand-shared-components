@@ -190,6 +190,7 @@ const Example = () => (
    antDesign={AntDesign}
    materialCommunityIcons={MaterialCommunityIcons}
    onSelectOption={(index: number) => console.log(index)}
+   footerOnPressLaunchIcon={() => {}}
    onError={(message: string) => Alert.alert('Failed', message)}
  />
 );
@@ -203,7 +204,7 @@ const Example = () => (
 
 ## Tech
 
-The Header component uses a number of open source projects to work properly:
+The Footer component uses a number of open source projects to work properly:
 
 - `expo-av` - For Audio Recording.
 - `expo-image-picker` - To take picture from camera or select from library.
@@ -212,7 +213,7 @@ The Header component uses a number of open source projects to work properly:
 
 ## props
 
-Below are the listed props that can be passed to the header component
+Below are the listed props that can be passed to the footer component
 
 | Property | Type | Required | Description |
 | ------ | ------ | ------ | ------ |
@@ -223,6 +224,7 @@ Below are the listed props that can be passed to the header component
 | `send` | `function` | `false` | A functions that returns the message object as a parameter. |
 | `onError` | `function` | `false` | A function that returns error message as a parameter. |
 | `onSelectOption` | `function` | `false` | The function returns the index of the selected option as parameter. |
+| `footerOnPressLaunchIcon` | `function` | `false` | When specified, the function is executed when the Plus or Location Icon is pressed instead of showing the Action Sheet. |
 | `onSelectDefaultOption` | `function` | `false` | The function returns the index of the selected option as parameter. |
 | `ionicons` | `@expo/vector-icons` | `true` | It takes in Ionicons component to display icons in the footer component |
 | `family` | `object` | `true` | An object that contains the font family used for the text elements in the footer component. An example is shown above. |
