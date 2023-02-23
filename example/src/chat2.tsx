@@ -83,6 +83,7 @@ export default () => {
         materialCommunityIcons={MaterialCommunityIcons}
         // footerKeyboardType={'phone-pad'}
         // removeFooter={true}
+        // clear={false}
         // footerInputRef={(ref: any) => (inputRef = ref)}
       />
     </Wrap>

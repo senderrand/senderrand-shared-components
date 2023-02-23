@@ -1,4 +1,4 @@
-import { Audio } from 'expo-av';
+import { Audio, InterruptionModeAndroid, InterruptionModeIOS } from 'expo-av';
 import styled from 'styled-components';
 import Helper from '../../config/helper';
 import Slider from 'react-native-sliders';
@@ -272,10 +272,10 @@ export default (props: any) => {
 let mode = {
   allowsRecordingIOS: false,
   playsInSilentModeIOS: true,
-  interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+  interruptionModeIOS: InterruptionModeIOS.DoNotMix,
   shouldDuckAndroid: true,
   playThroughEarpieceAndroid: false,
-  interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+  interruptionModeAndroid: InterruptionModeAndroid.DoNotMix,
 };
 
 const others = StyleSheet.create({

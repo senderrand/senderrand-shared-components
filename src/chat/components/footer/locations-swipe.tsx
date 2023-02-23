@@ -109,6 +109,7 @@ const EachItem = (props: any) => {
       props.apiKey
     );
     let newCountry = props.country && props.country;
+    let state = '';
     result &&
       result.address_components &&
       result.address_components.length &&
@@ -120,6 +121,13 @@ const EachItem = (props: any) => {
           !props.country
         )
           newCountry = item.long_name;
+        if (
+          item.types &&
+          item.types.length &&
+          item.types[0] === 'administrative_area_level_1'
+        ) {
+          state = item.long_name;
+        }
       });
     let newData: any = {
       address: props.address && props.address,
@@ -128,6 +136,7 @@ const EachItem = (props: any) => {
         result && result.geometry && getLatLng(result.geometry).latitude,
       longitude:
         result && result.geometry && getLatLng(result.geometry).longitude,
+      state,
       country: newCountry,
     };
     if (result && result.opening_hours) {

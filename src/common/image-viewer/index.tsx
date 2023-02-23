@@ -275,6 +275,7 @@ export default class SingleImage extends PureComponent<any, any> {
             opacity,
           ]}
         />
+        {/* @ts-ignore */}
         <SwipeableViews
           disabled={animating || panning}
           index={this.state.index}
