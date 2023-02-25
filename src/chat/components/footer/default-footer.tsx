@@ -135,12 +135,22 @@ export default (props: any) => {
   }, [inputRef, props.reply]);
 
   useEffect(() => {
-    Keyboard.addListener('keyboardWillShow', keyboardWillShow);
-    Keyboard.addListener('keyboardWillHide', keyboardWillHide);
+    if (props.clear) setText('');
+  }, [props.clear]);
+
+  useEffect(() => {
+    const willShowSub = Keyboard.addListener(
+      'keyboardWillShow',
+      keyboardWillShow
+    );
+    const willHideSub = Keyboard.addListener(
+      'keyboardWillHide',
+      keyboardWillHide
+    );
     return () => {
       // cleanup function
-      Keyboard.removeListener('keyboardWillShow', keyboardWillShow);
-      Keyboard.removeListener('keyboardWillHide', keyboardWillHide);
+      willShowSub.remove();
+      willHideSub.remove();
     };
   }, []);
   const [keyboardShown, setKeyboardShown] = useState(false);

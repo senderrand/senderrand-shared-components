@@ -1450,6 +1450,7 @@ Below are the listed props that can be passed to the header component
 | `footerSetRecording` | `function` | `false` | The prop called when user starts and stops recording. It take in a boolean as parameter. True for recording, False for not recording. |
 | `footerInputRef` | `function` | `false` | Takes the ref of the footer input as parameter. |
 | `footerKeyboardType` | `string` | `false` | Takes the keyboard type of the footer input. |
+| `clear` | `boolean` | `false` | To trigger the clearing of the input field. |
 | `removeFooter` | `boolean` | `false` | Hides the footer, defaults to false. |
 
 ## Get Invoice Message
