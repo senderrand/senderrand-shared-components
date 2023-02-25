@@ -107,6 +107,10 @@ interface Props {
   currency: string;
   items?: InvoiceItems[];
   totalItems: InvoiceTotalItems[];
+  baseFare?: number;
+  distanceFare?: number;
+  timeFare?: number;
+  paymentMethod?: 'cash' | 'card';
   grandTotal: number;
   grandTotalTxt?: string;
   press?: (index: number) => void;
@@ -176,16 +180,18 @@ export default (props: Props) => {
             {props.txt3 ? props.txt3 : '#12345678'}
           </Txt>
           <InvoiceWrap>
-            <View width={'100%'} direct={'row'} justify={'space-between'}>
-              <TitleRow
-                family={props.family && props.family}
-                titles={
-                  props.titles && props.titles.length
-                    ? props.titles
-                    : dummyTitles
-                }
-              />
-            </View>
+            {props.items && props.items.length ? (
+              <View width={'100%'} direct={'row'} justify={'space-between'}>
+                <TitleRow
+                  family={props.family && props.family}
+                  titles={
+                    props.titles && props.titles.length
+                      ? props.titles
+                      : dummyTitles
+                  }
+                />
+              </View>
+            ) : null}
             {props.items && props.items.length ? (
               props.items.map((item, index: number) => (
                 <EachRow
@@ -209,42 +215,101 @@ export default (props: Props) => {
               </InvoiceMessage>
             )}
           </InvoiceWrap>
-          <InvoiceWrap>
-            {props.totalItems && props.totalItems.length
-              ? props.totalItems.map((item, index: number) => (
-                  <View
-                    key={index}
-                    viewMargin={[
-                      0,
-                      0,
-                      index + 1 === props.totalItems.length ? 0 : 8,
-                      0,
-                    ]}
-                  >
-                    <TotalItem
-                      family={props.family && props.family}
-                      discount={item.discount && item.discount}
-                      title={item.name ? item.name : 'Title'}
-                      price={
-                        item.value
-                          ? `${currencyFormat(Number(item.value))} ${
-                              props.currency
-                            }`
-                          : 'Value'
-                      }
-                    />
-                  </View>
-                ))
-              : null}
-          </InvoiceWrap>
+          {props.totalItems && props.totalItems.length ? (
+            <InvoiceWrap>
+              {props.totalItems.map((item, index: number) => (
+                <View
+                  key={index}
+                  viewMargin={[
+                    0,
+                    0,
+                    index + 1 === props.totalItems.length ? 0 : 8,
+                    0,
+                  ]}
+                >
+                  <TotalItem
+                    family={props.family && props.family}
+                    discount={item.discount && item.discount}
+                    title={item.name ? item.name : 'Title'}
+                    price={
+                      item.value
+                        ? `${currencyFormat(Number(item.value))} ${
+                            props.currency
+                          }`
+                        : 'Value'
+                    }
+                  />
+                </View>
+              ))}
+            </InvoiceWrap>
+          ) : null}
+          {props.paymentMethod ? (
+            <InvoiceWrap>
+              <Txt
+                size={15}
+                viewMargin={[0, 0, 3, 0]}
+                color={Helper.getColor().primaryTxt}
+                family={props.family && props.family.bold}
+              >
+                {Helper.t('payment_method', lang)}
+              </Txt>
+              <Txt
+                size={10}
+                viewMargin={[0, 0, 3, 0]}
+                color={Helper.getColor().primaryTxt}
+                family={props.family && props.family.regular}
+              >
+                {props.paymentMethod.toUpperCase()}
+              </Txt>
+            </InvoiceWrap>
+          ) : null}
           <InvoiceWrap>
             <GrandTotal
               currency={props.currency}
               lang={props.lang && props.lang}
               family={props.family && props.family}
               grandTotal={
+                props.baseFare &&
+                `${currencyFormat(Number(props.baseFare || 0))} ${
+                  props.currency
+                }`
+              }
+              grandTotalTxt={Helper.t('base_fare', lang)}
+            />
+            <GrandTotal
+              currency={props.currency}
+              lang={props.lang && props.lang}
+              family={props.family && props.family}
+              grandTotal={
+                props.distanceFare &&
+                `${currencyFormat(Number(props?.distanceFare || 0))} ${
+                  props.currency
+                }`
+              }
+              grandTotalTxt={Helper.t('distance_fare', lang)}
+            />
+            <GrandTotal
+              currency={props.currency}
+              lang={props.lang && props.lang}
+              family={props.family && props.family}
+              grandTotal={
+                props.timeFare &&
+                `${currencyFormat(Number(props.timeFare || 0))} ${
+                  props.currency
+                }`
+              }
+              grandTotalTxt={Helper.t('time_fare', lang)}
+            />
+            <GrandTotal
+              currency={props.currency}
+              lang={props.lang && props.lang}
+              family={props.family && props.family}
+              isTotal={true}
+              grandTotal={
                 props.grandTotal &&
-                `${currencyFormat(Number(props.grandTotal))} ${props.currency}`
+                `${currencyFormat(Number(props.grandTotal || 0))} ${
+                  props.currency
+                }`
               }
               grandTotalTxt={props.grandTotalTxt && props.grandTotalTxt}
             />
@@ -259,7 +324,13 @@ export default (props: Props) => {
                 acceptTxt={props.acceptTxt && props.acceptTxt}
                 declineTxt={props.declineTxt && props.declineTxt}
               />
-            ) : null}
+            ) : (
+              <Btn blue onPress={props.close}>
+                <BtnTxt family={props.family && props.family} blue>
+                  {Helper.t('close', lang)}
+                </BtnTxt>
+              </Btn>
+            )}
           </InvoiceWrap>
           <ZigzagLines
             position={'bottom'}
@@ -396,7 +467,7 @@ let GrandTotal = (props: any) => {
     <View align={'center'} direct={'row'} justify={'space-between'}>
       <Txt
         size={12}
-        color={'#FD5710'}
+        color={props.isTotal ? '#FD5710' : Helper.getColor().primaryTxt}
         family={
           props.family && props.family.medium ? props.family.medium : 'Medium'
         }

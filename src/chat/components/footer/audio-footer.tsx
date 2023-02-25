@@ -1,4 +1,4 @@
-import { Audio } from 'expo-av';
+import { Audio, InterruptionModeAndroid, InterruptionModeIOS } from 'expo-av';
 import styled from 'styled-components';
 import Helper from '../../../config/helper';
 import helper from '../../../config/helper';
@@ -6,6 +6,12 @@ import * as FileSystem from 'expo-file-system';
 import { ActivityIndicator } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import type { RecordingOptions } from 'expo-av/build/Audio/Recording.types';
+import {
+  AndroidAudioEncoder,
+  AndroidOutputFormat,
+  IOSAudioQuality,
+  IOSOutputFormat,
+} from 'expo-av/build/Audio';
 
 const RecordWrap = styled.View`
   flex-direction: row;
@@ -58,16 +64,16 @@ const Icon = styled.Text``;
 const RECORDING_OPTIONS_PRESET_LOW_QUALITY = {
   android: {
     extension: '.aac',
-    outputFormat: Audio.RECORDING_OPTION_ANDROID_OUTPUT_FORMAT_AAC_ADTS,
-    audioEncoder: Audio.RECORDING_OPTION_ANDROID_AUDIO_ENCODER_AAC,
+    outputFormat: AndroidOutputFormat.AAC_ADTS,
+    audioEncoder: AndroidAudioEncoder.AAC,
     sampleRate: 44100,
     numberOfChannels: 2,
     bitRate: 128000,
   },
   ios: {
     extension: '.aac',
-    outputFormat: Audio.RECORDING_OPTION_IOS_OUTPUT_FORMAT_MPEG4AAC,
-    audioQuality: Audio.RECORDING_OPTION_IOS_AUDIO_QUALITY_HIGH,
+    outputFormat: IOSOutputFormat.MPEG4AAC,
+    audioQuality: IOSAudioQuality.HIGH,
     sampleRate: 44100,
     numberOfChannels: 2,
     bitRate: 128000,
@@ -78,10 +84,10 @@ const RECORDING_OPTIONS_PRESET_LOW_QUALITY = {
 };
 let audioSettings = {
   allowsRecordingIOS: true,
-  interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+  interruptionModeIOS: InterruptionModeIOS.DoNotMix,
   playsInSilentModeIOS: true,
   shouldDuckAndroid: true,
-  interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+  interruptionModeAndroid: InterruptionModeAndroid.DoNotMix,
   playThroughEarpieceAndroid: false,
   staysActiveInBackground: true,
 };

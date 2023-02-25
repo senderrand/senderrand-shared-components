@@ -31,8 +31,11 @@ const XmppClient = (props: client) => {
   };
 
   useEffect(() => {
-    AppState.addEventListener('change', handleAppStateChange);
-    return () => AppState.removeEventListener('change', handleAppStateChange);
+    const appStateListener = AppState.addEventListener(
+      'change',
+      handleAppStateChange
+    );
+    return () => appStateListener.remove();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [appState]);
 

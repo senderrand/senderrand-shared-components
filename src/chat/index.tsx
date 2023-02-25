@@ -125,6 +125,7 @@ interface Chat {
   removeFooter?: boolean;
   footerKeyboardType?: string;
   footerInputRef?: (ref: any) => void;
+  clear?: boolean;
   footerOnPressLaunchIcon?: () => void;
 }
 
@@ -445,6 +446,7 @@ export default (props: Chat) => {
         keyboardType={props.footerKeyboardType && props.footerKeyboardType}
         setRecording={props.footerSetRecording && props.footerSetRecording}
         onChangeText={props.footerOnChangeText && props.footerOnChangeText}
+        clear={props?.clear}
         defaultOptions={
           props.footerDefaultOptions && props.footerDefaultOptions
         }
